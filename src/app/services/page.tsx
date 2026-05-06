@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { ServiceCard } from "@/components/services/ServiceCard";
+import { ServicesCtaSection } from "@/components/services/ServicesCtaSection";
 import { SERVICES, SERVICES_INTRO } from "@/data/services";
 
 export const metadata: Metadata = {
@@ -32,6 +33,8 @@ export default function ServicesPage() {
           ))}
         </div>
       </section>
+
+      <ServicesCtaSection />
     </main>
   );
 }

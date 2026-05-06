@@ -57,7 +57,7 @@ const SOCIALS = [
 
 export function SocialIcons() {
   return (
-    <div className="flex flex-wrap items-center justify-center gap-3">
+    <div className="flex flex-wrap items-center justify-center gap-2">
       {SOCIALS.map(({ label, href, Icon }) => (
         <a
           key={label}
@@ -65,7 +65,7 @@ export function SocialIcons() {
           target="_blank"
           rel="noopener noreferrer"
           aria-label={label}
-          className="flex h-10 w-10 items-center justify-center rounded-full border border-white/15 bg-white/5 text-white transition-colors hover:border-white/30 hover:bg-white/10"
+          className="flex h-8 w-8 items-center justify-center rounded-full border border-white/15 bg-white/5 text-white transition-colors hover:border-white/30 hover:bg-white/10 sm:h-9 sm:w-9"
         >
           <Icon />
         </a>

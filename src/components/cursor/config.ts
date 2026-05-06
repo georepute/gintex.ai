@@ -5,7 +5,7 @@ export const CURSOR = {
   /** Inner dot (px) */
   dot: 9,
   /** Outer ring diameter (px) */
-  ring: 56,
+  ring: 46,
   /** Inner position smoothing (higher = snappier) */
   innerLerp: 0.48,
   /** Outer ring follows inner (lower = more lag / “trail”) */

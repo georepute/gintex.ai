@@ -265,9 +265,9 @@ export function PremiumCursor() {
         outerEl.style.transform = `translate3d(${ox}px, ${oy}px, 0) translate(-50%, -50%) scale(${ringS})`;
         const glowMul = interactive.current ? 1.65 : 1;
         outerEl.style.boxShadow = [
-          `0 0 ${22 * glowMul}px ${CURSOR.colors.glowSoft}`,
-          `0 0 ${52 * glowMul}px ${CURSOR.colors.glow}`,
-          `inset 0 0 22px ${CURSOR.colors.ringInner}`,
+          `0 0 ${18 * glowMul}px ${CURSOR.colors.glowSoft}`,
+          `0 0 ${42 * glowMul}px ${CURSOR.colors.glow}`,
+          `inset 0 0 18px ${CURSOR.colors.ringInner}`,
         ].join(", ");
       }
       if (glowEl) {
@@ -344,11 +344,13 @@ export function PremiumCursor() {
 
       <div
         ref={trailRef}
-        className="absolute left-0 top-0 h-[88px] w-[88px] will-change-transform mix-blend-screen"
+        className="absolute left-0 top-0 will-change-transform mix-blend-screen"
         style={{
+          width: CURSOR.ring * 1.57,
+          height: CURSOR.ring * 1.57,
           background:
             "conic-gradient(from 210deg, rgba(0,191,255,0.35), rgba(59,130,246,0.12), transparent 55%, rgba(0,191,255,0.2))",
-          filter: "blur(16px)",
+          filter: "blur(14px)",
           opacity: 0.85,
         }}
       />
