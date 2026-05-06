@@ -1,8 +1,22 @@
+import type { Metadata } from "next";
+import { AboutCoreSection } from "@/components/about/AboutCoreSection";
+import { AboutEdgeSection } from "@/components/about/AboutEdgeSection";
+import { AboutLeadershipSection } from "@/components/about/AboutLeadershipSection";
+import { AboutPhilosophySection } from "@/components/about/AboutPhilosophySection";
+
+export const metadata: Metadata = {
+  title: "About | Gintex Ai",
+  description:
+    "Our core purpose: intelligence that redefines how brands understand markets, people, and AI-driven discovery.",
+};
+
 export default function AboutPage() {
   return (
-    <main className="flex flex-1 flex-col items-center justify-center gap-2 bg-zinc-50 px-6 py-16 text-zinc-900 dark:bg-zinc-950 dark:text-zinc-50">
-      <h1 className="text-2xl font-semibold">About</h1>
-      <p className="text-zinc-600 dark:text-zinc-400">Content coming soon.</p>
+    <main className="flex flex-1 flex-col bg-[#0a0a0a] text-white">
+      <AboutCoreSection />
+      <AboutPhilosophySection />
+      <AboutEdgeSection />
+      <AboutLeadershipSection />
     </main>
   );
 }
