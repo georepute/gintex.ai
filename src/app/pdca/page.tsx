@@ -1,8 +1,20 @@
+import type { Metadata } from "next";
+import { PdcaHeroSection } from "@/components/pdca/PdcaHeroSection";
+import { PdcaCtaSection } from "@/components/pdca/PdcaCtaSection";
+import { PdcaPhaseDetailSections } from "@/components/pdca/PdcaPhaseDetailSections";
+
+export const metadata: Metadata = {
+  title: "PDCA Framework | Gintex Ai",
+  description:
+    "Plan, Do, Check, Act—reimagined with AI and GeoReput intelligence for faster optimization and clearer ROI.",
+};
+
 export default function PdcaPage() {
   return (
-    <main className="flex flex-1 flex-col items-center justify-center gap-2 bg-zinc-50 px-6 py-16 text-zinc-900 dark:bg-zinc-950 dark:text-zinc-50">
-      <h1 className="text-2xl font-semibold">PDCA</h1>
-      <p className="text-zinc-600 dark:text-zinc-400">Content coming soon.</p>
+    <main className="flex flex-1 flex-col bg-[#0a0a0a] text-white">
+      <PdcaHeroSection />
+      <PdcaPhaseDetailSections />
+      <PdcaCtaSection />
     </main>
   );
 }
