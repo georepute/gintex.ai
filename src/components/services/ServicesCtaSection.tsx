@@ -19,13 +19,13 @@ export function ServicesCtaSection() {
           <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:mt-10 sm:flex-row sm:gap-4">
             <Link
               href="/contact"
-              className="inline-flex h-12 w-full min-w-[12rem] items-center justify-center rounded-xl bg-[#c8d4f8] px-6 text-xs font-bold uppercase tracking-[0.16em] text-[#111827] transition-colors hover:bg-[#dce4fc] sm:w-auto sm:px-8 sm:text-[0.7rem]"
+              className="font-label inline-flex h-12 w-full min-w-[12rem] items-center justify-center rounded-xl bg-[#c8d4f8] px-6 text-xs font-bold uppercase tracking-[0.16em] text-[#111827] transition-colors hover:bg-[#dce4fc] sm:w-auto sm:px-8 sm:text-[0.7rem]"
             >
               Get in touch
             </Link>
             <Link
               href="/about"
-              className="inline-flex h-12 w-full min-w-[12rem] items-center justify-center rounded-xl border border-white/[0.1] bg-[#252525] px-6 text-xs font-bold uppercase tracking-[0.16em] text-white transition-colors hover:border-white/[0.18] hover:bg-[#2e2e2e] sm:w-auto sm:px-8 sm:text-[0.7rem]"
+              className="font-label inline-flex h-12 w-full min-w-[12rem] items-center justify-center rounded-xl border border-white/[0.1] bg-[#252525] px-6 text-xs font-bold uppercase tracking-[0.16em] text-white transition-colors hover:border-white/[0.18] hover:bg-[#2e2e2e] sm:w-auto sm:px-8 sm:text-[0.7rem]"
             >
               About us
             </Link>

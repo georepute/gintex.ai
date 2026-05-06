@@ -21,7 +21,7 @@ export function Footer() {
           </div>
 
           <div className="space-y-2.5">
-            <h3 className="text-xs font-bold uppercase tracking-wider text-gray-400">
+            <h3 className="font-label text-xs font-bold uppercase tracking-wider text-gray-400">
               Quick links
             </h3>
             <ul className="flex flex-col gap-2">
@@ -44,7 +44,7 @@ export function Footer() {
           </div>
 
           <div className="space-y-2.5">
-            <h3 className="text-xs font-bold uppercase tracking-wider text-gray-400">
+            <h3 className="font-label text-xs font-bold uppercase tracking-wider text-gray-400">
               Resources
             </h3>
             <ul className="flex flex-col gap-2">
@@ -67,7 +67,7 @@ export function Footer() {
           </div>
 
           <div className="space-y-2.5">
-            <h3 className="text-xs font-bold uppercase tracking-wider text-gray-400">
+            <h3 className="font-label text-xs font-bold uppercase tracking-wider text-gray-400">
               Newsletter
             </h3>
             <NewsletterForm />
@@ -78,7 +78,7 @@ export function Footer() {
           <SocialIcons />
         </div>
 
-        <div className="mt-5 flex flex-col gap-3 border-t border-white/10 pt-5 text-[11px] font-medium uppercase tracking-wider text-gray-400 sm:mt-6 sm:flex-row sm:items-center sm:justify-between sm:pt-5">
+        <div className="font-label mt-5 flex flex-col gap-3 border-t border-white/10 pt-5 text-[11px] font-medium uppercase tracking-wider text-gray-400 sm:mt-6 sm:flex-row sm:items-center sm:justify-between sm:pt-5">
           <p>
             © {year} GINTEX AI. Intelligence Redefined.
           </p>

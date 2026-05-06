@@ -6,7 +6,7 @@ export function AboutPhilosophySection() {
     <section className="border-t border-white/[0.06] bg-black px-6 py-20 sm:px-10 sm:py-24 lg:py-28">
       <div className="mx-auto grid max-w-6xl items-center gap-14 lg:grid-cols-2 lg:gap-20 xl:gap-24">
         <div className="min-w-0 lg:pr-4">
-          <p className="text-[10px] font-semibold uppercase tracking-[0.38em] text-cyan-400 sm:text-[11px] sm:tracking-[0.4em]">
+          <p className="font-label text-[10px] font-semibold uppercase tracking-[0.38em] text-cyan-400 sm:text-[11px] sm:tracking-[0.4em]">
             Philosophy
           </p>
           <h2 className="mt-5 max-w-xl text-[2rem] font-bold leading-[1.15] tracking-tight text-white sm:mt-6 sm:text-4xl sm:leading-[1.12] md:text-[2.75rem] md:leading-[1.1]">

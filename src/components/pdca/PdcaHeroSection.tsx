@@ -121,7 +121,7 @@ export function PdcaHeroSection() {
 
       <div className="relative mx-auto max-w-6xl">
         <header className="mx-auto max-w-3xl text-center">
-          <p className="text-[11px] font-semibold uppercase tracking-[0.32em] text-sky-400/95 sm:text-xs">
+          <p className="font-label text-[11px] font-semibold uppercase tracking-[0.32em] text-sky-400/95 sm:text-xs">
             Intelligent optimization
           </p>
           <h1 className="mt-5 text-3xl font-bold tracking-tight text-white sm:mt-6 sm:text-4xl md:text-[2.65rem] md:leading-[1.12]">
@@ -141,7 +141,7 @@ export function PdcaHeroSection() {
             className="relative mx-auto flex w-fit flex-col items-center rounded-full border border-sky-500/35 bg-gradient-to-b from-[#1a1a1a] to-[#0f0f0f] px-8 py-8 shadow-[0_0_48px_-12px_rgba(56,189,248,0.35)] ring-1 ring-white/[0.08]"
           >
             <CoreIcon />
-            <p className="mt-3 text-[10px] font-semibold uppercase tracking-[0.28em] text-white/90">
+            <p className="font-label mt-3 text-[10px] font-semibold uppercase tracking-[0.28em] text-white/90">
               Gintex core
             </p>
           </div>
@@ -160,7 +160,7 @@ export function PdcaHeroSection() {
             className="absolute left-1/2 top-1/2 z-20 flex -translate-x-1/2 -translate-y-1/2 flex-col items-center rounded-full border border-sky-500/40 bg-gradient-to-b from-[#1c1c1c] to-[#101010] px-10 py-10 shadow-[0_0_56px_-8px_rgba(56,189,248,0.4)] ring-1 ring-white/10 sm:px-12 sm:py-11"
           >
             <CoreIcon />
-            <p className="mt-3 text-[10px] font-semibold uppercase tracking-[0.3em] text-white/90 sm:text-[11px]">
+            <p className="font-label mt-3 text-[10px] font-semibold uppercase tracking-[0.3em] text-white/90 sm:text-[11px]">
               Gintex core
             </p>
           </div>

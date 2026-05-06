@@ -72,7 +72,7 @@ export function TrustedBy() {
   return (
     <section className="border-t border-white/10 bg-black px-6 py-10 sm:px-10 sm:py-12">
       <div className="mx-auto flex w-full max-w-5xl flex-col items-center">
-        <p className="mb-8 text-center text-xs font-semibold uppercase tracking-[0.2em] text-white/80 sm:mb-9 sm:text-sm">
+        <p className="font-label mb-8 text-center text-xs font-semibold uppercase tracking-[0.2em] text-white/80 sm:mb-9 sm:text-sm">
           Trusted by global innovators
         </p>
         <div className="flex w-full flex-wrap items-center justify-center gap-x-10 gap-y-6 sm:gap-x-12 md:gap-x-14">
@@ -82,7 +82,7 @@ export function TrustedBy() {
               className="flex items-center gap-3 text-white/90 transition-opacity hover:opacity-100"
             >
               <Icon />
-              <span className="text-base font-semibold uppercase tracking-[0.12em] md:text-lg">
+              <span className="font-label text-base font-semibold uppercase tracking-[0.12em] md:text-lg">
                 {name}
               </span>
             </div>

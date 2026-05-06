@@ -34,7 +34,7 @@ export function ServiceCard({ service }: { service: ServiceItem }) {
       </p>
       <Link
         href="/contact"
-        className={`mt-8 inline-flex shrink-0 items-center gap-1.5 text-[10px] font-bold uppercase tracking-[0.18em] transition-colors sm:mt-10 sm:text-[11px] ${a.link}`}
+        className={`font-label mt-8 inline-flex shrink-0 items-center gap-1.5 text-[10px] font-bold uppercase tracking-[0.18em] transition-colors sm:mt-10 sm:text-[11px] ${a.link}`}
       >
         Learn more
         <span aria-hidden className="text-xs font-normal">

@@ -39,7 +39,7 @@ export function OptimizationLoopSection() {
           <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl md:text-[2.5rem] md:leading-tight">
             A Continuous Optimization Loop
           </h2>
-          <p className="mt-4 text-xs font-semibold uppercase tracking-[0.28em] text-sky-400/95 sm:text-sm">
+          <p className="font-label mt-4 text-xs font-semibold uppercase tracking-[0.28em] text-sky-400/95 sm:text-sm">
             From analyze to improve
           </p>
         </header>

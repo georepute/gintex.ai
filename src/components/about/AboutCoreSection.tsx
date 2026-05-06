@@ -25,7 +25,7 @@ export function AboutCoreSection() {
         aria-hidden
       />
       <div className="relative mx-auto max-w-6xl text-center">
-        <p className="text-[11px] font-semibold uppercase tracking-[0.32em] text-sky-400/95 sm:text-xs">
+        <p className="font-label text-[11px] font-semibold uppercase tracking-[0.32em] text-sky-400/95 sm:text-xs">
           Our core purpose
         </p>
         <h1 className="mx-auto mt-6 max-w-4xl text-4xl font-bold leading-[1.12] tracking-tight text-white sm:mt-7 sm:text-5xl md:text-6xl md:leading-[1.08]">
@@ -50,7 +50,7 @@ export function AboutCoreSection() {
               className="rounded-xl border border-white/[0.08] bg-[#141414] px-6 py-8 shadow-[0_20px_60px_-40px_rgba(0,0,0,0.9)] ring-1 ring-white/[0.04] sm:px-8 sm:py-10"
             >
               <GradientStat value={stat.value} />
-              <p className="mt-3 text-[11px] font-semibold uppercase tracking-[0.22em] text-[#888] sm:text-xs sm:tracking-[0.26em]">
+              <p className="font-label mt-3 text-[11px] font-semibold uppercase tracking-[0.22em] text-[#888] sm:text-xs sm:tracking-[0.26em]">
                 {stat.label}
               </p>
             </div>
