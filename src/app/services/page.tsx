@@ -14,7 +14,7 @@ export default function ServicesPage() {
     <main className="flex flex-1 flex-col bg-[#0a0a0a] text-white">
       <section className="border-b border-white/[0.06] px-6 pb-20 pt-16 sm:px-10 sm:pb-24 sm:pt-20">
         <div className="mx-auto max-w-6xl text-left">
-          <p className="text-[11px] font-semibold uppercase tracking-[0.32em] text-[#4A90E2] sm:text-xs">
+          <p className="font-label text-[11px] font-semibold uppercase tracking-[0.32em] text-[#4A90E2] sm:text-xs">
             Our capabilities
           </p>
           <h1 className="mt-6 text-4xl font-bold tracking-tight text-white sm:mt-7 sm:text-5xl md:text-[3.5rem] md:leading-[1.08]">

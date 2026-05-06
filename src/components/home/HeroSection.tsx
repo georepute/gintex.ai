@@ -13,7 +13,7 @@ export function HeroSection() {
 
       <div className="relative mx-auto grid max-w-6xl gap-12 lg:grid-cols-2 lg:items-center lg:gap-y-12 lg:gap-x-28 xl:gap-x-40">
         <div className="flex max-w-xl flex-col gap-8 lg:max-w-none">
-          <div className="inline-flex w-fit items-center rounded-full border border-white/25 bg-white/5 px-4 py-1.5 text-[10px] font-semibold uppercase tracking-[0.2em] text-white sm:text-xs">
+          <div className="font-label inline-flex w-fit items-center rounded-full border border-white/25 bg-white/5 px-4 py-1.5 text-[10px] font-semibold uppercase tracking-[0.2em] text-white sm:text-xs">
             Marketing Evolution
           </div>
 

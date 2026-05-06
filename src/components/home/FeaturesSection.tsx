@@ -133,7 +133,7 @@ export function FeaturesSection() {
                 >
                   <Icon className="relative z-10 h-7 w-7 text-white drop-shadow-[0_0_8px_rgba(255,255,255,0.35)] transition-transform duration-300 group-hover:scale-110" />
                 </div>
-                <h3 className="relative text-lg font-bold uppercase tracking-[0.12em] text-white">
+                <h3 className="font-label relative text-lg font-bold uppercase tracking-[0.12em] text-white">
                   {title}
                 </h3>
                 <p className="relative mt-4 text-sm leading-relaxed text-gray-400 transition-colors duration-300 group-hover:text-gray-300 sm:text-[0.9375rem]">

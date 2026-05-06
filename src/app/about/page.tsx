@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
+import { AboutCtaSection } from "@/components/about/AboutCtaSection";
 import { AboutCoreSection } from "@/components/about/AboutCoreSection";
 import { AboutEdgeSection } from "@/components/about/AboutEdgeSection";
+import { AboutJourneySection } from "@/components/about/AboutJourneySection";
 import { AboutLeadershipSection } from "@/components/about/AboutLeadershipSection";
 import { AboutPhilosophySection } from "@/components/about/AboutPhilosophySection";
 
@@ -17,6 +19,8 @@ export default function AboutPage() {
       <AboutPhilosophySection />
       <AboutEdgeSection />
       <AboutLeadershipSection />
+      <AboutJourneySection />
+      <AboutCtaSection />
     </main>
   );
 }

@@ -51,7 +51,7 @@ export function CoreCapabilitiesSection() {
       <div className="relative mx-auto max-w-7xl">
         <div className="flex flex-col gap-16 lg:flex-row lg:items-start lg:gap-20 xl:gap-24">
           <header className="max-w-lg shrink-0 lg:sticky lg:top-28">
-            <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-sky-400/90">
+            <p className="font-label text-[11px] font-semibold uppercase tracking-[0.28em] text-sky-400/90">
               Services
             </p>
             <h2 className="mt-4 text-3xl font-bold tracking-tight text-white sm:text-4xl lg:text-[2.65rem] lg:leading-[1.12]">
@@ -66,7 +66,7 @@ export function CoreCapabilitiesSection() {
             </p>
             <Link
               href="/services"
-              className="group/cta mt-10 inline-flex items-center gap-3 rounded-full border border-sky-500/35 bg-sky-500/10 px-6 py-3 text-xs font-semibold uppercase tracking-[0.2em] text-sky-300 shadow-[0_0_24px_-8px_rgba(14,165,233,0.45)] backdrop-blur-sm transition-all duration-300 hover:border-sky-400/55 hover:bg-sky-500/15 hover:text-white hover:shadow-[0_0_32px_-6px_rgba(56,189,248,0.5)] sm:text-sm"
+              className="group/cta font-label mt-10 inline-flex items-center gap-3 rounded-full border border-sky-500/35 bg-sky-500/10 px-6 py-3 text-xs font-semibold uppercase tracking-[0.2em] text-sky-300 shadow-[0_0_24px_-8px_rgba(14,165,233,0.45)] backdrop-blur-sm transition-all duration-300 hover:border-sky-400/55 hover:bg-sky-500/15 hover:text-white hover:shadow-[0_0_32px_-6px_rgba(56,189,248,0.5)] sm:text-sm"
             >
               View all services
               <span
@@ -126,7 +126,7 @@ export function CoreCapabilitiesSection() {
                         aria-hidden
                       />
                     </div>
-                    <span className="absolute left-5 top-5 rounded-md border border-white/15 bg-black/40 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-white/90 backdrop-blur-md">
+                    <span className="font-label absolute left-5 top-5 rounded-md border border-white/15 bg-black/40 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-white/90 backdrop-blur-md">
                       {kicker}
                     </span>
                     <span className="absolute bottom-4 right-5 font-mono text-[10px] font-medium text-white/35">
@@ -141,7 +141,7 @@ export function CoreCapabilitiesSection() {
                     <p className="mt-4 text-sm leading-relaxed text-gray-400 transition-colors duration-300 group-hover:text-gray-300 sm:text-[0.9375rem]">
                       {description}
                     </p>
-                    <span className="mt-6 inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.16em] text-sky-400/80 opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100">
+                    <span className="font-label mt-6 inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.16em] text-sky-400/80 opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100">
                       Explore
                       <span aria-hidden>→</span>
                     </span>

@@ -35,7 +35,7 @@ export function AboutLeadershipSection() {
               <span className="text-2xl font-bold tracking-tight text-white sm:text-3xl">
                 {name}
               </span>
-              <span className="text-[0.65rem] font-semibold uppercase tracking-[0.28em] text-cyan-400/95">
+              <span className="font-label text-[0.65rem] font-semibold uppercase tracking-[0.28em] text-cyan-400/95">
                 {role}
               </span>
             </div>
@@ -66,7 +66,7 @@ export function AboutLeadershipSection() {
           </div>
         </div>
 
-        <p className="mx-auto mt-14 max-w-4xl text-center text-[0.7rem] font-bold uppercase leading-relaxed tracking-[0.14em] text-white sm:mt-16 sm:text-xs sm:tracking-[0.16em] md:text-[0.8rem] md:leading-relaxed">
+        <p className="font-label mx-auto mt-14 max-w-4xl text-center text-[0.7rem] font-bold uppercase leading-relaxed tracking-[0.14em] text-white sm:mt-16 sm:text-xs sm:tracking-[0.16em] md:text-[0.8rem] md:leading-relaxed">
           {tagline}
         </p>
       </div>
