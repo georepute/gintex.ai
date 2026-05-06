@@ -24,3 +24,17 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+@media (pointer: fine) {
+  html.premium-cursor-active,
+  html.premium-cursor-active * {
+    cursor: none !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html.premium-cursor-active,
+  html.premium-cursor-active * {
+    cursor: auto !important;
+  }
+}
