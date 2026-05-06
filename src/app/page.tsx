@@ -1,3 +1,4 @@
+import { FeaturesSection } from "@/components/home/FeaturesSection";
 import { HeroSection } from "@/components/home/HeroSection";
 import { TrustedBy } from "@/components/home/TrustedBy";
 
@@ -6,6 +7,7 @@ export default function Home() {
     <main className="flex flex-1 flex-col bg-black text-white">
       <HeroSection />
       <TrustedBy />
+      <FeaturesSection />
     </main>
   );
 }
