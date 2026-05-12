@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 
 export default function PdcaPage() {
   return (
-    <main className="flex flex-1 flex-col bg-[#0a0a0a] text-white">
+    <main className="flex flex-1 flex-col transition-colors duration-300" style={{ background: "var(--bg-page)", color: "var(--text-primary)" }}>
       <PdcaHeroSection />
       <PdcaPhaseDetailSections />
       <PdcaCtaSection />
