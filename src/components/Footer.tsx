@@ -15,8 +15,8 @@ export function Footer() {
           <div className="space-y-2.5">
             <p className="text-xl font-bold tracking-tight sm:text-2xl">GINTEX AI</p>
             <p className="text-sm leading-snug text-gray-400">
-              Intelligence Redefined. Harnessing the power of advanced neural
-              systems for tomorrow&apos;s market leaders.
+              AI visibility, reputation intelligence, and market positioning
+              systems for brands that take perception seriously.
             </p>
           </div>
 
@@ -31,8 +31,18 @@ export function Footer() {
                 </Link>
               </li>
               <li>
+                <Link href="/intelligence" className={linkClass}>
+                  Intelligence
+                </Link>
+              </li>
+              <li>
                 <Link href="/pdca" className={linkClass}>
-                  PDCA Guide
+                  PDCA Framework
+                </Link>
+              </li>
+              <li>
+                <Link href="/global-map" className={linkClass}>
+                  Global Intelligence Map
                 </Link>
               </li>
               <li>
@@ -80,7 +90,7 @@ export function Footer() {
 
         <div className="font-label mt-5 flex flex-col gap-3 border-t border-white/10 pt-5 text-[11px] font-medium uppercase tracking-wider text-gray-400 sm:mt-6 sm:flex-row sm:items-center sm:justify-between sm:pt-5">
           <p>
-            © {year} GINTEX AI. Intelligence Redefined.
+            © {year} GINTEX AI. Perception Intelligence.
           </p>
           <p className="normal-case text-sm tracking-normal text-gray-400 sm:text-right">
             Developed by{" "}

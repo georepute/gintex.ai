@@ -18,28 +18,60 @@ const spaceGrotesk = Space_Grotesk({
 });
 
 export const metadata: Metadata = {
-  title: "Gintex AI - Control How the Market Sees You",
-  description: "See the Story Behind the Story",
+  icons: {
+    icon: "/favicon.png",
+    shortcut: "/favicon.png",
+    apple: "/favicon.png",
+  },
+  title: {
+    default: "Gintex AI — AI Visibility, Reputation & Market Intelligence",
+    template: "%s | Gintex AI",
+  },
+  description:
+    "Control how AI systems, search engines, and digital markets perceive your brand. GeoReput audits, SEO systems, reputation intelligence, and strategic authority-building for growth-focused businesses.",
+  keywords: [
+    "AI visibility",
+    "reputation intelligence",
+    "GEO targeting",
+    "SEO optimization",
+    "market intelligence",
+    "brand perception",
+    "digital authority",
+    "GeoReput",
+    "GEON intelligence",
+  ],
+  authors: [{ name: "Gintex AI", url: "https://gintex-ai.vercel.app" }],
+  creator: "Gintex AI",
+  metadataBase: new URL("https://gintex-ai.vercel.app"),
+  alternates: { canonical: "/" },
   openGraph: {
-    title: "Gintex AI - Control How the Market Sees You",
-    description: "See the Story Behind the Story",
+    title: "Gintex AI — Control How the Market Sees You",
+    description:
+      "AI visibility audits, reputation intelligence, and market positioning systems. See exactly how AI and search engines represent your brand — then reshape it.",
     url: "https://gintex-ai.vercel.app",
     siteName: "Gintex AI",
     type: "website",
+    locale: "en_US",
     images: [
       {
         url: "https://gintex-ai.vercel.app/logo.png",
         width: 1200,
         height: 630,
-        alt: "Gintex AI",
+        alt: "Gintex AI — AI Visibility & Market Intelligence",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Gintex AI - Control How the Market Sees You",
-    description: "See the Story Behind the Story",
+    title: "Gintex AI — Control How the Market Sees You",
+    description:
+      "AI visibility audits, reputation intelligence, and market positioning systems.",
     images: ["https://gintex-ai.vercel.app/logo.png"],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: { index: true, follow: true, "max-image-preview": "large" },
   },
 };
 
@@ -54,6 +86,51 @@ export default function RootLayout({
       className={`${inter.variable} ${spaceGrotesk.variable} h-full antialiased`}
     >
       <body className="flex min-h-screen flex-col font-sans">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Organization",
+              name: "Gintex AI",
+              alternateName: "GINTEX",
+              url: "https://gintex-ai.vercel.app",
+              logo: "https://gintex-ai.vercel.app/logo.png",
+              description:
+                "AI visibility, reputation intelligence, and strategic market positioning systems for brands. GeoReput audits, SEO optimization, and digital authority-building.",
+              foundingDate: "2024",
+              areaServed: "Worldwide",
+              serviceType: [
+                "AI Visibility Intelligence",
+                "Reputation & Perception Intelligence",
+                "SEO Optimization",
+                "GEO Targeting",
+                "Market Intelligence",
+                "Strategic Growth Infrastructure",
+              ],
+              sameAs: [
+                "https://gintex-ai.vercel.app",
+              ],
+              contactPoint: {
+                "@type": "ContactPoint",
+                contactType: "customer service",
+                url: "https://gintex-ai.vercel.app/contact",
+                availableLanguage: "English",
+              },
+              hasOfferCatalog: {
+                "@type": "OfferCatalog",
+                name: "Gintex AI Services",
+                itemListElement: [
+                  { "@type": "Offer", itemOffered: { "@type": "Service", name: "GeoReput Market Execution" } },
+                  { "@type": "Offer", itemOffered: { "@type": "Service", name: "AI Visibility Intelligence" } },
+                  { "@type": "Offer", itemOffered: { "@type": "Service", name: "Reputation & Perception Intelligence" } },
+                  { "@type": "Offer", itemOffered: { "@type": "Service", name: "Marketing Audit" } },
+                  { "@type": "Offer", itemOffered: { "@type": "Service", name: "Strategic Growth Infrastructure" } },
+                ],
+              },
+            }),
+          }}
+        />
         <PremiumCursor />
         <Header />
         <div className="flex flex-1 flex-col">{children}</div>
