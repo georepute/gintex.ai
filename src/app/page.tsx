@@ -19,7 +19,7 @@ import { TrustedBy } from "@/components/home/TrustedBy";
 export default function Home() {
   return (
     <>
-      <main className="flex flex-1 flex-col bg-black text-white">
+      <main className="flex flex-1 flex-col transition-colors duration-300" style={{ background: "var(--bg-page)", color: "var(--text-primary)" }}>
         <HeroSection />
         <TrustedBy />
         <FeaturesSection />

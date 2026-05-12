@@ -22,12 +22,15 @@ const INDUSTRIES = [
 
 export function TrustedBy() {
   return (
-    <section className="border-t border-white/[0.07] bg-black px-6 py-14 sm:px-10 sm:py-16">
+    <section
+      className="px-6 py-14 sm:px-10 sm:py-16 transition-colors duration-300"
+      style={{ background: "var(--bg-subtle)", borderTop: "1px solid var(--border)" }}
+    >
       <div className="mx-auto max-w-6xl">
 
-        {/* Label */}
         <motion.p
-          className="mb-10 text-center text-[11px] font-semibold uppercase tracking-[0.24em] text-white/40"
+          className="mb-10 text-center text-[11px] font-semibold uppercase tracking-[0.24em] transition-colors duration-300"
+          style={{ color: "var(--text-muted)" }}
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
@@ -48,22 +51,25 @@ export function TrustedBy() {
               transition={{ duration: 0.5, delay: idx * 0.08, ease: "easeOut" }}
             >
               <span
-                className="text-3xl font-bold tracking-tight text-white sm:text-4xl"
+                className="text-3xl font-bold tracking-tight sm:text-4xl"
                 style={{
-                  background: "linear-gradient(135deg, #fff 0%, rgba(56,189,248,0.85) 100%)",
+                  background: "linear-gradient(135deg, var(--text-primary) 0%, #0ea5e9 100%)",
                   WebkitBackgroundClip: "text",
                   WebkitTextFillColor: "transparent",
                 }}
               >
                 {value}
               </span>
-              <span className="text-xs font-medium text-gray-500 sm:text-sm">{label}</span>
+              <span className="text-xs font-medium sm:text-sm transition-colors duration-300" style={{ color: "var(--text-muted)" }}>{label}</span>
             </motion.div>
           ))}
         </div>
 
         {/* Divider */}
-        <div className="mb-10 h-px w-full bg-gradient-to-r from-transparent via-white/[0.07] to-transparent" />
+        <div
+          className="mb-10 h-px w-full"
+          style={{ background: "linear-gradient(to right, transparent, var(--border), transparent)" }}
+        />
 
         {/* Industry badges */}
         <motion.div
@@ -76,11 +82,17 @@ export function TrustedBy() {
           {INDUSTRIES.map((industry, idx) => (
             <motion.span
               key={industry}
-              className="rounded-full border border-white/[0.08] bg-white/[0.03] px-4 py-1.5 text-xs font-medium text-gray-400 backdrop-blur-sm transition-colors hover:border-sky-500/30 hover:text-gray-300"
+              className="rounded-full px-4 py-1.5 text-xs font-medium backdrop-blur-sm transition-colors duration-200"
+              style={{
+                border: "1px solid var(--border)",
+                background: "var(--bg-card)",
+                color: "var(--text-secondary)",
+              }}
               initial={{ opacity: 0, scale: 0.92 }}
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
               transition={{ duration: 0.35, delay: 0.25 + idx * 0.05 }}
+              whileHover={{ borderColor: "rgba(14,165,233,0.4)", color: "var(--text-primary)" }}
             >
               {industry}
             </motion.span>

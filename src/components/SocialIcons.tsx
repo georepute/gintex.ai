@@ -33,26 +33,10 @@ function InstagramIcon() {
 }
 
 const SOCIALS = [
-  {
-    label: "LinkedIn",
-    href: "https://www.linkedin.com",
-    Icon: LinkedInIcon,
-  },
-  {
-    label: "Facebook",
-    href: "https://www.facebook.com",
-    Icon: FacebookIcon,
-  },
-  {
-    label: "YouTube",
-    href: "https://www.youtube.com",
-    Icon: YouTubeIcon,
-  },
-  {
-    label: "Instagram",
-    href: "https://www.instagram.com",
-    Icon: InstagramIcon,
-  },
+  { label: "LinkedIn",  href: "https://www.linkedin.com",  Icon: LinkedInIcon  },
+  { label: "Facebook",  href: "https://www.facebook.com",  Icon: FacebookIcon  },
+  { label: "YouTube",   href: "https://www.youtube.com",   Icon: YouTubeIcon   },
+  { label: "Instagram", href: "https://www.instagram.com", Icon: InstagramIcon },
 ] as const;
 
 export function SocialIcons() {
@@ -65,7 +49,18 @@ export function SocialIcons() {
           target="_blank"
           rel="noopener noreferrer"
           aria-label={label}
-          className="flex h-8 w-8 items-center justify-center rounded-full border border-white/15 bg-white/5 text-white transition-colors hover:border-white/30 hover:bg-white/10 sm:h-9 sm:w-9"
+          className="flex h-8 w-8 items-center justify-center rounded-full transition-colors duration-200 sm:h-9 sm:w-9"
+          style={{
+            border: "1px solid var(--footer-border)",
+            background: "var(--footer-icon-bg)",
+            color: "var(--footer-heading)",
+          }}
+          onMouseEnter={e => {
+            (e.currentTarget as HTMLElement).style.background = "var(--footer-icon-hover)";
+          }}
+          onMouseLeave={e => {
+            (e.currentTarget as HTMLElement).style.background = "var(--footer-icon-bg)";
+          }}
         >
           <Icon />
         </a>

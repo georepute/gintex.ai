@@ -32,7 +32,13 @@ export function Header() {
   const pathname = usePathname();
 
   return (
-    <header className="sticky top-0 z-50 bg-[#0a0a0a]">
+    <header
+      className="sticky top-0 z-50 backdrop-blur-md transition-colors duration-300"
+      style={{
+        background: "var(--header-bg)",
+        borderBottom: "1px solid var(--header-border)",
+      }}
+    >
       <div className="relative mx-auto flex max-w-[1400px] flex-col gap-4 px-6 py-4 sm:px-10 lg:flex-row lg:items-center lg:justify-between lg:gap-0">
         <div className="flex items-center justify-between gap-4">
           <Link href="/" className="flex items-center">
@@ -62,11 +68,12 @@ export function Header() {
               <Link
                 key={href}
                 href={href}
-                className={
-                  isActive
-                    ? "border-b-2 border-white pb-1 font-medium text-white"
-                    : "border-b-2 border-transparent pb-1 text-gray-300 transition-colors hover:text-white"
-                }
+                className="border-b-2 pb-1 transition-colors duration-200"
+                style={{
+                  borderColor: isActive ? "var(--text-primary)" : "transparent",
+                  color: isActive ? "var(--text-primary)" : "var(--text-secondary)",
+                  fontWeight: isActive ? 500 : 400,
+                }}
               >
                 {label}
               </Link>

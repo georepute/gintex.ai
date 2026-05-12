@@ -37,7 +37,8 @@ const BLOCKS = [
 
 export function EcosystemSection() {
   return (
-    <section className="relative overflow-hidden border-t border-white/[0.07] bg-[#030507] px-6 py-24 sm:px-10 sm:py-32">
+    /* Always a dark strip regardless of theme — acts as a section separator */
+    <section className="relative overflow-hidden bg-[#080c12] px-6 py-24 sm:px-10 sm:py-32">
 
       {/* Ambient glow */}
       <div
@@ -47,7 +48,6 @@ export function EcosystemSection() {
 
       <div className="relative mx-auto max-w-6xl">
 
-        {/* Heading */}
         <motion.header
           className="mx-auto mb-16 max-w-2xl text-center sm:mb-20"
           initial={{ opacity: 0, y: 24 }}
@@ -73,15 +73,12 @@ export function EcosystemSection() {
           </p>
         </motion.header>
 
-        {/* Cards */}
         <div className="grid gap-6 md:grid-cols-3">
           {BLOCKS.map(({ brand, purpose, desc, color, glow, ring, dot, tag }, idx) => (
             <motion.div
               key={brand}
               className="group relative flex flex-col overflow-hidden rounded-2xl border border-white/[0.07] bg-gradient-to-b from-white/[0.03] to-transparent p-7 backdrop-blur-sm transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-1.5"
-              style={{
-                boxShadow: "0 0 0 1px rgba(255,255,255,0.03) inset",
-              }}
+              style={{ boxShadow: "0 0 0 1px rgba(255,255,255,0.03) inset" }}
               initial={{ opacity: 0, y: 32 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-60px" }}
@@ -90,18 +87,13 @@ export function EcosystemSection() {
                 boxShadow: `0 20px 48px -12px ${glow.replace("0.5", "0.2")}, 0 0 0 1px ${ring} inset`,
               }}
             >
-              {/* Top accent line on hover */}
               <div
                 className={`pointer-events-none absolute inset-x-6 top-0 h-[1.5px] rounded-full bg-gradient-to-r ${color} opacity-0 transition-opacity duration-300 group-hover:opacity-100`}
               />
-
-              {/* Orb */}
               <div
                 className="pointer-events-none absolute -right-16 -top-16 h-36 w-36 rounded-full opacity-0 blur-3xl transition-opacity duration-500 group-hover:opacity-100"
                 style={{ background: `radial-gradient(circle, ${glow.replace("0.5", "0.25")} 0%, transparent 70%)` }}
               />
-
-              {/* Brand + dot */}
               <div className="mb-5 flex items-center gap-3">
                 <motion.span
                   className={`h-2.5 w-2.5 rounded-full ${dot}`}
@@ -112,13 +104,9 @@ export function EcosystemSection() {
                   {brand}
                 </span>
               </div>
-
-              {/* Purpose tag */}
               <span className={`mb-4 inline-flex w-fit items-center rounded-md border px-2.5 py-1 text-[11px] font-semibold uppercase tracking-[0.14em] ${tag}`}>
                 {purpose}
               </span>
-
-              {/* Description */}
               <p className="mt-auto text-sm leading-relaxed text-gray-400 transition-colors duration-300 group-hover:text-gray-300">
                 {desc}
               </p>
@@ -126,7 +114,6 @@ export function EcosystemSection() {
           ))}
         </div>
 
-        {/* Bottom connector line */}
         <motion.div
           className="mx-auto mt-16 flex max-w-lg flex-col items-center gap-3 text-center"
           initial={{ opacity: 0, y: 16 }}

@@ -31,12 +31,18 @@ export function NewsletterForm() {
         name="email"
         placeholder="Enter email"
         autoComplete="email"
-        className="w-full border border-white/15 bg-[#111] py-2.5 pl-3.5 pr-11 text-sm text-white placeholder:text-gray-500 outline-none transition-colors focus:border-white/30"
+        className="w-full py-2.5 pl-3.5 pr-11 text-sm outline-none transition-colors duration-300"
+        style={{
+          background: "var(--footer-input-bg)",
+          border: "1px solid var(--footer-border)",
+          color: "var(--footer-heading)",
+        }}
       />
       <button
         type="submit"
         aria-label="Subscribe to newsletter"
-        className="absolute right-0 top-0 flex h-full w-10 items-center justify-center text-white transition-colors hover:text-gray-200"
+        className="absolute right-0 top-0 flex h-full w-10 items-center justify-center transition-opacity hover:opacity-70"
+        style={{ color: "var(--footer-heading)" }}
       >
         <ArrowIcon />
       </button>

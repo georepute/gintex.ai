@@ -6,7 +6,6 @@ import { useRef } from "react";
 import { motion, useScroll, useTransform, useSpring } from "framer-motion";
 import heroImage from "@/Gintex-images/Main img 1.png";
 
-// Stagger container — children animate in sequence
 const container = {
   hidden: {},
   show: {
@@ -36,10 +35,7 @@ const fadeIn = {
   },
 };
 
-// Floating ambient particle
-function GlowOrb({
-  x, y, size, color, dur, delay,
-}: {
+function GlowOrb({ x, y, size, color, dur, delay }: {
   x: string; y: string; size: number; color: string; dur: number; delay: number;
 }) {
   return (
@@ -60,38 +56,34 @@ function GlowOrb({
 
 export function HeroSection() {
   const sectionRef = useRef<HTMLElement>(null);
-
-  // Parallax on scroll — image drifts up slightly as user scrolls
   const { scrollYProgress } = useScroll({ target: sectionRef, offset: ["start start", "end start"] });
   const rawY = useTransform(scrollYProgress, [0, 1], [0, 60]);
   const imageY = useSpring(rawY, { stiffness: 60, damping: 20 });
-
-  // Subtle gradient orb follows scroll
   const rawOpacity = useTransform(scrollYProgress, [0, 0.6], [1, 0]);
 
   return (
     <section
       ref={sectionRef}
-      className="relative overflow-hidden px-6 pb-16 pt-20 sm:px-10 sm:pt-24 lg:pb-24 lg:pt-28 xl:pt-32"
+      className="relative overflow-hidden px-6 pb-16 pt-20 sm:px-10 sm:pt-24 lg:pb-24 lg:pt-28 xl:pt-32 transition-colors duration-300"
+      style={{ background: "var(--bg-page)" }}
     >
-      {/* ── Animated ambient orbs ── */}
-      <GlowOrb x="72%" y="-8%"  size={600} color="rgba(34,211,238,0.09)"  dur={7}  delay={0}   />
-      <GlowOrb x="85%" y="55%"  size={360} color="rgba(99,102,241,0.07)"  dur={9}  delay={1.5} />
-      <GlowOrb x="10%" y="80%"  size={280} color="rgba(56,189,248,0.05)"  dur={8}  delay={3}   />
+      {/* Ambient orbs */}
+      <GlowOrb x="72%" y="-8%"  size={600} color="var(--orb-1)" dur={7}  delay={0}   />
+      <GlowOrb x="85%" y="55%"  size={360} color="var(--orb-2)" dur={9}  delay={1.5} />
+      <GlowOrb x="10%" y="80%"  size={280} color="var(--orb-3)" dur={8}  delay={3}   />
 
-      {/* ── Static gradient overlays ── */}
+      {/* Radial gradient overlay */}
       <motion.div
         className="pointer-events-none absolute inset-0"
         style={{ opacity: rawOpacity }}
         aria-hidden
       >
-        <div className="h-full w-full bg-[radial-gradient(ellipse_85%_55%_at_75%_-10%,rgba(34,211,238,0.13),transparent_55%)]" />
+        <div className="h-full w-full bg-[radial-gradient(ellipse_85%_55%_at_75%_-10%,rgba(34,211,238,0.1),transparent_55%)]" />
       </motion.div>
-      <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_bottom,transparent,rgba(0,0,0,0.45))]" aria-hidden />
 
-      {/* ── Subtle grid ── */}
+      {/* Subtle grid */}
       <div
-        className="pointer-events-none absolute inset-0 opacity-[0.022]"
+        className="pointer-events-none absolute inset-0 opacity-[0.035]"
         style={{
           backgroundImage:
             "linear-gradient(rgba(56,189,248,1) 1px, transparent 1px), linear-gradient(90deg, rgba(56,189,248,1) 1px, transparent 1px)",
@@ -100,12 +92,12 @@ export function HeroSection() {
         aria-hidden
       />
 
-      {/* ── Moving light streak ── */}
+      {/* Moving light streak */}
       <motion.div
         className="pointer-events-none absolute left-0 right-0 top-0 h-px"
         style={{
           background:
-            "linear-gradient(to right, transparent 0%, rgba(56,189,248,0) 20%, rgba(56,189,248,0.6) 50%, rgba(56,189,248,0) 80%, transparent 100%)",
+            "linear-gradient(to right, transparent 0%, rgba(56,189,248,0) 20%, rgba(56,189,248,0.5) 50%, rgba(56,189,248,0) 80%, transparent 100%)",
           backgroundSize: "200% 100%",
         }}
         animate={{ backgroundPosition: ["-100% 0", "200% 0"] }}
@@ -113,10 +105,10 @@ export function HeroSection() {
         aria-hidden
       />
 
-      {/* ── Content grid ── */}
+      {/* Content grid */}
       <div className="relative mx-auto grid max-w-6xl gap-12 lg:grid-cols-2 lg:items-center lg:gap-y-12 lg:gap-x-28 xl:gap-x-40">
 
-        {/* ── Left: text ── */}
+        {/* Left: text */}
         <motion.div
           className="flex max-w-xl flex-col gap-8 lg:max-w-none"
           variants={container}
@@ -126,8 +118,13 @@ export function HeroSection() {
           {/* Badge */}
           <motion.div variants={fadeUp}>
             <motion.div
-              className="font-label inline-flex w-fit items-center gap-2 rounded-full border border-white/20 bg-white/[0.04] px-4 py-1.5 text-[10px] font-semibold uppercase tracking-[0.2em] text-white backdrop-blur-sm sm:text-xs"
-              whileHover={{ borderColor: "rgba(56,189,248,0.45)", background: "rgba(56,189,248,0.07)" }}
+              className="font-label inline-flex w-fit items-center gap-2 rounded-full px-4 py-1.5 text-[10px] font-semibold uppercase tracking-[0.2em] backdrop-blur-sm sm:text-xs transition-colors duration-300"
+              style={{
+                border: "1px solid var(--border)",
+                background: "var(--bg-subtle)",
+                color: "var(--text-secondary)",
+              }}
+              whileHover={{ borderColor: "rgba(56,189,248,0.5)", background: "rgba(56,189,248,0.06)" }}
               transition={{ duration: 0.25 }}
             >
               <motion.span
@@ -141,7 +138,8 @@ export function HeroSection() {
 
           {/* Heading */}
           <motion.h1
-            className="text-4xl font-bold leading-[1.1] tracking-tight sm:text-5xl lg:text-6xl"
+            className="text-4xl font-bold leading-[1.1] tracking-tight sm:text-5xl lg:text-6xl transition-colors duration-300"
+            style={{ color: "var(--text-primary)" }}
             variants={fadeUp}
           >
             AI Visibility, Reputation &{" "}
@@ -157,7 +155,8 @@ export function HeroSection() {
 
           {/* Body */}
           <motion.p
-            className="max-w-xl text-base leading-relaxed text-gray-400 sm:text-lg"
+            className="max-w-xl text-base leading-relaxed sm:text-lg transition-colors duration-300"
+            style={{ color: "var(--text-secondary)" }}
             variants={fadeUp}
           >
             GINTEX helps businesses improve AI visibility, online reputation, GEO presence, SEO
@@ -185,14 +184,16 @@ export function HeroSection() {
             </motion.div>
 
             <motion.div
-              whileHover={{ scale: 1.03, borderColor: "rgba(255,255,255,0.35)", background: "rgba(255,255,255,0.06)" }}
+              whileHover={{ scale: 1.03 }}
               whileTap={{ scale: 0.97 }}
               transition={{ duration: 0.2, ease: "easeOut" }}
-              className="shrink-0 rounded-full border border-white/25"
+              className="shrink-0 rounded-full"
+              style={{ border: "1px solid var(--border)" }}
             >
               <Link
                 href="/contact"
-                className="inline-flex items-center justify-center whitespace-nowrap rounded-full px-6 py-3 text-sm font-semibold text-white"
+                className="inline-flex items-center justify-center whitespace-nowrap rounded-full px-6 py-3 text-sm font-semibold transition-colors duration-300"
+                style={{ color: "var(--text-primary)" }}
               >
                 View Reports & Analysis
               </Link>
@@ -201,17 +202,19 @@ export function HeroSection() {
 
           {/* Authority line */}
           <motion.p
-            className="flex items-center gap-2 text-[11px] font-medium text-gray-500"
+            className="flex items-center gap-2 text-[11px] font-medium transition-colors duration-300"
+            style={{ color: "var(--text-muted)" }}
             variants={fadeUp}
           >
-            <span className="h-px w-5 bg-sky-500/50" />
+            <span className="h-px w-5 bg-sky-400/60" />
             Powered by{" "}
-            <span className="font-semibold tracking-wide text-sky-400/80">GEON Intelligence</span>
+            <span className="font-semibold tracking-wide text-sky-500">GEON Intelligence</span>
           </motion.p>
 
           {/* Stats row */}
           <motion.div
-            className="flex items-center gap-8 border-t border-white/[0.07] pt-6"
+            className="flex items-center gap-8 pt-6 transition-colors duration-300"
+            style={{ borderTop: "1px solid var(--border)" }}
             variants={fadeUp}
           >
             {[
@@ -221,20 +224,21 @@ export function HeroSection() {
             ].map(({ value, label }) => (
               <div key={label} className="flex flex-col gap-0.5">
                 <motion.span
-                  className="text-xl font-bold text-white sm:text-2xl"
+                  className="text-xl font-bold sm:text-2xl transition-colors duration-300"
+                  style={{ color: "var(--text-primary)" }}
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: 0.9, ease: "easeOut" }}
                 >
                   {value}
                 </motion.span>
-                <span className="text-xs text-gray-500">{label}</span>
+                <span className="text-xs transition-colors duration-300" style={{ color: "var(--text-muted)" }}>{label}</span>
               </div>
             ))}
           </motion.div>
         </motion.div>
 
-        {/* ── Right: image ── */}
+        {/* Right: image */}
         <motion.div
           className="relative w-full lg:justify-self-end"
           variants={fadeIn}
@@ -246,8 +250,7 @@ export function HeroSection() {
           <motion.div
             className="pointer-events-none absolute -inset-4 rounded-3xl"
             style={{
-              background:
-                "radial-gradient(ellipse 80% 60% at 50% 50%, rgba(34,211,238,0.12) 0%, transparent 70%)",
+              background: "radial-gradient(ellipse 80% 60% at 50% 50%, rgba(34,211,238,0.12) 0%, transparent 70%)",
               filter: "blur(20px)",
             }}
             animate={{ opacity: [0.6, 1, 0.6] }}
@@ -275,8 +278,6 @@ export function HeroSection() {
               priority
               sizes="(max-width: 1024px) 100vw, 50vw"
             />
-
-            {/* Glass overlay shimmer */}
             <motion.div
               className="pointer-events-none absolute inset-0"
               style={{
@@ -291,45 +292,22 @@ export function HeroSection() {
 
           {/* Floating badge — top right */}
           <motion.div
-            className="absolute -right-3 -top-3 flex items-center gap-2 rounded-xl border border-white/10 bg-black/70 px-3 py-2 backdrop-blur-md sm:-right-5 sm:-top-4"
+            className="absolute -right-3 -top-3 flex items-center gap-2 rounded-xl px-3 py-2 backdrop-blur-md shadow-md sm:-right-5 sm:-top-4 transition-colors duration-300"
+            style={{
+              border: "1px solid var(--border)",
+              background: "var(--bg-card)",
+            }}
             initial={{ opacity: 0, scale: 0.8, y: -10 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             transition={{ delay: 1.0, duration: 0.6, ease: [0.34, 1.56, 0.64, 1] }}
             whileHover={{ scale: 1.05 }}
           >
             <motion.span
-              className="h-2 w-2 rounded-full bg-emerald-400"
+              className="h-2 w-2 rounded-full bg-emerald-500"
               animate={{ opacity: [1, 0.3, 1], scale: [1, 0.7, 1] }}
               transition={{ duration: 1.4, repeat: Infinity }}
             />
-            <span className="text-[11px] font-semibold text-white/90">AI Live</span>
-          </motion.div>
-
-          {/* Floating metric card — bottom left */}
-          <motion.div
-            className="absolute -bottom-4 -left-3 rounded-xl border border-white/10 bg-black/75 px-4 py-3 backdrop-blur-md sm:-bottom-5 sm:-left-5"
-            initial={{ opacity: 0, scale: 0.85, y: 10 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            transition={{ delay: 1.2, duration: 0.6, ease: [0.34, 1.56, 0.64, 1] }}
-            whileHover={{ scale: 1.04 }}
-          >
-            <p className="text-[10px] font-medium uppercase tracking-widest text-sky-400/80">Perception Score</p>
-            <div className="mt-1 flex items-end gap-1.5">
-              <span className="text-xl font-bold text-white">94.7</span>
-              <span className="mb-0.5 text-xs font-semibold text-emerald-400">▲ 12%</span>
-            </div>
-            {/* Animated mini bar */}
-            <div className="mt-2 flex items-end gap-0.5">
-              {[40, 55, 48, 70, 62, 80, 94].map((h, i) => (
-                <motion.div
-                  key={i}
-                  className="w-[5px] rounded-sm bg-sky-500/70"
-                  initial={{ height: 0 }}
-                  animate={{ height: h * 0.22 }}
-                  transition={{ delay: 1.3 + i * 0.06, duration: 0.5, ease: "easeOut" }}
-                />
-              ))}
-            </div>
+            <span className="text-[11px] font-semibold transition-colors duration-300" style={{ color: "var(--text-primary)" }}>AI Live</span>
           </motion.div>
         </motion.div>
       </div>

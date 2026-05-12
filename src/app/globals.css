@@ -1,13 +1,86 @@
 @import "tailwindcss";
 
+/* ── Light mode tokens (default) ── */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --bg-page:        #ffffff;
+  --bg-subtle:      #f8fafc;
+  --bg-muted:       #f1f5f9;
+  --bg-strip:       #080c12;
+  --bg-card:        #ffffff;
+  --bg-card-hover:  #f8fafc;
+
+  --border:         #e2e8f0;
+  --border-subtle:  #f1f5f9;
+
+  --text-primary:   #0f172a;
+  --text-secondary: #475569;
+  --text-muted:     #94a3b8;
+  --text-invert:    #ffffff;
+
+  --accent-cyan:    #0ea5e9;
+  --accent-cyan-bg: rgba(14,165,233,0.07);
+  --accent-cyan-border: rgba(14,165,233,0.2);
+
+  --header-bg:      rgba(255,255,255,0.95);
+  --header-border:  #e2e8f0;
+
+  --bg-strip-footer:   #f8fafc;
+  --footer-heading:    #0f172a;
+  --footer-text:       #334155;
+  --footer-muted:      #64748b;
+  --footer-link:       #475569;
+  --footer-border:     #e2e8f0;
+  --footer-input-bg:   #ffffff;
+  --footer-icon-bg:    rgba(0,0,0,0.04);
+  --footer-icon-hover: rgba(0,0,0,0.08);
+
+  --orb-1: rgba(34,211,238,0.12);
+  --orb-2: rgba(99,102,241,0.08);
+  --orb-3: rgba(56,189,248,0.07);
+}
+
+/* ── Dark mode tokens ── */
+.dark {
+  --bg-page:        #0a0a0a;
+  --bg-subtle:      #111111;
+  --bg-muted:       #0f0f0f;
+  --bg-strip:       #020408;
+  --bg-card:        #141414;
+  --bg-card-hover:  #1a1a1a;
+
+  --border:         rgba(255,255,255,0.08);
+  --border-subtle:  rgba(255,255,255,0.04);
+
+  --text-primary:   #f8fafc;
+  --text-secondary: #94a3b8;
+  --text-muted:     #64748b;
+  --text-invert:    #0f172a;
+
+  --accent-cyan:    #38bdf8;
+  --accent-cyan-bg: rgba(56,189,248,0.07);
+  --accent-cyan-border: rgba(56,189,248,0.2);
+
+  --header-bg:      rgba(10,10,10,0.95);
+  --header-border:  rgba(255,255,255,0.07);
+
+  --bg-strip-footer:   #080c12;
+  --footer-heading:    #f8fafc;
+  --footer-text:       #cbd5e1;
+  --footer-muted:      #64748b;
+  --footer-link:       #94a3b8;
+  --footer-border:     rgba(255,255,255,0.08);
+  --footer-input-bg:   #111111;
+  --footer-icon-bg:    rgba(255,255,255,0.05);
+  --footer-icon-hover: rgba(255,255,255,0.10);
+
+  --orb-1: rgba(34,211,238,0.09);
+  --orb-2: rgba(99,102,241,0.07);
+  --orb-3: rgba(56,189,248,0.05);
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
+  --color-background: var(--bg-page);
+  --color-foreground: var(--text-primary);
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif,
     "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
   --font-label: var(--font-space-grotesk), ui-sans-serif, system-ui, sans-serif;
@@ -15,16 +88,10 @@
     "Liberation Mono", "Courier New", monospace;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
 body {
-  background: var(--background);
-  color: var(--foreground);
+  background: var(--bg-page);
+  color: var(--text-primary);
+  transition: background 0.3s ease, color 0.3s ease;
 }
 
 @layer base {
@@ -46,3 +113,14 @@ body {
     cursor: auto !important;
   }
 }
+
+/* ── Theme-aware utility classes ── */
+.theme-page        { background: var(--bg-page); }
+.theme-subtle      { background: var(--bg-subtle); }
+.theme-muted-bg    { background: var(--bg-muted); }
+.theme-strip       { background: var(--bg-strip); }
+.theme-card        { background: var(--bg-card); }
+.theme-border      { border-color: var(--border); }
+.theme-text        { color: var(--text-primary); }
+.theme-text-sec    { color: var(--text-secondary); }
+.theme-text-muted  { color: var(--text-muted); }

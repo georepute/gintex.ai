@@ -1,9 +1,10 @@
 import Link from "next/link";
 
+/* Always a dark strip — the final CTA before the footer */
 export function CtaSection() {
   return (
-    <section className="border-t border-white/10 bg-black px-6 pt-16 pb-20 sm:px-10 sm:pt-20 sm:pb-28">
-      <div className="mx-auto max-w-6xl rounded-[1.75rem] border border-white/[0.08] bg-[#141414] px-8 py-12 sm:px-10 sm:py-14 lg:flex lg:items-center lg:justify-between lg:gap-14 lg:px-14 lg:py-16">
+    <section className="bg-[#080c12] px-6 pt-16 pb-20 sm:px-10 sm:pt-20 sm:pb-28">
+      <div className="mx-auto max-w-6xl rounded-[1.75rem] border border-white/[0.08] bg-white/[0.04] px-8 py-12 sm:px-10 sm:py-14 lg:flex lg:items-center lg:justify-between lg:gap-14 lg:px-14 lg:py-16">
         <div className="max-w-2xl lg:flex-1">
           <h2 className="text-xl font-bold leading-snug text-white sm:text-2xl md:text-3xl md:leading-snug">
             If you don&apos;t understand your starting point, every marketing

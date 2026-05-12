@@ -10,7 +10,7 @@ const FAQS = [
   },
   {
     q: "Is our data secure when using Gintex AI?",
-    a: "Yes. We treat your data with strict access controls, encryption in transit and at rest where applicable, and clear data-handling practices. We’re happy to walk through security, retention, and compliance questions with your team.",
+    a: "Yes. We treat your data with strict access controls, encryption in transit and at rest where applicable, and clear data-handling practices. We're happy to walk through security, retention, and compliance questions with your team.",
   },
   {
     q: "What is a typical ramp-up or engagement timeline?",
@@ -29,7 +29,8 @@ const FAQS = [
 function Chevron({ open }: { open: boolean }) {
   return (
     <svg
-      className={`h-5 w-5 shrink-0 text-gray-400 transition-transform duration-300 ${open ? "rotate-180" : ""}`}
+      className={`h-5 w-5 shrink-0 transition-all duration-300 ${open ? "rotate-180" : ""}`}
+      style={{ color: open ? "#0ea5e9" : "var(--text-muted)" }}
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
@@ -48,10 +49,14 @@ export function FaqSection() {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 
   return (
-    <section className="border-t border-white/10 bg-[#0a0a0a] px-6 py-24 sm:px-10 sm:py-28">
+    <section
+      className="px-6 py-24 sm:px-10 sm:py-28 transition-colors duration-300"
+      style={{ background: "var(--bg-subtle)", borderTop: "1px solid var(--border)" }}
+    >
       <div className="mx-auto max-w-3xl">
         <motion.h2
-          className="text-center text-3xl font-bold tracking-tight text-white sm:text-4xl"
+          className="text-center text-3xl font-bold tracking-tight sm:text-4xl transition-colors duration-300"
+          style={{ color: "var(--text-primary)" }}
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-80px" }}
@@ -69,8 +74,13 @@ export function FaqSection() {
             return (
               <motion.div
                 key={item.q}
-                className="overflow-hidden rounded-xl border border-white/[0.08] bg-[#141414] transition-colors hover:border-white/[0.11]"
+                className="overflow-hidden rounded-xl transition-all duration-200"
                 data-cursor-hover
+                style={{
+                  border: "1px solid var(--border)",
+                  background: "var(--bg-card)",
+                  boxShadow: open ? "0 4px 24px -8px rgba(14,165,233,0.12)" : "none",
+                }}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-40px" }}
@@ -84,7 +94,10 @@ export function FaqSection() {
                   className="flex w-full items-center justify-between gap-4 px-5 py-4 text-left sm:px-6 sm:py-5"
                   onClick={() => setOpenIndex(open ? null : index)}
                 >
-                  <span className="text-base font-medium text-white sm:text-[1.05rem]">
+                  <span
+                    className="text-base font-medium sm:text-[1.05rem] transition-colors duration-300"
+                    style={{ color: "var(--text-primary)" }}
+                  >
                     {item.q}
                   </span>
                   <Chevron open={open} />
@@ -96,7 +109,13 @@ export function FaqSection() {
                   className={`grid transition-[grid-template-rows] duration-300 ease-out ${open ? "grid-rows-[1fr]" : "grid-rows-[0fr]"}`}
                 >
                   <div className="min-h-0 overflow-hidden">
-                    <p className="border-t border-white/[0.06] px-5 pb-5 pt-3 text-sm leading-relaxed text-gray-400 sm:px-6 sm:pb-6 sm:text-base">
+                    <p
+                      className="px-5 pb-5 pt-3 text-sm leading-relaxed sm:px-6 sm:pb-6 sm:text-base transition-colors duration-300"
+                      style={{
+                        borderTop: "1px solid var(--border)",
+                        color: "var(--text-secondary)",
+                      }}
+                    >
                       {item.a}
                     </p>
                   </div>
