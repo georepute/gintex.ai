@@ -4,9 +4,10 @@ import { ServicesCtaSection } from "@/components/services/ServicesCtaSection";
 import { SERVICES, SERVICES_INTRO } from "@/data/services";
 
 export const metadata: Metadata = {
-  title: "Services | Gintex Ai",
+  title: "Services — Intelligence-Led Growth Systems",
   description:
-    "Our solutions bridge consultancy and AI—GeoReput intelligence, advisory, audits, content, and software powered by innovation.",
+    "AI visibility audits, reputation intelligence, SEO systems, strategic advisory, and digital authority-building. Purpose-built services for brands serious about market positioning.",
+  alternates: { canonical: "https://gintex-ai.vercel.app/services" },
 };
 
 export default function ServicesPage() {
@@ -18,7 +19,7 @@ export default function ServicesPage() {
             Our capabilities
           </p>
           <h1 className="mt-6 text-4xl font-bold tracking-tight text-white sm:mt-7 sm:text-5xl md:text-[3.5rem] md:leading-[1.08]">
-            Our solutions.
+            Intelligence-Led Growth Systems
           </h1>
           <p className="mt-8 max-w-3xl text-base font-normal leading-[1.65] text-[#b8b8b8] sm:mt-10 sm:text-lg sm:leading-relaxed">
             {SERVICES_INTRO}

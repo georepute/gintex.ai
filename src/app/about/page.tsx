@@ -7,9 +7,10 @@ import { AboutLeadershipSection } from "@/components/about/AboutLeadershipSectio
 import { AboutPhilosophySection } from "@/components/about/AboutPhilosophySection";
 
 export const metadata: Metadata = {
-  title: "About | Gintex Ai",
+  title: "About — The Intelligence Behind the System",
   description:
-    "Our core purpose: intelligence that redefines how brands understand markets, people, and AI-driven discovery.",
+    "Gintex AI is a perception intelligence company. We build the systems that help brands understand and control how they appear across AI, search, and digital markets.",
+  alternates: { canonical: "https://gintex-ai.vercel.app/about" },
 };
 
 export default function AboutPage() {
