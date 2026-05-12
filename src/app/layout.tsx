@@ -18,8 +18,29 @@ const spaceGrotesk = Space_Grotesk({
 });
 
 export const metadata: Metadata = {
-  title: "Gintex Ai",
-  description: "Gintex Ai",
+  title: "Gintex AI - Control How the Market Sees You",
+  description: "See the Story Behind the Story",
+  openGraph: {
+    title: "Gintex AI - Control How the Market Sees You",
+    description: "See the Story Behind the Story",
+    url: "https://gintex-ai.vercel.app",
+    siteName: "Gintex AI",
+    type: "website",
+    images: [
+      {
+        url: "https://gintex-ai.vercel.app/logo.png",
+        width: 1200,
+        height: 630,
+        alt: "Gintex AI",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Gintex AI - Control How the Market Sees You",
+    description: "See the Story Behind the Story",
+    images: ["https://gintex-ai.vercel.app/logo.png"],
+  },
 };
 
 export default function RootLayout({

@@ -1,3 +1,7 @@
+"use client";
+
+import { motion } from "framer-motion";
+
 function BrainIcon({ className }: { className?: string }) {
   return (
     <svg
@@ -100,7 +104,13 @@ export function FeaturesSection() {
   return (
     <section className="border-t border-white/10 bg-black px-6 py-20 sm:px-10 sm:py-28">
       <div className="mx-auto max-w-6xl">
-        <header className="mx-auto mb-16 max-w-3xl text-center sm:mb-20">
+        <motion.header
+          className="mx-auto mb-16 max-w-3xl text-center sm:mb-20"
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-80px" }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+        >
           <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl md:text-[2.75rem] md:leading-tight">
             From Intelligence to Market Control
           </h2>
@@ -110,15 +120,19 @@ export function FeaturesSection() {
             AI-ready content, paid, and technical work so every move compounds
             real market control.
           </p>
-        </header>
+        </motion.header>
 
         <div className="grid gap-8 md:grid-cols-3 md:gap-6 lg:gap-8">
           {FEATURES.map(
-            ({ title, body, Icon, iconWrap, orb, topLine, hoverShadow }) => (
-              <article
+            ({ title, body, Icon, iconWrap, orb, topLine, hoverShadow }, idx) => (
+              <motion.article
                 key={title}
                 data-cursor-hover
                 className={`group relative flex flex-col overflow-hidden rounded-2xl border border-white/[0.08] bg-gradient-to-b from-white/[0.04] via-[#101010] to-[#0a0a0a] p-8 shadow-[0_0_0_1px_rgba(255,255,255,0.03)_inset] backdrop-blur-sm transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-2 hover:border-white/[0.14] ${hoverShadow}`}
+                initial={{ opacity: 0, y: 32 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-60px" }}
+                transition={{ duration: 0.55, delay: idx * 0.1, ease: "easeOut" }}
               >
                 <div
                   className={`pointer-events-none absolute -right-20 -top-20 h-44 w-44 rounded-full blur-3xl transition-all duration-500 ${orb}`}
@@ -139,7 +153,7 @@ export function FeaturesSection() {
                 <p className="relative mt-4 text-sm leading-relaxed text-gray-400 transition-colors duration-300 group-hover:text-gray-300 sm:text-[0.9375rem]">
                   {body}
                 </p>
-              </article>
+              </motion.article>
             ),
           )}
         </div>

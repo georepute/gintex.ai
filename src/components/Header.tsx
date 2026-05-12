@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 
 const NAV_LINKS = [
@@ -32,11 +33,15 @@ export function Header() {
     <header className="sticky top-0 z-50 bg-[#0a0a0a]">
       <div className="relative mx-auto flex max-w-[1400px] flex-col gap-4 px-6 py-4 sm:px-10 lg:flex-row lg:items-center lg:justify-between lg:gap-0">
         <div className="flex items-center justify-between gap-4">
-          <Link
-            href="/"
-            className="font-label text-xl font-bold tracking-tight text-white uppercase"
-          >
-            Gintex AI
+          <Link href="/" className="flex items-center">
+            <Image
+              src="/logo.png"
+              alt="Gintex AI"
+              width={260}
+              height={88}
+              className="h-20 w-auto object-contain"
+              priority
+            />
           </Link>
           <ConsultationLink className="shrink-0 lg:hidden" />
         </div>

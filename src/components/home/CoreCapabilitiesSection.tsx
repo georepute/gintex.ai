@@ -1,5 +1,8 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
+import { motion } from "framer-motion";
 import advisoryImg from "@/Gintex-images/Services img1.png";
 import auditImg from "@/Gintex-images/Services img2.png";
 
@@ -50,7 +53,13 @@ export function CoreCapabilitiesSection() {
 
       <div className="relative mx-auto max-w-7xl">
         <div className="flex flex-col gap-16 lg:flex-row lg:items-start lg:gap-20 xl:gap-24">
-          <header className="max-w-lg shrink-0 lg:sticky lg:top-28">
+          <motion.header
+            className="max-w-lg shrink-0 lg:sticky lg:top-28"
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-80px" }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
+          >
             <p className="font-label text-[11px] font-semibold uppercase tracking-[0.28em] text-sky-400/90">
               Services
             </p>
@@ -76,7 +85,7 @@ export function CoreCapabilitiesSection() {
                 →
               </span>
             </Link>
-          </header>
+          </motion.header>
 
           <div className="grid flex-1 grid-cols-1 gap-8 sm:grid-cols-2 lg:gap-7">
             {SERVICES.map(
@@ -94,10 +103,14 @@ export function CoreCapabilitiesSection() {
                 },
                 index,
               ) => (
-                <article
+                <motion.article
                   key={title}
                   data-cursor-hover
                   className={`group relative flex h-full flex-col overflow-hidden rounded-2xl border border-white/[0.09] bg-gradient-to-b from-white/[0.06] via-[#111] to-[#080808] shadow-[0_0_0_1px_rgba(255,255,255,0.04)_inset] backdrop-blur-md transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-2 hover:border-white/[0.14] ${shadow}`}
+                  initial={{ opacity: 0, y: 32 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "-60px" }}
+                  transition={{ duration: 0.55, delay: index * 0.12, ease: "easeOut" }}
                 >
                   <div
                     className={`pointer-events-none absolute -right-24 -top-24 h-48 w-48 rounded-full blur-3xl transition-all duration-500 ${orb}`}
@@ -146,7 +159,7 @@ export function CoreCapabilitiesSection() {
                       <span aria-hidden>→</span>
                     </span>
                   </div>
-                </article>
+                </motion.article>
               ),
             )}
           </div>

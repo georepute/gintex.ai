@@ -1,3 +1,7 @@
+"use client";
+
+import { motion } from "framer-motion";
+
 const TESTIMONIALS = [
   {
     quote:
@@ -54,7 +58,13 @@ export function TestimonialsSection() {
   return (
     <section className="border-t border-white/10 bg-black px-6 py-24 sm:px-10 sm:py-28">
       <div className="mx-auto flex max-w-6xl flex-col gap-12 lg:flex-row lg:items-center lg:gap-14 xl:gap-16">
-        <header className="max-w-lg shrink-0 lg:w-[40%] lg:max-w-none lg:pr-4">
+        <motion.header
+          className="max-w-lg shrink-0 lg:w-[40%] lg:max-w-none lg:pr-4"
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-80px" }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+        >
           <h2 className="text-left text-3xl font-bold tracking-tight text-white sm:text-4xl lg:text-[2.65rem] lg:leading-tight">
             Voices of Success
           </h2>
@@ -62,11 +72,19 @@ export function TestimonialsSection() {
             Leading enterprises are already experiencing the Gintex advantage.
             Join the elite.
           </p>
-        </header>
+        </motion.header>
 
         <div className="flex min-w-0 flex-1 flex-col gap-6 lg:gap-7">
-          {TESTIMONIALS.map((t) => (
-            <TestimonialCard key={t.name} {...t} />
+          {TESTIMONIALS.map((t, idx) => (
+            <motion.div
+              key={t.name}
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-60px" }}
+              transition={{ duration: 0.55, delay: idx * 0.1, ease: "easeOut" }}
+            >
+              <TestimonialCard {...t} />
+            </motion.div>
           ))}
         </div>
       </div>

@@ -1,6 +1,7 @@
 "use client";
 
 import { useId, useState } from "react";
+import { motion } from "framer-motion";
 
 const FAQS = [
   {
@@ -49,9 +50,15 @@ export function FaqSection() {
   return (
     <section className="border-t border-white/10 bg-[#0a0a0a] px-6 py-24 sm:px-10 sm:py-28">
       <div className="mx-auto max-w-3xl">
-        <h2 className="text-center text-3xl font-bold tracking-tight text-white sm:text-4xl">
+        <motion.h2
+          className="text-center text-3xl font-bold tracking-tight text-white sm:text-4xl"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-80px" }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+        >
           Frequently Asked
-        </h2>
+        </motion.h2>
 
         <div className="mt-12 flex flex-col gap-4">
           {FAQS.map((item, index) => {
@@ -60,10 +67,14 @@ export function FaqSection() {
             const headerId = `${baseId}-header-${index}`;
 
             return (
-              <div
+              <motion.div
                 key={item.q}
                 className="overflow-hidden rounded-xl border border-white/[0.08] bg-[#141414] transition-colors hover:border-white/[0.11]"
                 data-cursor-hover
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-40px" }}
+                transition={{ duration: 0.45, delay: index * 0.07, ease: "easeOut" }}
               >
                 <button
                   type="button"
@@ -90,7 +101,7 @@ export function FaqSection() {
                     </p>
                   </div>
                 </div>
-              </div>
+              </motion.div>
             );
           })}
         </div>
