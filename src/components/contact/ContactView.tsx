@@ -16,8 +16,8 @@ function IconBox({ children }: { children: ReactNode }) {
 
 const CONTACT = {
   email: "hello@gintex.ai",
-  phone: "+1 (555) 000-0100",
-  phoneHref: "tel:+15550000100",
+  phone: "972-55-6-800-600",
+  phoneHref: "tel:+972556800600",
   hq: "Global · Remote-first",
 } as const;
 
