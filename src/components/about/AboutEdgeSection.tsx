@@ -12,7 +12,7 @@ const CARDS: EdgeCard[] = [
     wide: true,
     title: "Adaptive architecture",
     description:
-      "Stacks tuned to your reality—GeoReput baselines, SEO and GEO, content, and distribution evolve as Google and AI-driven discovery shift, not months later.",
+      "Stacks tuned to your reality—GeoRepute baselines, SEO and GEO, content, and distribution evolve as Google and AI-driven discovery shift, not months later.",
     icon: "adaptive",
   },
   {

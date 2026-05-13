@@ -9,7 +9,7 @@ export function PdcaCtaSection() {
         </h2>
         <p className="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-gray-400 sm:mt-6 sm:text-lg sm:leading-relaxed">
           Schedule a deep dive with Gintex AI to see how the PDCA framework
-          fits your marketing stack, GeoReput intelligence, and day-to-day
+          fits your marketing stack, GeoRepute intelligence, and day-to-day
           operations.
         </p>
         <div className="mt-8 flex flex-col items-stretch justify-center gap-3 sm:mt-10 sm:flex-row sm:items-center sm:gap-4">

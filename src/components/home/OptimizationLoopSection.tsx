@@ -6,7 +6,7 @@ import { motion, useMotionValue, useSpring } from "framer-motion";
 // ─── Data ────────────────────────────────────────────────────────────────────
 
 const STEPS = [
-  { n: "01", title: "Analyze",  detail: "GeoReput scan",    icon: "⬡" },
+  { n: "01", title: "Analyze",  detail: "GeoRepute scan",    icon: "⬡" },
   { n: "02", title: "Decide",   detail: "Strategy engine",  icon: "◈" },
   { n: "03", title: "Position", detail: "SEO + GEO",        icon: "◎" },
   { n: "04", title: "Execute",  detail: "Dashboard",        icon: "⬟" },

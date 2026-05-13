@@ -17,7 +17,7 @@ const PHASES: readonly PdcaPhase[] = [
     slug: "plan",
     n: "1",
     title: "Plan",
-    description: "Predictive modeling and scenario analysis powered by LLMs and GeoReput-grade context.",
+    description: "Predictive modeling and scenario analysis powered by LLMs and GeoRepute-grade context.",
     accent: "border-sky-400 bg-sky-400/10 text-sky-500",
     color: "#38bdf8",
   },

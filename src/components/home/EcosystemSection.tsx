@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 
 const BLOCKS = [
   {
-    brand: "GeoReput",
+    brand: "GeoRepute",
     purpose: "Visibility & reputation intelligence system",
     desc: "Scans how search engines, AI platforms, and digital ecosystems represent your organization, surfaces narrative gaps, and maps authority signals across the competitive landscape.",
     color: "from-sky-500/40 to-blue-600/30",

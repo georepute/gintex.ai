@@ -22,9 +22,9 @@ export const SERVICES_INTRO =
 
 export const SERVICES: ServiceItem[] = [
   {
-    title: "GeoReput market execution",
+    title: "GeoRepute market execution",
     summary:
-      "Turn GeoReput intelligence into structured, measurable actions. Execution follows real data and approved plans—no guesswork, only aligned market moves.",
+      "Turn GeoRepute intelligence into structured, measurable actions. Execution follows real data and approved plans—no guesswork, only aligned market moves.",
     accent: "purple",
     icon: "target",
   },

@@ -25,10 +25,10 @@ export const PDCA_PHASE_DETAILS: readonly PdcaPhaseDetail[] = [
     image: planImg,
     imageAlt: "Analytics visualization with charts and data glow",
     body:
-      "The Plan stage begins with GeoReput. This is where visibility across Google and AI systems is analyzed, narrative and perception gaps are identified, competition and market focus are mapped, and opportunities are prioritized. Planning without intelligence is guessing; this stage establishes the factual truth before any action is taken.",
+      "The Plan stage begins with GeoRepute. This is where visibility across Google and AI systems is analyzed, narrative and perception gaps are identified, competition and market focus are mapped, and opportunities are prioritized. Planning without intelligence is guessing; this stage establishes the factual truth before any action is taken.",
     bullets: [
       {
-        emphasis: "GeoReput baseline:",
+        emphasis: "GeoRepute baseline:",
         text: "Map how you appear across Google, AI answers, and key discovery surfaces—not assumptions.",
       },
       {

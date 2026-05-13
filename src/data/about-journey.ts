@@ -21,7 +21,7 @@ export const ABOUT_JOURNEY_MILESTONES: readonly JourneyMilestone[] = [
     year: "2022",
     title: "The intelligence layer",
     description:
-      "GeoReput-style baselines, audits, and the Plan–Do–Check–Act loop harden into a repeatable system—SEO, GEO, content, and owned assets wired to the same source of truth.",
+      "GeoRepute-style baselines, audits, and the Plan–Do–Check–Act loop harden into a repeatable system—SEO, GEO, content, and owned assets wired to the same source of truth.",
     dot: "teal",
     narrativeOnLeft: false,
   },

@@ -14,7 +14,7 @@ export function ServicesCtaSection() {
           </h2>
           <p className="mx-auto mt-5 max-w-xl text-base leading-relaxed text-gray-400 sm:mt-6 sm:text-lg sm:leading-relaxed">
             Partner with Gintex AI to turn positioning, content, and execution
-            into systems that scale—with GeoReput-grade insight and automation
+            into systems that scale—with GeoRepute-grade insight and automation
             built for real markets.
           </p>
           <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:mt-10 sm:flex-row sm:gap-4">

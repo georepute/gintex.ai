@@ -14,7 +14,7 @@ export const CONTACT_CHANNELS: readonly ContactChannel[] = [
     id: "support",
     title: "Technical support",
     description:
-      "Priority assistance for GeoReput baselines, live integrations, and Gintex-built systems—so your intelligence stack stays reliable when it matters.",
+      "Priority assistance for GeoRepute baselines, live integrations, and Gintex-built systems—so your intelligence stack stays reliable when it matters.",
     linkLabel: "Open ticket",
     href: "mailto:support@gintex.ai?subject=Support%20request",
     accent: "cyan",
