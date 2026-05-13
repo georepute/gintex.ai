@@ -9,6 +9,7 @@ export const metadata: Metadata = {
 };
 import { EcosystemSection } from "@/components/home/EcosystemSection";
 import { FeaturesSection } from "@/components/home/FeaturesSection";
+import { GeoReputeSection } from "@/components/home/GeoReputeSection";
 import { OptimizationLoopSection } from "@/components/home/OptimizationLoopSection";
 import { CtaSection } from "@/components/home/CtaSection";
 import { FaqSection } from "@/components/home/FaqSection";
@@ -23,6 +24,7 @@ export default function Home() {
         <HeroSection />
         <TrustedBy />
         <FeaturesSection />
+        <GeoReputeSection />
         <EcosystemSection />
         <CoreCapabilitiesSection />
         <OptimizationLoopSection />

@@ -8,8 +8,8 @@ import { motion, useMotionValue, useSpring } from "framer-motion";
 const STEPS = [
   { n: "01", title: "Analyze",  detail: "GeoReput scan",    icon: "⬡" },
   { n: "02", title: "Decide",   detail: "Strategy engine",  icon: "◈" },
-  { n: "03", title: "Publish",  detail: "SEO + GEO",        icon: "◎" },
-  { n: "04", title: "Measure",  detail: "Dashboard",        icon: "⬟" },
+  { n: "03", title: "Position", detail: "SEO + GEO",        icon: "◎" },
+  { n: "04", title: "Execute",  detail: "Dashboard",        icon: "⬟" },
   { n: "05", title: "Improve",  detail: "Loop",             icon: "⟳" },
 ] as const;
 

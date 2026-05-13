@@ -41,7 +41,7 @@ export default function GlobalMapPage() {
       ref={iframeRef}
       src="/global-map.html"
       className="w-full border-0 block"
-      style={{ height: "calc(100vh - 80px)", display: "block" }}
+      style={{ height: "calc(100vh - 80px)", display: "block", background: "#000" }}
       title="GeoRepute World Intelligence Map"
       allowFullScreen
     />

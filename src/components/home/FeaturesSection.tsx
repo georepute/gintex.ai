@@ -47,7 +47,7 @@ const FEATURES = [
   {
     title: "AI Visibility Intelligence",
     desc: "How AI systems represent your brand",
-    body: "We audit how large language models, AI search engines, and emerging discovery platforms represent your brand. Gaps in your AI presence directly cost you customers — we close them with precision.",
+    body: "We audit how large language models, AI search engines, and emerging discovery platforms represent your organization. Gaps in your visibility infrastructure directly cost you authority — we close them with analytical precision.",
     Icon: AIVisibilityIcon,
     iconWrap: "from-blue-500/50 to-indigo-600/35 shadow-[0_0_28px_-6px_rgba(59,130,246,0.55)] ring-white/15",
     orb: "rgba(59,130,246,0.12)",
@@ -56,8 +56,8 @@ const FEATURES = [
   },
   {
     title: "Reputation & Perception Intelligence",
-    desc: "How digital ecosystems shape trust",
-    body: "Your reputation is built — or eroded — across review platforms, media coverage, forums, and social signals. We monitor, analyze, and strategically shape the narrative before it shapes you.",
+    desc: "How digital ecosystems shape market positioning",
+    body: "Your authority is built — or eroded — across media coverage, review platforms, forums, and public narrative. We analyze, map, and strategically reposition the signals that define how markets perceive you.",
     Icon: ReputationIcon,
     iconWrap: "from-violet-500/45 to-purple-600/35 shadow-[0_0_28px_-6px_rgba(139,92,246,0.5)] ring-white/15",
     orb: "rgba(139,92,246,0.1)",
@@ -66,8 +66,8 @@ const FEATURES = [
   },
   {
     title: "Strategic Growth Infrastructure",
-    desc: "Turning intelligence into execution",
-    body: "Intelligence without action is just data. We build the SEO architecture, GEO content systems, and digital authority frameworks that compound visibility into measurable revenue growth over time.",
+    desc: "Translating intelligence into market positioning",
+    body: "Intelligence without execution is just data. We build the SEO architecture, GEO content systems, and authority frameworks that compound visibility into measurable strategic growth over time.",
     Icon: GrowthIcon,
     iconWrap: "from-teal-500/45 to-cyan-600/35 shadow-[0_0_28px_-6px_rgba(20,184,166,0.48)] ring-white/15",
     orb: "rgba(20,184,166,0.1)",
@@ -94,16 +94,14 @@ export function FeaturesSection() {
             className="text-3xl font-bold tracking-tight sm:text-4xl md:text-[2.75rem] md:leading-tight transition-colors duration-300"
             style={{ color: "var(--text-primary)" }}
           >
-            From Intelligence to Market Control
+            We Analyze How the Market Sees You
           </h2>
           <p
             className="mt-5 max-w-2xl mx-auto text-base leading-relaxed sm:text-lg transition-colors duration-300"
             style={{ color: "var(--text-secondary)" }}
           >
-            We map how your brand is perceived across AI, search, and digital—then
-            define positioning, channels, and measurable goals. We execute SEO,
-            AI-ready content, paid, and technical work so every move compounds
-            real market control.
+            Most companies invest in marketing without fully understanding how they are represented across AI systems, search engines, digital media, and public perception.
+            GINTEX combines strategic consulting, proprietary analytical frameworks, and intelligence systems to help organizations make better market decisions.
           </p>
         </motion.header>
 

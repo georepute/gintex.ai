@@ -5,8 +5,8 @@ import { motion } from "framer-motion";
 const BLOCKS = [
   {
     brand: "GeoReput",
-    purpose: "AI visibility & reputation intelligence system",
-    desc: "Scans how AI systems and search engines represent your brand, surfaces gaps, and tracks reputation signals across the digital ecosystem.",
+    purpose: "Visibility & reputation intelligence system",
+    desc: "Scans how search engines, AI platforms, and digital ecosystems represent your organization, surfaces narrative gaps, and maps authority signals across the competitive landscape.",
     color: "from-sky-500/40 to-blue-600/30",
     glow: "rgba(56,189,248,0.5)",
     ring: "rgba(56,189,248,0.25)",
@@ -15,8 +15,8 @@ const BLOCKS = [
   },
   {
     brand: "OnlinePerception",
-    purpose: "Research, education & GEON framework",
-    desc: "The intelligence research layer — publishing frameworks, insights, and educational resources that define how brands should think about perception in the AI age.",
+    purpose: "Research, frameworks & perception intelligence",
+    desc: "The analytical research layer — publishing proprietary frameworks, competitive intelligence, and strategic resources that define how organizations should approach market perception.",
     color: "from-violet-500/40 to-purple-600/30",
     glow: "rgba(139,92,246,0.5)",
     ring: "rgba(139,92,246,0.25)",
@@ -26,7 +26,7 @@ const BLOCKS = [
   {
     brand: "GINTEX",
     purpose: "Strategic intelligence infrastructure",
-    desc: "The execution engine — translating intelligence into market positioning, authority-building, and measurable growth across SEO, GEO, and digital presence.",
+    desc: "The execution layer — translating intelligence into market positioning, authority infrastructure, and measurable strategic growth across SEO, GEO, and digital presence.",
     color: "from-teal-500/40 to-cyan-600/30",
     glow: "rgba(20,184,166,0.5)",
     ring: "rgba(20,184,166,0.25)",
@@ -69,7 +69,7 @@ export function EcosystemSection() {
             Ecosystem
           </h2>
           <p className="mt-5 text-base leading-relaxed text-gray-400 sm:text-lg">
-            Three interconnected brands — each playing a distinct role in the intelligence stack that powers modern market visibility.
+            Three interconnected platforms — each playing a distinct role in the analytical infrastructure that powers strategic market positioning.
           </p>
         </motion.header>
 

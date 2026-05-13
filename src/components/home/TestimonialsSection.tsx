@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 const TESTIMONIALS = [
   {
     quote:
-      "Gintex AI transformed our lead generation within weeks. The AI targeting is scarily accurate.",
+      "GINTEX gave us a level of market intelligence we didn't know was possible. We now understand exactly how our industry perceives us — and how to strategically change it.",
     name: "Marcus Thorne",
     role: "CMO, Veloce Global",
     initials: "MT",
@@ -16,7 +16,7 @@ const TESTIMONIALS = [
   },
   {
     quote:
-      "The only agency that understands both the creative soul and the algorithmic machine.",
+      "This is not a marketing vendor. This is a strategic intelligence partner. The depth of their analytical frameworks is unlike anything we've encountered.",
     name: "Elena Vance",
     role: "Founder, Aura Digital",
     initials: "EV",
@@ -45,14 +45,13 @@ export function TestimonialsSection() {
             className="text-left text-3xl font-bold tracking-tight sm:text-4xl lg:text-[2.65rem] lg:leading-tight transition-colors duration-300"
             style={{ color: "var(--text-primary)" }}
           >
-            Voices of Success
+            What Our Clients Say
           </h2>
           <p
             className="mt-5 text-left text-base leading-relaxed sm:text-lg transition-colors duration-300"
             style={{ color: "var(--text-secondary)" }}
           >
-            Leading enterprises are already experiencing the Gintex advantage.
-            Join the elite.
+            Organizations that have used GINTEX intelligence infrastructure to understand and improve their strategic market position.
           </p>
         </motion.header>
 

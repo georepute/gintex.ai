@@ -239,15 +239,13 @@ export function PdcaHeroSection() {
             className="mt-5 text-3xl font-bold tracking-tight sm:mt-6 sm:text-4xl md:text-[2.65rem] md:leading-[1.12] transition-colors duration-300"
             style={{ color: "var(--text-primary)" }}
           >
-            The PDCA Framework: Powered by AI.
+            A Continuous Intelligence & Optimization Framework
           </h1>
           <p
             className="mx-auto mt-6 max-w-2xl text-base leading-relaxed sm:mt-7 sm:text-lg transition-colors duration-300"
             style={{ color: "var(--text-secondary)" }}
           >
-            We&apos;ve evolved the traditional Plan-Do-Check-Act cycle into a
-            high-velocity engine for the digital era—using AI and GeoReput
-            intelligence to cut uncertainty and lift measurable outcomes.
+            We combine intelligence analysis, strategic planning, visibility execution, and continuous optimization into one integrated growth system.
           </p>
         </motion.header>
 

@@ -142,14 +142,14 @@ export function HeroSection() {
             style={{ color: "var(--text-primary)" }}
             variants={fadeUp}
           >
-            AI Visibility, Reputation &{" "}
+            Strategic Intelligence for{" "}
             <motion.span
               className="relative inline-block bg-gradient-to-r from-sky-400 via-cyan-300 to-teal-300 bg-clip-text text-transparent"
               animate={{ backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"] }}
               transition={{ duration: 5, repeat: Infinity, ease: "linear" }}
               style={{ backgroundSize: "200% 200%" }}
             >
-              Market Intelligence
+              Market Visibility
             </motion.span>
           </motion.h1>
 
@@ -159,9 +159,7 @@ export function HeroSection() {
             style={{ color: "var(--text-secondary)" }}
             variants={fadeUp}
           >
-            GINTEX helps businesses improve AI visibility, online reputation, GEO presence, SEO
-            performance, digital authority, and strategic market positioning through intelligence-driven
-            systems.
+            We help organizations understand how markets, AI systems, search engines, and digital ecosystems perceive their business - transforming intelligence into measurable strategic growth.
           </motion.p>
 
           {/* CTAs */}
@@ -179,7 +177,7 @@ export function HeroSection() {
                 href="/contact"
                 className="inline-flex items-center justify-center whitespace-nowrap rounded-full bg-gradient-to-r from-blue-600 to-purple-600 px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-blue-900/30"
               >
-                Explore Intelligence Systems
+                Explore GeoRepute
               </Link>
             </motion.div>
 
@@ -195,7 +193,7 @@ export function HeroSection() {
                 className="inline-flex items-center justify-center whitespace-nowrap rounded-full px-6 py-3 text-sm font-semibold transition-colors duration-300"
                 style={{ color: "var(--text-primary)" }}
               >
-                View Reports & Analysis
+                View Intelligence Reports
               </Link>
             </motion.div>
           </motion.div>
@@ -208,7 +206,7 @@ export function HeroSection() {
           >
             <span className="h-px w-5 bg-sky-400/60" />
             Powered by{" "}
-            <span className="font-semibold tracking-wide text-sky-500">GEON Intelligence</span>
+            <span className="font-semibold tracking-wide text-sky-500">the GeoRepute Intelligence Infrastructure</span>
           </motion.p>
 
           {/* Stats row */}
@@ -310,6 +308,32 @@ export function HeroSection() {
             <span className="text-[11px] font-semibold transition-colors duration-300" style={{ color: "var(--text-primary)" }}>AI Live</span>
           </motion.div>
         </motion.div>
+      </div>
+
+      {/* Authority strip */}
+      <div
+        className="mt-14 border-y py-4 transition-colors duration-300"
+        style={{ borderColor: "var(--border)", background: "var(--bg-subtle)" }}
+      >
+        <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-3 px-6">
+          {[
+            "70+ Proprietary Intelligence Reports",
+            "Strategic Market Analysis",
+            "AI Visibility & Reputation Intelligence",
+            "SEO & GEO Infrastructure",
+            "Executive Advisory",
+            "Political & Public Intelligence",
+          ].map((item) => (
+            <span
+              key={item}
+              className="flex items-center gap-2 text-xs font-medium tracking-wide transition-colors duration-300"
+              style={{ color: "var(--text-muted)" }}
+            >
+              <span className="h-1 w-1 rounded-full bg-sky-500 shrink-0" />
+              {item}
+            </span>
+          ))}
+        </div>
       </div>
     </section>
   );

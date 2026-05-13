@@ -3,10 +3,10 @@
 import { motion } from "framer-motion";
 
 const STATS = [
-  { value: "500+",  label: "Brands Audited"         },
-  { value: "94%",   label: "AI Visibility Lift"      },
-  { value: "3.4×",  label: "Avg. ROI Improvement"    },
-  { value: "48h",   label: "Audit Turnaround"        },
+  { value: "500+",  label: "Organizations Analyzed"       },
+  { value: "94%",   label: "Visibility Improvement"       },
+  { value: "3.4×",  label: "Avg. Strategic Growth Lift"   },
+  { value: "48h",   label: "Intelligence Turnaround"      },
 ] as const;
 
 const INDUSTRIES = [
@@ -36,7 +36,7 @@ export function TrustedBy() {
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
         >
-          Trusted across industries worldwide
+          Trusted by organizations across industries worldwide
         </motion.p>
 
         {/* Stats row */}
