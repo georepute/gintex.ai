@@ -61,24 +61,24 @@ export function ContactView() {
           {/* Left: info */}
           <div className="min-w-0">
             <p className="font-label text-[11px] font-semibold uppercase tracking-[0.32em] text-sky-500 sm:text-xs">
-              Connectivity
+              Partnership
             </p>
             <h1
               className="mt-4 text-4xl font-bold leading-[1.1] tracking-tight sm:text-5xl md:text-[3.25rem] transition-colors duration-300"
               style={{ color: "var(--text-primary)" }}
             >
-              Get in{" "}
+              Global GeoRepute{" "}
               <span className="bg-gradient-to-r from-sky-400 via-cyan-300 to-teal-300 bg-clip-text text-transparent">
-                Touch
+                Partnership Program
               </span>
             </h1>
             <p
               className="mt-6 max-w-lg text-base leading-relaxed sm:text-lg transition-colors duration-300"
               style={{ color: "var(--text-secondary)" }}
             >
-              Partner with Gintex AI on GeoReput intelligence, execution, and
-              systems that tie perception to outcomes. Tell us what you&apos;re
-              building—we&apos;ll help you architect the next step.
+              We are building a global network of strategic partners and regional operators around the GeoRepute Intelligence Infrastructure.
+              If you specialize in consulting, marketing, reputation, business strategy, or digital growth, we invite you to explore partnership opportunities in your country.
+              Together, we help organizations understand how the market sees them — and turn that intelligence into strategic growth.
             </p>
 
             <ul className="mt-10 space-y-8 sm:mt-12">
