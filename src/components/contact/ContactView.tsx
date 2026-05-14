@@ -15,7 +15,7 @@ function IconBox({ children }: { children: ReactNode }) {
 }
 
 const CONTACT = {
-  email: "hello@gintex.ai",
+  email: "Hello@gintex.ai",
   phone: "972-55-6-800-600",
   phoneHref: "tel:+972556800600",
   hq: "Global · Remote-first",
@@ -78,7 +78,7 @@ export function ContactView() {
             >
               We are building a global network of strategic partners and regional operators around the GeoRepute Intelligence Infrastructure.
               If you specialize in consulting, marketing, reputation, business strategy, or digital growth, we invite you to explore partnership opportunities in your country.
-              Together, we help organizations understand how the market sees them — and turn that intelligence into strategic growth.
+              Together, we help organizations understand how the market sees them and turn that intelligence into strategic growth.
             </p>
 
             <ul className="mt-10 space-y-8 sm:mt-12">
