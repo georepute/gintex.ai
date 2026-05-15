@@ -18,7 +18,7 @@ const CONTACT = {
   email: "Hello@gintex.ai",
   phone: "972-55-6-800-600",
   phoneHref: "tel:+972556800600",
-  hq: "Global · Remote-first",
+  hq: "Global Remote-first",
 } as const;
 
 const SOCIALS = [
