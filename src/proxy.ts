@@ -2,11 +2,23 @@ import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
 
 export async function proxy(request: NextRequest) {
+  const { pathname } = request.nextUrl;
+
+  // Only apply auth logic to /admin routes
+  if (!pathname.startsWith("/admin")) {
+    return NextResponse.next({ request });
+  }
+
+  // Guard: if Supabase env vars are missing, allow through to avoid crashing
+  if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
+    return NextResponse.next({ request });
+  }
+
   let supabaseResponse = NextResponse.next({ request });
 
   const supabase = createServerClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    process.env.NEXT_PUBLIC_SUPABASE_URL,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
     {
       cookies: {
         getAll() {
@@ -25,32 +37,36 @@ export async function proxy(request: NextRequest) {
     }
   );
 
-  // Refresh session
-  const { data: { user } } = await supabase.auth.getUser();
+  try {
+    const { data: { user } } = await supabase.auth.getUser();
 
-  const { pathname } = request.nextUrl;
+    // Protect all /admin/* routes except /admin/login
+    if (pathname.startsWith("/admin") && pathname !== "/admin/login") {
+      if (!user) {
+        const loginUrl = request.nextUrl.clone();
+        loginUrl.pathname = "/admin/login";
+        return NextResponse.redirect(loginUrl);
+      }
+    }
 
-  // Protect all /admin/* routes except /admin/login
-  if (pathname.startsWith("/admin") && pathname !== "/admin/login") {
-    if (!user) {
+    // Redirect logged-in users away from /admin/login
+    if (pathname === "/admin/login" && user) {
+      const dashUrl = request.nextUrl.clone();
+      dashUrl.pathname = "/admin/dashboard";
+      return NextResponse.redirect(dashUrl);
+    }
+  } catch {
+    // If auth check fails, redirect to login for safety
+    if (pathname !== "/admin/login") {
       const loginUrl = request.nextUrl.clone();
       loginUrl.pathname = "/admin/login";
       return NextResponse.redirect(loginUrl);
     }
   }
 
-  // Redirect logged-in users away from /admin/login
-  if (pathname === "/admin/login" && user) {
-    const dashUrl = request.nextUrl.clone();
-    dashUrl.pathname = "/admin/dashboard";
-    return NextResponse.redirect(dashUrl);
-  }
-
   return supabaseResponse;
 }
 
 export const config = {
-  matcher: [
-    "/((?!_next/static|_next/image|favicon\\.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)",
-  ],
+  matcher: ["/admin/:path*"],
 };
