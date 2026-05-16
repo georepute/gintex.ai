@@ -51,7 +51,16 @@ export function Header() {
               priority
             />
           </Link>
-          <ConsultationLink className="shrink-0 lg:hidden" />
+          <div className="flex shrink-0 items-center gap-2 lg:hidden">
+            <ConsultationLink />
+            <Link
+              href="/admin/login"
+              className="rounded-full border border-gray-400/40 px-3 py-2 text-center text-sm font-medium transition-colors duration-200 hover:border-gray-400/70"
+              style={{ color: "var(--text-secondary)" }}
+            >
+              Admin
+            </Link>
+          </div>
         </div>
 
         <nav
@@ -81,7 +90,16 @@ export function Header() {
           })}
         </nav>
 
-        <ConsultationLink className="hidden shrink-0 lg:inline-flex" />
+        <div className="hidden shrink-0 items-center gap-3 lg:flex">
+          <ConsultationLink />
+          <Link
+            href="/admin/login"
+            className="rounded-full border border-gray-400/40 px-4 py-2 text-center text-sm font-medium transition-colors duration-200 hover:border-gray-400/70"
+            style={{ color: "var(--text-secondary)" }}
+          >
+            Admin
+          </Link>
+        </div>
       </div>
     </header>
   );
