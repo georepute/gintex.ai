@@ -103,15 +103,9 @@ export function Footer() {
           <p>© {year} GINTEX AI. Perception Intelligence.</p>
           <p className="normal-case text-sm tracking-normal sm:text-right" style={{ color: "var(--footer-muted)" }}>
             Developed by{" "}
-            <a
-              href="https://skal.ai"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="font-medium underline-offset-4 transition-colors hover:underline"
-              style={{ color: "var(--footer-heading)" }}
-            >
-              skal.ai
-            </a>
+            <span className="font-medium" style={{ color: "var(--footer-heading)" }}>
+              Gintex
+            </span>
           </p>
         </div>
       </div>
