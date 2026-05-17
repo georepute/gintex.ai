@@ -71,17 +71,32 @@ function injectImages(content: string, slug: string, tags: string[]): string {
   return result.join("");
 }
 
-function sanitiseResult(parsed: Record<string, unknown>, topic: string, slug: string): BlogGenerationResult {
-  const content = String(parsed.content || "").trim();
+const RTL_LANGUAGES = new Set(["he", "ar"]);
+
+function removeEmDashes(text: string): string {
+  // Replace em dash variants with a regular hyphen-space
+  return text.replace(/—/g, " - ").replace(/–/g, " - ").replace(/--/g, " - ");
+}
+
+function sanitiseResult(parsed: Record<string, unknown>, topic: string, slug: string, language: string): BlogGenerationResult {
+  const rawContent = String(parsed.content || "").trim();
   const tags = Array.isArray(parsed.tags) ? parsed.tags.map(String).slice(0, 8) : [];
-  const enrichedContent = injectImages(content, slug, tags);
+
+  // Remove em-dashes from all fields
+  const cleanContent = removeEmDashes(rawContent);
+  const enrichedContent = injectImages(cleanContent, slug, tags);
+
+  // Wrap content in RTL dir if Hebrew/Arabic
+  const finalContent = RTL_LANGUAGES.has(language)
+    ? `<div dir="rtl" style="text-align:right;">${enrichedContent}</div>`
+    : enrichedContent;
 
   return {
-    title: String(parsed.title || topic).trim(),
+    title: removeEmDashes(String(parsed.title || topic).trim()),
     slug,
-    excerpt: String(parsed.excerpt || "").trim(),
-    content: enrichedContent,
-    seo_title: String(parsed.seo_title || parsed.title || "").trim().slice(0, 60),
+    excerpt: removeEmDashes(String(parsed.excerpt || "").trim()),
+    content: finalContent,
+    seo_title: removeEmDashes(String(parsed.seo_title || parsed.title || "").trim().slice(0, 60)),
     seo_description: String(parsed.seo_description || parsed.excerpt || "").trim().slice(0, 160),
     tags,
     reading_time: estimateReadingTime(enrichedContent),
@@ -102,6 +117,10 @@ Write in-depth, authoritative blog articles (1800–2500 words) that:
 
 Return ONLY valid JSON (no markdown fences, no extra text) in this exact structure:
 {"title":"SEO-optimised title","slug":"url-safe-slug","excerpt":"Compelling 2-3 sentence summary (150-180 chars)","content":"Full HTML article with h2, h3, p, ul, li, strong tags. No inline styles. 1800-2500 words minimum.","seo_title":"SEO meta title 50-60 chars","seo_description":"SEO meta description 150-160 chars","tags":["tag1","tag2","tag3","tag4","tag5"],"reading_time":10}
+
+WRITING RULES:
+- Never use em-dashes (—) or en-dashes (–). Use a regular hyphen (-) or rewrite the sentence instead.
+- For Hebrew or Arabic content, ensure all text flows right-to-left naturally.
 
 CRITICAL JSON RULES — failure to follow these will break the parser:
 - Every double quote inside a value MUST be escaped: \\"
@@ -168,7 +187,7 @@ Return ONLY valid JSON as specified. No markdown. No truncation.`;
         throw new Error(`Claude returned malformed JSON: ${parseErr.message}. Preview: ${jsonStr.slice(0, 300)}`);
       }
       const slug = slugify(String(parsed.slug || parsed.title || topic));
-      result = sanitiseResult(parsed, topic, slug);
+      result = sanitiseResult(parsed, topic, slug, language);
     } catch (err: any) {
       console.error("Claude generation error:", err);
       return NextResponse.json({ error: "Claude generation failed: " + (err.message ?? "unknown error") }, { status: 502 });
@@ -197,7 +216,7 @@ Return ONLY valid JSON as specified. No markdown. No truncation.`;
       const rawText = response.choices[0]?.message?.content ?? "";
       const parsed = JSON.parse(extractJson(rawText));
       const slug = slugify(String(parsed.slug || parsed.title || topic));
-      result = sanitiseResult(parsed, topic, slug);
+      result = sanitiseResult(parsed, topic, slug, language);
     } catch (err: any) {
       console.error("OpenAI generation error:", err);
       return NextResponse.json({ error: "OpenAI generation failed: " + (err.message ?? "unknown error") }, { status: 502 });
