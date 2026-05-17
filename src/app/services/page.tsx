@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { ServiceCard } from "@/components/services/ServiceCard";
+import { SystemCard } from "@/components/services/SystemCard";
 import { ServicesCtaSection } from "@/components/services/ServicesCtaSection";
 import { SERVICES, SERVICES_INTRO, SYSTEMS } from "@/data/services";
 
@@ -55,9 +56,9 @@ export default function ServicesPage() {
               Our Live Systems
             </p>
           </div>
-          <div className="grid grid-cols-1 items-start gap-6 md:grid-cols-3">
+          <div className="grid grid-cols-1 items-stretch gap-6 md:grid-cols-3">
             {SYSTEMS.map((system) => (
-              <ServiceCard key={system.title} service={system} />
+              <SystemCard key={system.title} system={system} />
             ))}
           </div>
         </div>
