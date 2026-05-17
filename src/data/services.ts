@@ -15,10 +15,42 @@ export type ServiceItem = {
     | "layers"
     | "pen"
     | "code";
+  href?: string;
+  isProduct?: boolean;
 };
 
 export const SERVICES_INTRO =
   "We bridge the gap between high-level consultancy and avant-garde artificial intelligence, delivering precision marketing systems that scale with human intelligence.";
+
+export const SYSTEMS: ServiceItem[] = [
+  {
+    title: "GeoRepute",
+    summary:
+      "The world professions intelligence map. Understand where your market lives, which platforms dominate your industry, and what visibility structure your business actually needs.",
+    accent: "teal",
+    icon: "target",
+    href: "https://georepute.ai",
+    isProduct: true,
+  },
+  {
+    title: "CopyApp",
+    summary:
+      "AI-powered copywriting system built for brand authority. Generate high-converting, on-brand content across every channel — faster, smarter, and always on message.",
+    accent: "purple",
+    icon: "pen",
+    href: "https://copyapp.ai",
+    isProduct: true,
+  },
+  {
+    title: "OnlinePerception AI",
+    summary:
+      "Know exactly how AI systems, search engines, and digital ecosystems perceive your brand. Audit, analyze, and reshape your online reputation with precision intelligence.",
+    accent: "teal",
+    icon: "search",
+    href: "https://onlineperception.ai",
+    isProduct: true,
+  },
+];
 
 export const SERVICES: ServiceItem[] = [
   {
