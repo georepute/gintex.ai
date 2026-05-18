@@ -3,7 +3,6 @@
 import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { useLocale } from "@/lib/i18n/LocaleContext";
 import advisoryImg from "@/Gintex-images/Services img1.png";
 import auditImg from "@/Gintex-images/Services img2.png";
 
@@ -35,14 +34,6 @@ const SERVICES = [
 ] as const;
 
 export function CoreCapabilitiesSection() {
-  const { t } = useLocale();
-  const c = t.capabilities;
-  const servicesI18n = SERVICES.map((s, i) => ({
-    ...s,
-    kicker: c.services[i]?.kicker ?? s.kicker,
-    title: c.services[i]?.title ?? s.title,
-    description: c.services[i]?.description ?? s.description,
-  }));
   return (
     <section
       className="relative overflow-hidden px-6 py-24 sm:px-10 sm:py-32 transition-colors duration-300"
@@ -64,28 +55,29 @@ export function CoreCapabilitiesSection() {
             transition={{ duration: 0.6, ease: "easeOut" }}
           >
             <p className="font-label text-[11px] font-semibold uppercase tracking-[0.28em] text-sky-500">
-              {c.kicker}
+              Services
             </p>
             <h2
               className="mt-4 text-3xl font-bold tracking-tight sm:text-4xl lg:text-[2.65rem] lg:leading-[1.12] transition-colors duration-300"
               style={{ color: "var(--text-primary)" }}
             >
-              {c.heading}{" "}
+              Core{" "}
               <span className="bg-gradient-to-r from-sky-600 to-sky-400 bg-clip-text text-transparent">
-                {c.headingHighlight}
+                Capabilities
               </span>
             </h2>
             <p
               className="mt-6 max-w-md text-base leading-relaxed sm:text-lg transition-colors duration-300"
               style={{ color: "var(--text-secondary)" }}
             >
-              {c.body}
+              Our multi-disciplinary team merges creative excellence with
+              algorithmic rigor.
             </p>
             <Link
               href="/services"
               className="group/cta font-label mt-10 inline-flex items-center gap-3 rounded-full border border-sky-500/35 bg-sky-500/10 px-6 py-3 text-xs font-semibold uppercase tracking-[0.2em] text-sky-500 shadow-[0_0_24px_-8px_rgba(14,165,233,0.35)] backdrop-blur-sm transition-all duration-300 hover:border-sky-400/55 hover:bg-sky-500/15 hover:shadow-[0_0_32px_-6px_rgba(56,189,248,0.4)] sm:text-sm"
             >
-              {c.cta}
+              View all services
               <span
                 className="inline-flex h-7 w-7 items-center justify-center rounded-full bg-sky-500/10 text-sm transition-transform duration-300 group-hover/cta:translate-x-0.5"
                 aria-hidden
@@ -97,7 +89,7 @@ export function CoreCapabilitiesSection() {
 
           {/* Cards */}
           <div className="grid flex-1 grid-cols-1 gap-8 sm:grid-cols-2 lg:gap-7">
-            {servicesI18n.map(({ kicker, title, description, image, alt, orb, line, hoverGlow, imageTint }, index) => (
+            {SERVICES.map(({ kicker, title, description, image, alt, orb, line, hoverGlow, imageTint }, index) => (
               <motion.article
                 key={title}
                 data-cursor-hover
@@ -171,7 +163,7 @@ export function CoreCapabilitiesSection() {
                     {description}
                   </p>
                   <span className="font-label mt-6 inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.16em] text-sky-500 opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100">
-                    {c.explore}
+                    Explore
                     <span aria-hidden>→</span>
                   </span>
                 </div>

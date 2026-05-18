@@ -3,9 +3,18 @@
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { useLocale } from "@/lib/i18n/LocaleContext";
 
-function ConsultationLink({ label, className }: { label: string; className?: string }) {
+const NAV_LINKS = [
+  { href: "/", label: "Home" },
+  { href: "/services", label: "Services" },
+  { href: "/intelligence", label: "Intelligence" },
+  { href: "/pdca", label: "PDCA" },
+  { href: "/global-map", label: "Global Map" },
+  { href: "/about", label: "About" },
+  { href: "/contact", label: "Contact" },
+] as const;
+
+function ConsultationLink({ className }: { className?: string }) {
   return (
     <Link
       href="/contact"
@@ -14,45 +23,13 @@ function ConsultationLink({ label, className }: { label: string; className?: str
         (className ?? "")
       }
     >
-      {label}
+      Book a Consultation
     </Link>
-  );
-}
-
-function LangToggle() {
-  const { locale, setLocale } = useLocale();
-  const next = locale === "en" ? "he" : "en";
-
-  return (
-    <button
-      onClick={() => setLocale(next)}
-      className="flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-xs font-semibold transition-all duration-200 hover:opacity-80"
-      style={{
-        borderColor: "var(--border)",
-        color: "var(--text-secondary)",
-        background: "var(--bg-subtle)",
-      }}
-      aria-label={`Switch to ${next === "he" ? "Hebrew" : "English"}`}
-    >
-      <span className="text-sm">{locale === "en" ? "🇮🇱" : "🇬🇧"}</span>
-      {locale === "en" ? "עב" : "EN"}
-    </button>
   );
 }
 
 export function Header() {
   const pathname = usePathname();
-  const { t } = useLocale();
-
-  const NAV_LINKS = [
-    { href: "/", label: t.nav.home },
-    { href: "/services", label: t.nav.services },
-    { href: "/intelligence", label: t.nav.intelligence },
-    { href: "/pdca", label: t.nav.pdca },
-    { href: "/global-map", label: t.nav.globalMap },
-    { href: "/about", label: t.nav.about },
-    { href: "/contact", label: t.nav.contact },
-  ];
 
   return (
     <header
@@ -75,14 +52,13 @@ export function Header() {
             />
           </Link>
           <div className="flex shrink-0 items-center gap-2 lg:hidden">
-            <LangToggle />
-            <ConsultationLink label={t.nav.bookConsultation} />
+            <ConsultationLink />
             <Link
               href="/admin/login"
               className="rounded-full border border-gray-400/40 px-3 py-2 text-center text-sm font-medium transition-colors duration-200 hover:border-gray-400/70"
               style={{ color: "var(--text-secondary)" }}
             >
-              {t.nav.admin}
+              Admin
             </Link>
           </div>
         </div>
@@ -115,14 +91,13 @@ export function Header() {
         </nav>
 
         <div className="hidden shrink-0 items-center gap-3 lg:flex">
-          <LangToggle />
-          <ConsultationLink label={t.nav.bookConsultation} />
+          <ConsultationLink />
           <Link
             href="/admin/login"
             className="rounded-full border border-gray-400/40 px-4 py-2 text-center text-sm font-medium transition-colors duration-200 hover:border-gray-400/70"
             style={{ color: "var(--text-secondary)" }}
           >
-            {t.nav.admin}
+            Admin
           </Link>
         </div>
       </div>

@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { useLocale } from "@/lib/i18n/LocaleContext";
 
 const SIGNALS = [
   { label: "AI visibility",            icon: "M9.663 17h4.673M12 3v1m6.364 1.636-.707.707M21 12h-1M4 12H3m3.343-5.657-.707-.707m2.828 9.9a5 5 0 1 1 7.072 0l-.548.547A3.374 3.374 0 0 0 14 18.469V19a2 2 0 1 1-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" },
@@ -33,10 +32,6 @@ const fadeUp = {
 const stagger = { hidden: {}, show: { transition: { staggerChildren: 0.07, delayChildren: 0.1 } } };
 
 export function GeoReputeSection() {
-  const { t } = useLocale();
-  const g = t.geoRepute;
-  const signalsI18n = SIGNALS.map((s, i) => ({ ...s, label: g.signals[i] ?? s.label }));
-  const reportsI18n = REPORTS.map((r, i) => ({ ...r, label: g.reports[i] ?? r.label }));
   return (
     <>
       {/* ── GeoRepute Engine ── */}
@@ -56,16 +51,16 @@ export function GeoReputeSection() {
           {/* header */}
           <motion.div className="mb-16 text-center" variants={stagger} initial="hidden" whileInView="show" viewport={{ once: true }}>
             <motion.p className="font-label text-[11px] font-semibold uppercase tracking-[0.32em] text-sky-500 sm:text-xs" variants={fadeUp}>
-              {g.kicker}
+              Intelligence Infrastructure
             </motion.p>
             <motion.h2
               className="mt-4 text-3xl font-bold tracking-tight sm:text-4xl md:text-[2.75rem] transition-colors duration-300"
               style={{ color: "var(--text-primary)" }}
               variants={fadeUp}
             >
-              {g.heading1}{" "}
+              The Intelligence Infrastructure{" "}
               <span className="bg-gradient-to-r from-sky-400 via-cyan-300 to-teal-300 bg-clip-text text-transparent">
-                {g.heading2}
+                Behind GINTEX
               </span>
             </motion.h2>
             <motion.p
@@ -73,7 +68,8 @@ export function GeoReputeSection() {
               style={{ color: "var(--text-secondary)" }}
               variants={fadeUp}
             >
-              {g.body}
+              GeoRepute is the proprietary analytical system powering GINTEX — transforming complex
+              visibility data into strategic business intelligence.
             </motion.p>
           </motion.div>
 
@@ -97,16 +93,17 @@ export function GeoReputeSection() {
                   </svg>
                 </div>
                 <div>
-                  <p className="text-sm font-semibold transition-colors duration-300" style={{ color: "var(--text-primary)" }}>{g.engineTitle}</p>
-                  <p className="text-[11px] transition-colors duration-300" style={{ color: "var(--text-muted)" }}>{g.engineSub}</p>
+                  <p className="text-sm font-semibold transition-colors duration-300" style={{ color: "var(--text-primary)" }}>GeoRepute Intelligence Engine</p>
+                  <p className="text-[11px] transition-colors duration-300" style={{ color: "var(--text-muted)" }}>Proprietary analytical system</p>
                 </div>
               </div>
 
               <h3 className="text-2xl font-bold leading-snug mb-4 transition-colors duration-300" style={{ color: "var(--text-primary)" }}>
-                {g.dimensionsHeading}
+                Seven dimensions of market intelligence — unified.
               </h3>
               <p className="text-base leading-relaxed mb-8 transition-colors duration-300" style={{ color: "var(--text-secondary)" }}>
-                {g.dimensionsBody}
+                The platform maps every angle of how your brand exists in the digital world, turning raw
+                signals into a clear, actionable intelligence picture.
               </p>
 
               <Link
@@ -114,7 +111,7 @@ export function GeoReputeSection() {
                 className="inline-flex items-center gap-2 rounded-full px-7 py-3 text-sm font-semibold text-white shadow-lg transition-all hover:opacity-90 hover:shadow-sky-500/30"
                 style={{ background: "linear-gradient(135deg, #0ea5e9, #6366f1)", boxShadow: "0 8px 32px rgba(14,165,233,0.25)" }}
               >
-                {g.cta}
+                Explore GeoRepute Intelligence
                 <svg className="h-3.5 w-3.5" viewBox="0 0 16 16" fill="none" aria-hidden>
                   <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
@@ -129,7 +126,7 @@ export function GeoReputeSection() {
               whileInView="show"
               viewport={{ once: true }}
             >
-              {signalsI18n.map(({ label, icon }) => (
+              {SIGNALS.map(({ label, icon }) => (
                 <motion.div
                   key={label}
                   className="group flex flex-col gap-3 rounded-xl p-4 transition-all duration-200"
@@ -168,16 +165,16 @@ export function GeoReputeSection() {
         <div className="relative mx-auto max-w-6xl">
           <motion.div className="mb-14 text-center" variants={stagger} initial="hidden" whileInView="show" viewport={{ once: true }}>
             <motion.p className="font-label text-[11px] font-semibold uppercase tracking-[0.32em] text-sky-500 sm:text-xs" variants={fadeUp}>
-              {g.reportsKicker}
+              Proprietary Reports
             </motion.p>
             <motion.h2
               className="mt-4 text-3xl font-bold tracking-tight sm:text-4xl md:text-[2.75rem] transition-colors duration-300"
               style={{ color: "var(--text-primary)" }}
               variants={fadeUp}
             >
-              {g.reportsHeading1}{" "}
+              Multi-Dimensional{" "}
               <span className="bg-gradient-to-r from-violet-400 via-purple-300 to-indigo-300 bg-clip-text text-transparent">
-                {g.reportsHeading2}
+                Intelligence Reports
               </span>
             </motion.h2>
             <motion.p
@@ -185,7 +182,9 @@ export function GeoReputeSection() {
               style={{ color: "var(--text-secondary)" }}
               variants={fadeUp}
             >
-              {g.reportsBody}
+              Our infrastructure includes over{" "}
+              <span className="font-semibold" style={{ color: "var(--text-primary)" }}>70 proprietary analytical reports</span>{" "}
+              designed to help organizations understand their real market position.
             </motion.p>
           </motion.div>
 
@@ -196,7 +195,7 @@ export function GeoReputeSection() {
             whileInView="show"
             viewport={{ once: true }}
           >
-            {reportsI18n.map(({ label, grad, bg, border }) => (
+            {REPORTS.map(({ label, grad, bg, border }) => (
               <motion.div
                 key={label}
                 className="group relative flex flex-col gap-4 overflow-hidden rounded-2xl p-5 transition-all duration-200"
@@ -214,7 +213,7 @@ export function GeoReputeSection() {
                   <svg className="h-3 w-3 opacity-60" viewBox="0 0 16 16" fill="none" aria-hidden>
                     <path d="M2 8h12M8 2v12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
                   </svg>
-                  {g.proprietaryNote}
+                  Proprietary framework
                 </div>
               </motion.div>
             ))}

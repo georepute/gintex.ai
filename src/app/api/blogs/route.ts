@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { createPublicClient } from "@/lib/supabase/server";
+import { createClient } from "@/lib/supabase/server";
 
 export const revalidate = 60;
 
@@ -10,7 +10,7 @@ export async function GET(request: NextRequest) {
   const tag = searchParams.get("tag");
   const q = searchParams.get("q");
 
-  const supabase = createPublicClient();
+  const supabase = await createClient();
   let query = supabase
     .from("blogs")
     .select("id, title, slug, excerpt, cover_image, tags, published_at, reading_time, language, seo_description", { count: "exact" })

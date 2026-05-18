@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { createPublicClient } from "@/lib/supabase/server";
+import { createClient } from "@/lib/supabase/server";
 import type { Blog } from "@/types/blog";
 
 export const revalidate = 60;
@@ -9,7 +9,7 @@ export const revalidate = 60;
 type Props = { params: Promise<{ slug: string }> };
 
 async function getBlog(slug: string): Promise<Blog | null> {
-  const supabase = createPublicClient();
+  const supabase = await createClient();
   const { data, error } = await supabase
     .from("blogs")
     .select("*")
@@ -74,25 +74,19 @@ export default async function BlogDetailPage({ params }: Props) {
     keywords: (blog.tags ?? []).join(", "),
   };
 
-  const isRtl = ["he", "ar"].includes(blog.language ?? "");
-
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
 
-      <main
-        className="flex flex-1 flex-col"
-        style={{ background: "var(--bg-page)", color: "var(--text-primary)" }}
-        dir={isRtl ? "rtl" : undefined}
-      >
+      <main className="flex flex-1 flex-col" style={{ background: "var(--bg-page)", color: "var(--text-primary)" }}>
         {/* Hero */}
         <section
           className="border-b px-6 pb-12 pt-12 sm:px-10"
           style={{ borderColor: "var(--border)" }}
         >
           <div className="mx-auto max-w-3xl">
-            {/* Breadcrumb — always LTR */}
-            <nav className="mb-6 flex items-center gap-2 text-xs" dir="ltr" style={{ color: "var(--text-muted)" }}>
+            {/* Breadcrumb */}
+            <nav className="mb-6 flex items-center gap-2 text-xs" style={{ color: "var(--text-muted)" }}>
               <Link href="/intelligence" className="hover:opacity-80 transition-opacity">Intelligence</Link>
               <span>/</span>
               <span className="truncate max-w-[200px]">{blog.title}</span>
@@ -113,26 +107,17 @@ export default async function BlogDetailPage({ params }: Props) {
               </div>
             )}
 
-            <h1
-              className="text-3xl font-bold leading-tight tracking-tight sm:text-4xl md:text-[2.5rem] md:leading-[1.1]"
-              style={isRtl ? { textAlign: "right" } : undefined}
-            >
+            <h1 className="text-3xl font-bold leading-tight tracking-tight sm:text-4xl md:text-[2.5rem] md:leading-[1.1]">
               {blog.title}
             </h1>
 
             {blog.excerpt && (
-              <p
-                className="mt-4 text-base leading-relaxed sm:text-lg"
-                style={{ color: "var(--text-secondary)", ...(isRtl ? { textAlign: "right" } : {}) }}
-              >
+              <p className="mt-4 text-base leading-relaxed sm:text-lg" style={{ color: "var(--text-secondary)" }}>
                 {blog.excerpt}
               </p>
             )}
 
-            <div
-              className="mt-6 flex flex-wrap items-center gap-4 text-sm"
-              style={{ color: "var(--text-muted)", ...(isRtl ? { justifyContent: "flex-end" } : {}) }}
-            >
+            <div className="mt-6 flex flex-wrap items-center gap-4 text-sm" style={{ color: "var(--text-muted)" }}>
               {blog.published_at && <span>Published {formatDate(blog.published_at)}</span>}
               {blog.reading_time && (
                 <>
@@ -244,19 +229,6 @@ export default async function BlogDetailPage({ params }: Props) {
           border-collapse: collapse;
           margin: 1.5rem 0;
           font-size: 0.875rem;
-        }
-        [dir="rtl"] .blog-content h1,
-        [dir="rtl"] .blog-content h2,
-        [dir="rtl"] .blog-content h3,
-        [dir="rtl"] .blog-content h4,
-        [dir="rtl"] .blog-content p,
-        [dir="rtl"] .blog-content li { text-align: right; }
-        [dir="rtl"] .blog-content ul,
-        [dir="rtl"] .blog-content ol { margin: 1rem 1.5rem 1.5rem 0; }
-        [dir="rtl"] .blog-content blockquote {
-          border-left: none;
-          border-right: 3px solid var(--accent-cyan);
-          border-radius: 0.5rem 0 0 0.5rem;
         }
         .blog-content th {
           background: var(--bg-muted);
