@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { useLocale } from "@/lib/i18n/LocaleContext";
 
 const TESTIMONIALS = [
   {
@@ -28,6 +29,12 @@ const TESTIMONIALS = [
 ] as const;
 
 export function TestimonialsSection() {
+  const { t } = useLocale();
+  const tm = t.testimonials;
+  const items = [
+    { ...TESTIMONIALS[0], quote: tm.items[0].quote, name: tm.items[0].name, role: tm.items[0].role },
+    { ...TESTIMONIALS[1], quote: tm.items[1].quote, name: tm.items[1].name, role: tm.items[1].role },
+  ];
   return (
     <section
       className="px-6 py-24 sm:px-10 sm:py-28 transition-colors duration-300"
@@ -45,18 +52,18 @@ export function TestimonialsSection() {
             className="text-left text-3xl font-bold tracking-tight sm:text-4xl lg:text-[2.65rem] lg:leading-tight transition-colors duration-300"
             style={{ color: "var(--text-primary)" }}
           >
-            What Our Clients Say
+            {tm.heading}
           </h2>
           <p
             className="mt-5 text-left text-base leading-relaxed sm:text-lg transition-colors duration-300"
             style={{ color: "var(--text-secondary)" }}
           >
-            Organizations that have used GINTEX intelligence infrastructure to understand and improve their strategic market position.
+            {tm.body}
           </p>
         </motion.header>
 
         <div className="flex min-w-0 flex-1 flex-col gap-6 lg:gap-7">
-          {TESTIMONIALS.map((t, idx) => (
+          {items.map((t, idx) => (
             <motion.figure
               key={t.name}
               data-cursor-hover

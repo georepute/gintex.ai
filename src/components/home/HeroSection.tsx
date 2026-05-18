@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useRef } from "react";
 import { motion, useScroll, useTransform, useSpring } from "framer-motion";
 import heroImage from "@/Gintex-images/Main img 1.png";
+import { useLocale } from "@/lib/i18n/LocaleContext";
 
 const container = {
   hidden: {},
@@ -55,6 +56,8 @@ function GlowOrb({ x, y, size, color, dur, delay }: {
 }
 
 export function HeroSection() {
+  const { t } = useLocale();
+  const h = t.hero;
   const sectionRef = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({ target: sectionRef, offset: ["start start", "end start"] });
   const rawY = useTransform(scrollYProgress, [0, 1], [0, 60]);
@@ -132,7 +135,7 @@ export function HeroSection() {
                 animate={{ opacity: [1, 0.3, 1], scale: [1, 0.65, 1] }}
                 transition={{ duration: 1.6, repeat: Infinity }}
               />
-              Marketing Evolution
+              {h.badge}
             </motion.div>
           </motion.div>
 
@@ -142,14 +145,14 @@ export function HeroSection() {
             style={{ color: "var(--text-primary)" }}
             variants={fadeUp}
           >
-            Strategic Intelligence for{" "}
+            {h.heading1}{" "}
             <motion.span
               className="relative inline-block bg-gradient-to-r from-sky-400 via-cyan-300 to-teal-300 bg-clip-text text-transparent"
               animate={{ backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"] }}
               transition={{ duration: 5, repeat: Infinity, ease: "linear" }}
               style={{ backgroundSize: "200% 200%" }}
             >
-              Market Visibility
+              {h.heading2}
             </motion.span>
           </motion.h1>
 
@@ -159,7 +162,7 @@ export function HeroSection() {
             style={{ color: "var(--text-secondary)" }}
             variants={fadeUp}
           >
-            We help organizations understand how markets, AI systems, search engines, and digital ecosystems perceive their business - transforming intelligence into measurable strategic growth.
+            {h.body}
           </motion.p>
 
           {/* CTAs */}
@@ -177,7 +180,7 @@ export function HeroSection() {
                 href="/contact"
                 className="inline-flex items-center justify-center whitespace-nowrap rounded-full bg-gradient-to-r from-blue-600 to-purple-600 px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-blue-900/30"
               >
-                Explore GeoRepute
+                {h.cta1}
               </Link>
             </motion.div>
 
@@ -193,7 +196,7 @@ export function HeroSection() {
                 className="inline-flex items-center justify-center whitespace-nowrap rounded-full px-6 py-3 text-sm font-semibold transition-colors duration-300"
                 style={{ color: "var(--text-primary)" }}
               >
-                View Intelligence Reports
+                {h.cta2}
               </Link>
             </motion.div>
           </motion.div>
@@ -205,8 +208,7 @@ export function HeroSection() {
             variants={fadeUp}
           >
             <span className="h-px w-5 bg-sky-400/60" />
-            Powered by{" "}
-            <span className="font-semibold tracking-wide text-sky-500">the GeoRepute Intelligence Infrastructure</span>
+            {h.poweredBy}
           </motion.p>
 
           {/* Stats row */}
@@ -215,11 +217,7 @@ export function HeroSection() {
             style={{ borderTop: "1px solid var(--border)" }}
             variants={fadeUp}
           >
-            {[
-              { value: "3.4×", label: "Avg. ROI lift" },
-              { value: "98%",  label: "Uptime SLA"   },
-              { value: "500+", label: "Brands served" },
-            ].map(({ value, label }) => (
+            {h.stats.map(({ value, label }) => (
               <div key={label} className="flex flex-col gap-0.5">
                 <motion.span
                   className="text-xl font-bold sm:text-2xl transition-colors duration-300"
@@ -316,14 +314,7 @@ export function HeroSection() {
         style={{ borderColor: "var(--border)", background: "var(--bg-subtle)" }}
       >
         <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-3 px-6">
-          {[
-            "70+ Proprietary Intelligence Reports",
-            "Strategic Market Analysis",
-            "AI Visibility & Reputation Intelligence",
-            "SEO & GEO Infrastructure",
-            "Executive Advisory",
-            "Political & Public Intelligence",
-          ].map((item) => (
+          {h.authority.map((item) => (
             <span
               key={item}
               className="flex items-center gap-2 text-xs font-medium tracking-wide transition-colors duration-300"

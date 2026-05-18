@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState, useCallback } from "react";
 import { motion, useMotionValue, useSpring } from "framer-motion";
+import { useLocale } from "@/lib/i18n/LocaleContext";
 
 // ─── Data ────────────────────────────────────────────────────────────────────
 
@@ -71,10 +72,12 @@ function AmbientOrb({ x, y, size, color, delay }: {
 
 // ─── Node component ───────────────────────────────────────────────────────────
 
+type StepType = { n: string; title: string; detail: string; icon: string };
+
 function StepNode({
   step, isActive, isCompleted, index,
 }: {
-  step: typeof STEPS[number];
+  step: StepType;
   isActive: boolean;
   isCompleted: boolean;
   index: number;
@@ -308,6 +311,13 @@ function StepNode({
 // ─── Main section ─────────────────────────────────────────────────────────────
 
 export function OptimizationLoopSection() {
+  const { t } = useLocale();
+  const p = t.pdca;
+  const stepsI18n = [...STEPS].map((s, i) => ({
+    ...s,
+    title: (p.phases[i] ?? s.title) as string,
+    detail: (p.phaseDescs[i] ?? s.detail) as string,
+  }));
   const [active, setActive] = useState(0);
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
@@ -394,25 +404,21 @@ export function OptimizationLoopSection() {
               transition={{ duration: 1.4, repeat: Infinity }}
             />
             <span className="text-[11px] font-semibold uppercase tracking-[0.2em] text-sky-400/90">
-              Live Pipeline
+              {p.kicker ?? "Live Pipeline"}
             </span>
           </motion.div>
 
-          <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl md:text-[2.6rem] md:leading-[1.15]">
-            A Continuous{" "}
-            <span
-              className="relative inline-block"
-              style={{
-                background: "linear-gradient(135deg, rgb(56,189,248) 0%, rgb(139,92,246) 100%)",
-                WebkitBackgroundClip: "text",
-                WebkitTextFillColor: "transparent",
-              }}
-            >
-              Optimization Loop
-            </span>
+          <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl md:text-[2.6rem] md:leading-[1.15]"
+            style={{
+              background: "linear-gradient(135deg, rgb(248,250,252) 0%, rgb(56,189,248) 100%)",
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+            }}
+          >
+            {p.heading}
           </h2>
           <p className="mt-4 text-sm font-semibold uppercase tracking-[0.28em] text-sky-400/70">
-            From analyze to improve
+            {p.body}
           </p>
         </motion.header>
 
@@ -467,7 +473,7 @@ export function OptimizationLoopSection() {
 
           {/* ── Step nodes ── */}
           <div className="relative z-10 flex justify-between">
-            {STEPS.map((step, idx) => (
+            {stepsI18n.map((step, idx) => (
               <StepNode
                 key={step.n}
                 step={step}
@@ -517,7 +523,7 @@ export function OptimizationLoopSection() {
             />
           </div>
 
-          {STEPS.map((step, idx) => {
+          {stepsI18n.map((step, idx) => {
             const isActive = idx === active;
             const isCompleted = idx < active;
 

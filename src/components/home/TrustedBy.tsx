@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { useLocale } from "@/lib/i18n/LocaleContext";
 
 const STATS = [
   { value: "500+",  label: "Organizations Analyzed"       },
@@ -21,6 +22,8 @@ const INDUSTRIES = [
 ] as const;
 
 export function TrustedBy() {
+  const { t } = useLocale();
+  const tb = t.trustedBy;
   return (
     <section
       className="px-6 py-14 sm:px-10 sm:py-16 transition-colors duration-300"
@@ -36,12 +39,12 @@ export function TrustedBy() {
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
         >
-          Trusted by organizations across industries worldwide
+          {tb.text}
         </motion.p>
 
         {/* Stats row */}
         <div className="mb-12 grid grid-cols-2 gap-6 sm:grid-cols-4">
-          {STATS.map(({ value, label }, idx) => (
+          {tb.stats.map(({ value, label }, idx) => (
             <motion.div
               key={label}
               className="flex flex-col items-center gap-1.5 text-center"

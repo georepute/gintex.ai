@@ -2,6 +2,7 @@
 
 import { useId, useState } from "react";
 import { motion } from "framer-motion";
+import { useLocale } from "@/lib/i18n/LocaleContext";
 
 const FAQS = [
   {
@@ -45,8 +46,10 @@ function Chevron({ open }: { open: boolean }) {
 }
 
 export function FaqSection() {
+  const { t } = useLocale();
   const baseId = useId();
   const [openIndex, setOpenIndex] = useState<number | null>(0);
+  const faqs = t.faq.items;
 
   return (
     <section
@@ -62,11 +65,11 @@ export function FaqSection() {
           viewport={{ once: true, margin: "-80px" }}
           transition={{ duration: 0.6, ease: "easeOut" }}
         >
-          Frequently Asked
+          {t.faq.heading}
         </motion.h2>
 
         <div className="mt-12 flex flex-col gap-4">
-          {FAQS.map((item, index) => {
+          {faqs.map((item, index) => {
             const open = openIndex === index;
             const panelId = `${baseId}-panel-${index}`;
             const headerId = `${baseId}-header-${index}`;

@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { createClient } from "@/lib/supabase/server";
+import { createPublicClient } from "@/lib/supabase/server";
 import type { Blog } from "@/types/blog";
 
 export const metadata: Metadata = {
@@ -13,7 +13,7 @@ export const metadata: Metadata = {
 export const revalidate = 60;
 
 async function getPublishedBlogs(): Promise<Blog[]> {
-  const supabase = await createClient();
+  const supabase = createPublicClient();
   const { data } = await supabase
     .from("blogs")
     .select("id, title, slug, excerpt, cover_image, tags, published_at, reading_time, language")

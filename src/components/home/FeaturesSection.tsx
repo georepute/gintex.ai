@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { useLocale } from "@/lib/i18n/LocaleContext";
 
 function AIVisibilityIcon({ className }: { className?: string }) {
   return (
@@ -77,6 +78,13 @@ const FEATURES = [
 ] as const;
 
 export function FeaturesSection() {
+  const { t } = useLocale();
+  const f = t.features;
+  const FEATURES_I18N = [
+    { ...FEATURES[0], title: f.items[0].title, desc: f.items[0].desc, body: f.items[0].body },
+    { ...FEATURES[1], title: f.items[1].title, desc: f.items[1].desc, body: f.items[1].body },
+    { ...FEATURES[2], title: f.items[2].title, desc: f.items[2].desc, body: f.items[2].body },
+  ];
   return (
     <section
       className="px-6 py-20 sm:px-10 sm:py-28 transition-colors duration-300"
@@ -94,19 +102,18 @@ export function FeaturesSection() {
             className="text-3xl font-bold tracking-tight sm:text-4xl md:text-[2.75rem] md:leading-tight transition-colors duration-300"
             style={{ color: "var(--text-primary)" }}
           >
-            We Analyze How the Market Sees You
+            {f.heading}
           </h2>
           <p
             className="mt-5 max-w-2xl mx-auto text-base leading-relaxed sm:text-lg transition-colors duration-300"
             style={{ color: "var(--text-secondary)" }}
           >
-            Most companies invest in marketing without fully understanding how they are represented across AI systems, search engines, digital media, and public perception.
-            GINTEX combines strategic consulting, proprietary analytical frameworks, and intelligence systems to help organizations make better market decisions.
+            {f.body}
           </p>
         </motion.header>
 
         <div className="grid gap-8 md:grid-cols-3 md:gap-6 lg:gap-8">
-          {FEATURES.map(({ title, desc, body, Icon, iconWrap, orb, topLine }, idx) => (
+          {FEATURES_I18N.map(({ title, desc, body, Icon, iconWrap, orb, topLine }, idx) => (
             <motion.article
               key={title}
               data-cursor-hover

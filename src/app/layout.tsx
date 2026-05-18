@@ -4,6 +4,7 @@ import { PremiumCursor } from "@/components/cursor";
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
 import { ThemeProvider } from "@/components/ThemeProvider";
+import { LocaleProvider } from "@/lib/i18n/LocaleContext";
 import { ThemeToggleFloat } from "@/components/ThemeToggleFloat";
 import "./globals.css";
 
@@ -88,6 +89,7 @@ export default function RootLayout({
       className={`${inter.variable} ${spaceGrotesk.variable} h-full antialiased`}
     >
       <body className="flex min-h-screen flex-col font-sans">
+        <LocaleProvider>
         <ThemeProvider>
         <script
           type="application/ld+json"
@@ -140,6 +142,7 @@ export default function RootLayout({
         <div className="flex flex-1 flex-col">{children}</div>
         <Footer />
         </ThemeProvider>
+        </LocaleProvider>
       </body>
     </html>
   );

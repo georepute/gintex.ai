@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { useLocale } from "@/lib/i18n/LocaleContext";
 
 const BLOCKS = [
   {
@@ -36,6 +37,13 @@ const BLOCKS = [
 ] as const;
 
 export function EcosystemSection() {
+  const { t } = useLocale();
+  const e = t.ecosystem;
+  const blocksI18n = BLOCKS.map((b, i) => ({
+    ...b,
+    purpose: e.blocks[i]?.purpose ?? b.purpose,
+    desc: e.blocks[i]?.desc ?? b.desc,
+  }));
   return (
     /* Always a dark strip regardless of theme — acts as a section separator */
     <section className="relative overflow-hidden bg-[#080c12] px-6 py-24 sm:px-10 sm:py-32">
@@ -56,7 +64,7 @@ export function EcosystemSection() {
           transition={{ duration: 0.6, ease: "easeOut" }}
         >
           <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl md:text-[2.6rem] md:leading-tight">
-            The{" "}
+            {e.heading1}{" "}
             <span
               style={{
                 background: "linear-gradient(135deg, rgb(56,189,248) 0%, rgb(139,92,246) 100%)",
@@ -64,17 +72,17 @@ export function EcosystemSection() {
                 WebkitTextFillColor: "transparent",
               }}
             >
-              GINTEX Intelligence
+              {e.heading2}
             </span>{" "}
-            Ecosystem
+            {e.heading3}
           </h2>
           <p className="mt-5 text-base leading-relaxed text-gray-400 sm:text-lg">
-            Three interconnected platforms — each playing a distinct role in the analytical infrastructure that powers strategic market positioning.
+            {e.body}
           </p>
         </motion.header>
 
         <div className="grid gap-6 md:grid-cols-3">
-          {BLOCKS.map(({ brand, purpose, desc, color, glow, ring, dot, tag }, idx) => (
+          {blocksI18n.map(({ brand, purpose, desc, color, glow, ring, dot, tag }, idx) => (
             <motion.div
               key={brand}
               className="group relative flex flex-col overflow-hidden rounded-2xl border border-white/[0.07] bg-gradient-to-b from-white/[0.03] to-transparent p-7 backdrop-blur-sm transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-1.5"
@@ -124,7 +132,7 @@ export function EcosystemSection() {
           <div className="flex items-center gap-3">
             <div className="h-px w-12 bg-gradient-to-r from-transparent to-sky-500/50" />
             <span className="text-[11px] font-semibold uppercase tracking-[0.22em] text-gray-500">
-              One unified intelligence layer
+              {e.unified}
             </span>
             <div className="h-px w-12 bg-gradient-to-l from-transparent to-sky-500/50" />
           </div>
