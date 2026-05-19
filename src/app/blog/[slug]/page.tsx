@@ -46,9 +46,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-function formatDate(iso: string | null): string {
+const RTL_LANGS = new Set(["he", "ar"]);
+
+function formatDate(iso: string | null, lang?: string): string {
   if (!iso) return "";
-  return new Date(iso).toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" });
+  const locale = lang === "he" ? "he-IL" : lang === "ar" ? "ar-SA" : "en-US";
+  return new Date(iso).toLocaleDateString(locale, { month: "long", day: "numeric", year: "numeric" });
 }
 
 export default async function BlogDetailPage({ params }: Props) {
@@ -74,6 +77,10 @@ export default async function BlogDetailPage({ params }: Props) {
     keywords: (blog.tags ?? []).join(", "),
   };
 
+  const isRtl = RTL_LANGS.has(blog.language ?? "en");
+  const dir = isRtl ? "rtl" : "ltr";
+  const textAlign = isRtl ? "right" : "left";
+
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
@@ -83,10 +90,14 @@ export default async function BlogDetailPage({ params }: Props) {
         <section
           className="border-b px-6 pb-12 pt-12 sm:px-10"
           style={{ borderColor: "var(--border)" }}
+          dir={dir}
         >
-          <div className="mx-auto max-w-3xl">
+          <div className="mx-auto max-w-3xl" style={{ textAlign }}>
             {/* Breadcrumb */}
-            <nav className="mb-6 flex items-center gap-2 text-xs" style={{ color: "var(--text-muted)" }}>
+            <nav
+              className="mb-6 flex items-center gap-2 text-xs"
+              style={{ color: "var(--text-muted)", flexDirection: isRtl ? "row-reverse" : "row", justifyContent: isRtl ? "flex-end" : "flex-start" }}
+            >
               <Link href="/intelligence" className="hover:opacity-80 transition-opacity">Intelligence</Link>
               <span>/</span>
               <span className="truncate max-w-[200px]">{blog.title}</span>
@@ -94,7 +105,7 @@ export default async function BlogDetailPage({ params }: Props) {
 
             {/* Tags */}
             {blog.tags && blog.tags.length > 0 && (
-              <div className="mb-4 flex flex-wrap gap-2">
+              <div className={`mb-4 flex flex-wrap gap-2 ${isRtl ? "justify-end" : ""}`}>
                 {blog.tags.map(tag => (
                   <span
                     key={tag}
@@ -117,8 +128,8 @@ export default async function BlogDetailPage({ params }: Props) {
               </p>
             )}
 
-            <div className="mt-6 flex flex-wrap items-center gap-4 text-sm" style={{ color: "var(--text-muted)" }}>
-              {blog.published_at && <span>Published {formatDate(blog.published_at)}</span>}
+            <div className={`mt-6 flex flex-wrap items-center gap-4 text-sm ${isRtl ? "flex-row-reverse justify-end" : ""}`} style={{ color: "var(--text-muted)" }}>
+              {blog.published_at && <span>Published {formatDate(blog.published_at, blog.language)}</span>}
               {blog.reading_time && (
                 <>
                   <span>·</span>
@@ -145,9 +156,9 @@ export default async function BlogDetailPage({ params }: Props) {
         )}
 
         {/* Article content */}
-        <article className="px-6 pb-20 pt-10 sm:px-10">
+        <article className="px-6 pb-20 pt-10 sm:px-10" dir={dir}>
           <div
-            className="blog-content mx-auto max-w-3xl"
+            className={`blog-content mx-auto max-w-3xl${isRtl ? " blog-content-rtl" : ""}`}
             dangerouslySetInnerHTML={{ __html: blog.content ?? "" }}
           />
         </article>
@@ -268,6 +279,27 @@ export default async function BlogDetailPage({ params }: Props) {
         .blog-content strong { font-weight: 600; color: var(--text-primary); }
         .blog-content em { font-style: italic; }
         .blog-content hr { border: none; border-top: 1px solid var(--border); margin: 2rem 0; }
+
+        /* ── RTL overrides (Hebrew / Arabic) ── */
+        .blog-content-rtl { direction: rtl; text-align: right; }
+        .blog-content-rtl h1,
+        .blog-content-rtl h2,
+        .blog-content-rtl h3,
+        .blog-content-rtl h4 { text-align: right; direction: rtl; }
+        .blog-content-rtl p { text-align: right; direction: rtl; }
+        .blog-content-rtl ul,
+        .blog-content-rtl ol { margin: 1rem 1.5rem 1.5rem 0; padding-right: 1.5rem; padding-left: 0; text-align: right; }
+        .blog-content-rtl li { text-align: right; }
+        .blog-content-rtl blockquote {
+          border-left: none;
+          border-right: 3px solid var(--accent-cyan);
+          border-radius: 0.5rem 0 0 0.5rem;
+          text-align: right;
+        }
+        .blog-content-rtl table,
+        .blog-content-rtl th,
+        .blog-content-rtl td { text-align: right; direction: rtl; }
+        .blog-content-rtl div { direction: rtl; }
       `}</style>
     </>
   );

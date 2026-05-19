@@ -63,6 +63,59 @@ function extractJson(text: string): string {
   return text.trim();
 }
 
+// Attempt to salvage a truncated JSON response by extracting fields individually
+function repairTruncatedJson(raw: string, topic: string): Record<string, unknown> | null {
+  try {
+    // Extract title
+    const titleMatch = raw.match(/"title"\s*:\s*"((?:[^"\\]|\\.)*)"/);
+    const slugMatch  = raw.match(/"slug"\s*:\s*"((?:[^"\\]|\\.)*)"/);
+    const excerptMatch = raw.match(/"excerpt"\s*:\s*"((?:[^"\\]|\\.)*)"/);
+    const seoTitleMatch = raw.match(/"seo_title"\s*:\s*"((?:[^"\\]|\\.)*)"/);
+    const seoDescMatch  = raw.match(/"seo_description"\s*:\s*"((?:[^"\\]|\\.)*)"/);
+    const tagsMatch = raw.match(/"tags"\s*:\s*\[([^\]]*)\]/);
+
+    // Extract content — everything between "content": " and the next unescaped " followed by ,
+    const contentStart = raw.indexOf('"content"');
+    let content = "";
+    if (contentStart !== -1) {
+      const valueStart = raw.indexOf('"', contentStart + 9) + 1;
+      // Walk forward collecting content, stop at truncation
+      content = raw.slice(valueStart);
+      // Remove trailing partial escape sequences and close the HTML
+      content = content
+        .replace(/\\n/g, "\n")
+        .replace(/\\"/g, '"')
+        .replace(/\\\\/g, "\\")
+        .replace(/\\t/g, "  ");
+      // Trim any trailing partial tag or escape
+      content = content.replace(/\\[^"ntr\\]*$/, "").replace(/<[^>]*$/, "");
+      // Ensure HTML is somewhat closed
+      if (!content.includes("</div>") && !content.includes("</p>")) {
+        content += "</p>";
+      }
+    }
+
+    if (!titleMatch && !content) return null;
+
+    const tags = tagsMatch
+      ? tagsMatch[1].match(/"([^"]+)"/g)?.map(t => t.replace(/"/g, "")) ?? []
+      : [];
+
+    return {
+      title: titleMatch?.[1] ?? topic,
+      slug:  slugMatch?.[1]  ?? slugify(topic),
+      excerpt: excerptMatch?.[1] ?? "",
+      content,
+      seo_title: seoTitleMatch?.[1] ?? titleMatch?.[1] ?? topic,
+      seo_description: seoDescMatch?.[1] ?? "",
+      tags,
+      reading_time: 10,
+    };
+  } catch {
+    return null;
+  }
+}
+
 // Generate a stable numeric seed from a string
 function strToSeed(str: string): number {
   let hash = 0;
@@ -284,7 +337,7 @@ Return ONLY valid JSON as specified in the system prompt. No markdown fences. No
     try {
       const response = await anthropic.messages.create({
         model: "claude-sonnet-4-6",
-        max_tokens: 12000,
+        max_tokens: 16000,
         system: SYSTEM_PROMPT,
         messages: [{ role: "user", content: userPrompt }],
       });
@@ -295,8 +348,13 @@ Return ONLY valid JSON as specified in the system prompt. No markdown fences. No
       let parsed: Record<string, unknown>;
       try {
         parsed = JSON.parse(jsonStr);
-      } catch (parseErr: any) {
-        throw new Error(`Claude returned malformed JSON: ${parseErr.message}. Preview: ${jsonStr.slice(0, 300)}`);
+      } catch {
+        // JSON was truncated — attempt field-level extraction
+        const repaired = repairTruncatedJson(rawText, topic);
+        if (!repaired) {
+          throw new Error(`Claude returned malformed JSON that could not be repaired. Preview: ${rawText.slice(0, 300)}`);
+        }
+        parsed = repaired;
       }
       const slug = slugify(String(parsed.slug || parsed.title || topic));
       result = sanitiseResult(parsed, topic, slug, language);
@@ -326,7 +384,14 @@ Return ONLY valid JSON as specified in the system prompt. No markdown fences. No
 
       tokensUsed = response.usage?.total_tokens ?? 0;
       const rawText = response.choices[0]?.message?.content ?? "";
-      const parsed = JSON.parse(extractJson(rawText));
+      let parsed: Record<string, unknown>;
+      try {
+        parsed = JSON.parse(extractJson(rawText));
+      } catch {
+        const repaired = repairTruncatedJson(rawText, topic);
+        if (!repaired) throw new Error("OpenAI returned malformed JSON that could not be repaired.");
+        parsed = repaired;
+      }
       const slug = slugify(String(parsed.slug || parsed.title || topic));
       result = sanitiseResult(parsed, topic, slug, language);
     } catch (err: any) {

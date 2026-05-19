@@ -1,9 +1,17 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import type { ServiceItem } from "@/data/services";
 import { useLang } from "@/components/LanguageContext";
 import { t, tx } from "@/lib/translations";
+import copyUpLogo from "@/Gintex-images/image (7).png";
+import onlinePerceptionLogo from "@/Gintex-images/WhatsApp Image 2026-02-03 at 20.54.01 (1) (3).jpeg";
+
+const LOGOS: Record<string, { src: typeof copyUpLogo; width: number; height: number; pill?: boolean }> = {
+  CopyApp: { src: copyUpLogo, width: 300, height: 90, pill: false },
+  "OnlinePerception AI": { src: onlinePerceptionLogo, width: 220, height: 60 },
+};
 
 const SYSTEM_STYLES: Record<string, {
   gradient: string;
@@ -95,13 +103,31 @@ export function SystemCard({ system }: { system: ServiceItem }) {
         </div>
       </div>
 
-      {/* Title */}
-      <h2
-        className="relative text-2xl font-black tracking-tight transition-colors duration-300"
-        style={{ color: "var(--text-primary)" }}
-      >
-        {system.title}
-      </h2>
+      {/* Logo or Title */}
+      {LOGOS[system.title] ? (
+        <div className="relative mb-1 flex items-center" style={{ height: 90 }}>
+          <Image
+            src={LOGOS[system.title].src}
+            alt={system.title}
+            width={LOGOS[system.title].width}
+            height={LOGOS[system.title].height}
+            className="object-contain object-left"
+            style={{
+              maxHeight: 90,
+              width: "auto",
+              mixBlendMode: "multiply",
+              filter: "contrast(1.1) saturate(1.2)",
+            }}
+          />
+        </div>
+      ) : (
+        <h2
+          className="relative text-2xl font-black tracking-tight transition-colors duration-300"
+          style={{ color: "var(--text-primary)" }}
+        >
+          {system.title}
+        </h2>
+      )}
 
       {/* Summary */}
       <p
