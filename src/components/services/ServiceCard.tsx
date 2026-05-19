@@ -3,6 +3,8 @@
 import Link from "next/link";
 import type { ServiceItem } from "@/data/services";
 import { ServiceIcon } from "@/components/services/ServiceIcons";
+import { useLang } from "@/components/LanguageContext";
+import { t, tx } from "@/lib/translations";
 
 const accentStyles = {
   purple: {
@@ -22,6 +24,7 @@ const accentStyles = {
 } as const;
 
 export function ServiceCard({ service }: { service: ServiceItem }) {
+  const { lang } = useLang();
   const a = accentStyles[service.accent];
   const href = service.href ?? "/contact";
   const isExternal = !!service.href;
@@ -51,7 +54,7 @@ export function ServiceCard({ service }: { service: ServiceItem }) {
             className="rounded-full px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-[0.18em]"
             style={a.badge}
           >
-            Live System
+            {tx(t.services.liveSystem, lang)}
           </span>
           <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ color: "var(--text-muted)" }}>
             <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/>
@@ -92,7 +95,7 @@ export function ServiceCard({ service }: { service: ServiceItem }) {
         rel={isExternal ? "noopener noreferrer" : undefined}
         className={`font-label relative mt-8 inline-flex shrink-0 items-center gap-1.5 text-[10px] font-bold uppercase tracking-[0.18em] transition-colors sm:mt-10 sm:text-[11px] ${a.link}`}
       >
-        {service.isProduct ? "Visit Platform" : "Learn more"}
+        {service.isProduct ? tx(t.services.visitPlatform, lang) : tx(t.services.learnMore, lang)}
         <span aria-hidden className="text-xs font-normal">→</span>
       </Link>
     </article>

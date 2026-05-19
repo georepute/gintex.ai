@@ -1,5 +1,9 @@
+"use client";
+
 import Image from "next/image";
 import { PDCA_PHASE_DETAILS } from "@/data/pdca";
+import { useLang } from "@/components/LanguageContext";
+import { t, tx } from "@/lib/translations";
 
 function PhaseIcon({ slug }: { slug: string }) {
   const cls = "h-5 w-5 sm:h-6 sm:w-6";
@@ -120,12 +124,30 @@ function PhaseImage({ image, imageAlt }: Pick<(typeof PDCA_PHASE_DETAILS)[number
 }
 
 export function PdcaPhaseDetailSections() {
+  const { lang } = useLang();
+
+  const phaseKey = (slug: string) => slug as "plan" | "do" | "check" | "act";
+
+  const PHASES_TRANSLATED = PDCA_PHASE_DETAILS.map((phase) => {
+    const k = phaseKey(phase.slug);
+    const d = t.pdca.details[k];
+    return {
+      ...phase,
+      title: tx(d.title, lang),
+      body: tx(d.body, lang),
+      bullets: [
+        { emphasis: tx(d.b1e, lang), text: tx(d.b1t, lang) },
+        { emphasis: tx(d.b2e, lang), text: tx(d.b2t, lang) },
+      ],
+    };
+  });
+
   return (
     <div
       className="transition-colors duration-300"
       style={{ borderTop: "1px solid var(--border)", background: "var(--bg-page)" }}
     >
-      {PDCA_PHASE_DETAILS.map((phase) => {
+      {PHASES_TRANSLATED.map((phase) => {
         const isTextFirst = phase.layout === "text-image";
         const accent = topAccent[phase.slug] ?? topAccent.plan;
 

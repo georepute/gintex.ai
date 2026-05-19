@@ -3,18 +3,62 @@
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
+import { useLang } from "./LanguageContext";
 
 const NAV_LINKS = [
-  { href: "/", label: "Home" },
-  { href: "/services", label: "Services" },
-  { href: "/intelligence", label: "Intelligence" },
-  { href: "/pdca", label: "PDCA" },
-  { href: "/global-map", label: "Global Map" },
-  { href: "/about", label: "About" },
-  { href: "/contact", label: "Contact" },
+  { href: "/", en: "Home", he: "בית" },
+  { href: "/services", en: "Services", he: "שירותים" },
+  { href: "/intelligence", en: "Intelligence", he: "מודיעין" },
+  { href: "/pdca", en: "PDCA", he: "PDCA" },
+  { href: "/global-map", en: "Global Map", he: "מפה גלובלית" },
+  { href: "/about", en: "About", he: "אודות" },
+  { href: "/contact", en: "Contact", he: "צור קשר" },
 ] as const;
 
+function LangToggle() {
+  const { lang, toggleLang } = useLang();
+  const isHe = lang === "he";
+
+  return (
+    <button
+      onClick={toggleLang}
+      aria-label="Switch language"
+      className="relative flex h-7 w-16 shrink-0 cursor-pointer items-center rounded-full p-[3px] focus:outline-none"
+      style={{
+        background: "var(--header-bg)",
+        border: "1px solid rgba(150,150,150,0.25)",
+        boxShadow: "inset 0 1px 3px rgba(0,0,0,0.12)",
+      }}
+    >
+      {/* sliding pill */}
+      <span
+        className="absolute top-[3px] h-[22px] w-[26px] rounded-full transition-all duration-300 ease-in-out"
+        style={{
+          left: isHe ? "calc(100% - 29px)" : "3px",
+          background: "linear-gradient(135deg, #3b82f6, #7c3aed)",
+          boxShadow: "0 1px 4px rgba(99,102,241,0.5)",
+        }}
+      />
+      {/* EN label */}
+      <span
+        className="z-10 flex-1 select-none text-center text-[11px] font-semibold tracking-wide transition-colors duration-300"
+        style={{ color: isHe ? "var(--text-secondary)" : "#fff" }}
+      >
+        EN
+      </span>
+      {/* HE label */}
+      <span
+        className="z-10 flex-1 select-none text-center text-[11px] font-semibold tracking-wide transition-colors duration-300"
+        style={{ color: isHe ? "#fff" : "var(--text-secondary)" }}
+      >
+        עב
+      </span>
+    </button>
+  );
+}
+
 function ConsultationLink({ className }: { className?: string }) {
+  const { lang } = useLang();
   return (
     <Link
       href="/contact"
@@ -23,13 +67,14 @@ function ConsultationLink({ className }: { className?: string }) {
         (className ?? "")
       }
     >
-      Book a Consultation
+      {lang === "he" ? "קבע ייעוץ" : "Book a Consultation"}
     </Link>
   );
 }
 
 export function Header() {
   const pathname = usePathname();
+  const { lang } = useLang();
 
   return (
     <header
@@ -60,6 +105,7 @@ export function Header() {
             >
               Admin
             </Link>
+            <LangToggle />
           </div>
         </div>
 
@@ -67,7 +113,7 @@ export function Header() {
           className="flex flex-wrap justify-center gap-x-6 gap-y-2 text-sm sm:gap-8 lg:absolute lg:left-1/2 lg:-translate-x-1/2 lg:flex-nowrap lg:justify-start"
           aria-label="Main"
         >
-          {NAV_LINKS.map(({ href, label }) => {
+          {NAV_LINKS.map(({ href, en, he }) => {
             const isActive =
               href === "/"
                 ? pathname === "/"
@@ -84,7 +130,7 @@ export function Header() {
                   fontWeight: isActive ? 500 : 400,
                 }}
               >
-                {label}
+                {lang === "he" ? he : en}
               </Link>
             );
           })}
@@ -99,6 +145,7 @@ export function Header() {
           >
             Admin
           </Link>
+          <LangToggle />
         </div>
       </div>
     </header>

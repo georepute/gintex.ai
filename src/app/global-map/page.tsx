@@ -1,8 +1,11 @@
 "use client";
 
 import Link from "next/link";
+import { useLang } from "@/components/LanguageContext";
+import { t, tx } from "@/lib/translations";
 
 export default function GlobalMapPage() {
+  const { lang } = useLang();
   return (
     <div className="flex flex-col" style={{ background: "var(--bg-page)" }}>
 
@@ -44,7 +47,7 @@ export default function GlobalMapPage() {
               className="h-1.5 w-1.5 rounded-full animate-pulse"
               style={{ background: "var(--accent-cyan)" }}
             />
-            GeoRepute Global Intelligence Map
+            {tx(t.globalMap.hero.chip, lang)}
           </div>
 
           {/* Main headline */}
@@ -52,9 +55,9 @@ export default function GlobalMapPage() {
             className="text-4xl font-bold leading-[1.08] tracking-tight sm:text-5xl md:text-[3.25rem]"
             style={{ color: "var(--text-primary)" }}
           >
-            Understand Where Your{" "}
+            {tx(t.globalMap.hero.heading1, lang)}{" "}
             <span className="bg-gradient-to-r from-sky-400 via-cyan-300 to-teal-300 bg-clip-text text-transparent">
-              Market Actually Lives
+              {tx(t.globalMap.hero.heading2, lang)}
             </span>
           </h1>
 
@@ -63,9 +66,7 @@ export default function GlobalMapPage() {
             className="mx-auto mt-6 max-w-2xl text-base leading-relaxed sm:text-lg"
             style={{ color: "var(--text-secondary)" }}
           >
-            The GeoRepute Global Intelligence Map helps businesses understand where customer
-            attention exists, which platforms dominate their industry, and what type of digital
-            visibility structure fits their market.
+            {tx(t.globalMap.hero.body, lang)}
           </p>
 
           {/* Supporting line */}
@@ -77,9 +78,9 @@ export default function GlobalMapPage() {
             }}
           >
             <p className="text-sm leading-relaxed" style={{ color: "var(--text-secondary)" }}>
-              Different businesses require different visibility systems.{" "}
+              {tx(t.globalMap.hero.notice, lang)}{" "}
               <span className="font-semibold" style={{ color: "var(--text-primary)" }}>
-                A local business should not market itself like a global brand.
+                {tx(t.globalMap.hero.noticeB, lang)}
               </span>
             </p>
           </div>
@@ -94,7 +95,7 @@ export default function GlobalMapPage() {
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <circle cx="11" cy="11" r="8" /><path d="m21 21-4.35-4.35" />
               </svg>
-              Explore the Intelligence Map
+              {tx(t.globalMap.hero.cta1, lang)}
             </Link>
             <Link
               href="/contact"
@@ -105,7 +106,7 @@ export default function GlobalMapPage() {
                 background: "var(--bg-subtle)",
               }}
             >
-              Analyze My Visibility
+              {tx(t.globalMap.hero.cta2, lang)}
             </Link>
           </div>
 
@@ -120,46 +121,34 @@ export default function GlobalMapPage() {
         <div className="mx-auto max-w-5xl">
           {/* Section label */}
           <p className="mb-12 text-center text-[11px] font-semibold uppercase tracking-[0.3em]" style={{ color: "var(--accent-cyan)" }}>
-            What the map reveals
+            {tx(t.globalMap.reveals.kicker, lang)}
           </p>
 
           <div className="grid gap-6 sm:grid-cols-3">
             {[
               {
                 number: "01",
-                icon: (
-                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                    <rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/>
-                  </svg>
-                ),
+                icon: (<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>),
                 gradient: "from-sky-500/20 to-blue-600/10",
                 iconColor: "#38bdf8",
-                title: "Platform Intelligence",
-                body: "Discover which digital platforms dominate your industry and where your competitors are winning attention.",
+                title: tx(t.globalMap.reveals.c1.title, lang),
+                body: tx(t.globalMap.reveals.c1.body, lang),
               },
               {
                 number: "02",
-                icon: (
-                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                    <circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2"/>
-                  </svg>
-                ),
+                icon: (<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2"/></svg>),
                 gradient: "from-violet-500/20 to-purple-600/10",
                 iconColor: "#a78bfa",
-                title: "Market Visibility Structure",
-                body: "Understand whether your business requires local, regional, national, or global visibility — and build accordingly.",
+                title: tx(t.globalMap.reveals.c2.title, lang),
+                body: tx(t.globalMap.reveals.c2.body, lang),
               },
               {
                 number: "03",
-                icon: (
-                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/>
-                  </svg>
-                ),
+                icon: (<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg>),
                 gradient: "from-teal-500/20 to-cyan-600/10",
                 iconColor: "#2dd4bf",
-                title: "GEON Visibility Patterns",
-                body: "Explore visibility behavior, authority structure, reviews, AI presence, and narrative strength by profession.",
+                title: tx(t.globalMap.reveals.c3.title, lang),
+                body: tx(t.globalMap.reveals.c3.body, lang),
               },
             ].map(({ number, icon, gradient, iconColor, title, body }) => (
               <div
@@ -229,21 +218,19 @@ export default function GlobalMapPage() {
           {/* Header */}
           <div className="mx-auto mb-16 max-w-3xl text-center sm:mb-20">
             <p className="mb-4 text-[11px] font-semibold uppercase tracking-[0.3em]" style={{ color: "var(--accent-cyan)" }}>
-              What is this map?
+              {tx(t.globalMap.whatIsMap.kicker, lang)}
             </p>
             <h2
               className="text-3xl font-bold tracking-tight sm:text-4xl md:text-[2.75rem] md:leading-tight transition-colors duration-300"
               style={{ color: "var(--text-primary)" }}
             >
-              What Is the Global Intelligence Map?
+              {tx(t.globalMap.whatIsMap.heading, lang)}
             </h2>
             <p
               className="mt-5 mx-auto max-w-2xl text-base leading-relaxed sm:text-lg transition-colors duration-300"
               style={{ color: "var(--text-secondary)" }}
             >
-              The Global Intelligence Map is an interactive visibility intelligence system developed by GeoRepute.
-              It analyzes industries, digital behavior, platform relevance, customer attention patterns, and visibility
-              structures across modern search and AI ecosystems.
+              {tx(t.globalMap.whatIsMap.body, lang)}
             </p>
           </div>
 
@@ -251,9 +238,9 @@ export default function GlobalMapPage() {
           <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
             {[
               {
-                label: "Industries Mapped",
+                label: tx(t.globalMap.whatIsMap.stats.s1.label, lang),
                 value: "100+",
-                body: "Covering a broad range of business categories and market verticals.",
+                body: tx(t.globalMap.whatIsMap.stats.s1.body, lang),
                 iconWrap: "from-blue-500/50 to-indigo-600/35 shadow-[0_0_28px_-6px_rgba(59,130,246,0.55)] ring-white/15",
                 orb: "rgba(59,130,246,0.12)",
                 topLine: "from-transparent via-sky-400/80 to-transparent",
@@ -264,9 +251,9 @@ export default function GlobalMapPage() {
                 ),
               },
               {
-                label: "Platforms Tracked",
+                label: tx(t.globalMap.whatIsMap.stats.s2.label, lang),
                 value: "12",
-                body: "From Google and Instagram to AI-first discovery platforms.",
+                body: tx(t.globalMap.whatIsMap.stats.s2.body, lang),
                 iconWrap: "from-violet-500/45 to-purple-600/35 shadow-[0_0_28px_-6px_rgba(139,92,246,0.5)] ring-white/15",
                 orb: "rgba(139,92,246,0.1)",
                 topLine: "from-transparent via-fuchsia-400/75 to-transparent",
@@ -277,9 +264,9 @@ export default function GlobalMapPage() {
                 ),
               },
               {
-                label: "Visibility Levels",
+                label: tx(t.globalMap.whatIsMap.stats.s3.label, lang),
                 value: "4",
-                body: "Local, regional, national, and global — each with its own structure.",
+                body: tx(t.globalMap.whatIsMap.stats.s3.body, lang),
                 iconWrap: "from-teal-500/45 to-cyan-600/35 shadow-[0_0_28px_-6px_rgba(20,184,166,0.48)] ring-white/15",
                 orb: "rgba(20,184,166,0.1)",
                 topLine: "from-transparent via-cyan-400/80 to-transparent",
@@ -290,9 +277,9 @@ export default function GlobalMapPage() {
                 ),
               },
               {
-                label: "Professions Analyzed",
+                label: tx(t.globalMap.whatIsMap.stats.s4.label, lang),
                 value: "1,000+",
-                body: "Detailed visibility profiles across every major profession and niche.",
+                body: tx(t.globalMap.whatIsMap.stats.s4.body, lang),
                 iconWrap: "from-orange-500/45 to-amber-600/35 shadow-[0_0_28px_-6px_rgba(251,146,60,0.48)] ring-white/15",
                 orb: "rgba(251,146,60,0.1)",
                 topLine: "from-transparent via-orange-400/80 to-transparent",
@@ -337,14 +324,14 @@ export default function GlobalMapPage() {
             style={{ background: "var(--bg-card)", border: "1px solid var(--border)" }}
           >
             <p className="mb-6 text-sm font-bold uppercase tracking-[0.12em]" style={{ color: "var(--text-primary)" }}>
-              The system helps businesses understand
+              {tx(t.globalMap.whatIsMap.helpsKicker, lang)}
             </p>
             <div className="grid gap-4 sm:grid-cols-2">
               {[
-                "Where their audience actually spends attention",
-                "Which platforms matter most in their market",
-                "How visibility differs between industries",
-                "What type of digital presence is required to compete effectively",
+                tx(t.globalMap.whatIsMap.helps.h1, lang),
+                tx(t.globalMap.whatIsMap.helps.h2, lang),
+                tx(t.globalMap.whatIsMap.helps.h3, lang),
+                tx(t.globalMap.whatIsMap.helps.h4, lang),
               ].map((item) => (
                 <div key={item} className="flex items-start gap-3">
                   <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-sky-400" />
@@ -366,13 +353,13 @@ export default function GlobalMapPage() {
           {/* Header */}
           <div className="mx-auto mb-16 max-w-3xl text-center sm:mb-20">
             <p className="mb-4 text-[11px] font-semibold uppercase tracking-[0.3em]" style={{ color: "var(--accent-cyan)" }}>
-              Market Structure
+              {tx(t.globalMap.marketStructure.kicker, lang)}
             </p>
             <h2
               className="text-3xl font-bold tracking-tight sm:text-4xl md:text-[2.75rem] md:leading-tight transition-colors duration-300"
               style={{ color: "var(--text-primary)" }}
             >
-              Different Markets Require Different Visibility Strategies
+              {tx(t.globalMap.marketStructure.heading, lang)}
             </h2>
           </div>
 
@@ -380,10 +367,10 @@ export default function GlobalMapPage() {
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {[
               {
-                tier: "Local",
-                tagline: "Focused on nearby customer intent, reviews, maps, and trust signals.",
+                tier: tx(t.globalMap.marketStructure.tiers.local.tier, lang),
+                tagline: tx(t.globalMap.marketStructure.tiers.local.tagline, lang),
                 channels: ["Google Maps", "Google Business", "Instagram", "Facebook"],
-                bestFor: "Restaurants, clinics, salons, gyms, local services.",
+                bestFor: tx(t.globalMap.marketStructure.tiers.local.bestFor, lang),
                 iconWrap: "from-emerald-500/50 to-teal-600/35 shadow-[0_0_28px_-6px_rgba(16,185,129,0.55)] ring-white/15",
                 orb: "rgba(16,185,129,0.12)",
                 topLine: "from-transparent via-emerald-400/80 to-transparent",
@@ -395,10 +382,10 @@ export default function GlobalMapPage() {
                 ),
               },
               {
-                tier: "Regional",
-                tagline: "Focused on geographic expansion and regional authority.",
+                tier: tx(t.globalMap.marketStructure.tiers.regional.tier, lang),
+                tagline: tx(t.globalMap.marketStructure.tiers.regional.tagline, lang),
                 channels: ["Google Search", "Facebook", "YouTube", "Local SEO"],
-                bestFor: "Regional companies, agencies, contractors, education.",
+                bestFor: tx(t.globalMap.marketStructure.tiers.regional.bestFor, lang),
                 iconWrap: "from-sky-500/50 to-blue-600/35 shadow-[0_0_28px_-6px_rgba(14,165,233,0.55)] ring-white/15",
                 orb: "rgba(14,165,233,0.12)",
                 topLine: "from-transparent via-sky-400/80 to-transparent",
@@ -410,10 +397,10 @@ export default function GlobalMapPage() {
                 ),
               },
               {
-                tier: "National",
-                tagline: "Focused on authority, consistency, and large-scale brand visibility.",
+                tier: tx(t.globalMap.marketStructure.tiers.national.tier, lang),
+                tagline: tx(t.globalMap.marketStructure.tiers.national.tagline, lang),
                 channels: ["Google", "YouTube", "PR", "SEO", "AI Visibility"],
-                bestFor: "National brands, ecommerce, SaaS, coaching brands.",
+                bestFor: tx(t.globalMap.marketStructure.tiers.national.bestFor, lang),
                 iconWrap: "from-violet-500/45 to-purple-600/35 shadow-[0_0_28px_-6px_rgba(139,92,246,0.5)] ring-white/15",
                 orb: "rgba(139,92,246,0.1)",
                 topLine: "from-transparent via-violet-400/75 to-transparent",
@@ -425,10 +412,10 @@ export default function GlobalMapPage() {
                 ),
               },
               {
-                tier: "Global",
-                tagline: "Focused on international visibility and AI-driven digital ecosystems.",
+                tier: tx(t.globalMap.marketStructure.tiers.global.tier, lang),
+                tagline: tx(t.globalMap.marketStructure.tiers.global.tagline, lang),
                 channels: ["AI Search", "YouTube", "LinkedIn", "GEO", "Multilingual"],
-                bestFor: "Technology companies, AI brands, global ecommerce, international services.",
+                bestFor: tx(t.globalMap.marketStructure.tiers.global.bestFor, lang),
                 iconWrap: "from-orange-500/45 to-amber-500/35 shadow-[0_0_28px_-6px_rgba(251,146,60,0.5)] ring-white/15",
                 orb: "rgba(251,146,60,0.1)",
                 topLine: "from-transparent via-orange-400/75 to-transparent",
@@ -477,7 +464,7 @@ export default function GlobalMapPage() {
 
                 {/* Channels */}
                 <p className="mb-2 text-[10px] font-semibold uppercase tracking-[0.18em]" style={{ color: "var(--text-muted)" }}>
-                  Dominant Channels
+                  {tx(t.globalMap.marketStructure.dominantChannels, lang)}
                 </p>
                 <div className="mb-5 flex flex-wrap gap-1.5">
                   {channels.map((ch) => (
@@ -493,7 +480,7 @@ export default function GlobalMapPage() {
 
                 {/* Best for */}
                 <p className="mb-1.5 text-[10px] font-semibold uppercase tracking-[0.18em]" style={{ color: "var(--text-muted)" }}>
-                  Best For
+                  {tx(t.globalMap.marketStructure.bestFor, lang)}
                 </p>
                 <p className="mt-auto text-xs leading-relaxed" style={{ color: "var(--text-secondary)" }}>
                   {bestFor}
@@ -512,17 +499,15 @@ export default function GlobalMapPage() {
         <div className="mx-auto max-w-6xl">
           <div className="grid gap-10 lg:grid-cols-2 lg:items-center">
             <div>
-              <p className="mb-4 text-[11px] font-semibold uppercase tracking-[0.3em]" style={{ color: "var(--accent-cyan)" }}>Intelligence Model</p>
+              <p className="mb-4 text-[11px] font-semibold uppercase tracking-[0.3em]" style={{ color: "var(--accent-cyan)" }}>{tx(t.globalMap.intelligenceModel.kicker, lang)}</p>
               <h2 className="text-3xl font-bold tracking-tight sm:text-4xl md:text-[2.75rem] md:leading-tight" style={{ color: "var(--text-primary)" }}>
-                How the Intelligence Model Works
+                {tx(t.globalMap.intelligenceModel.heading, lang)}
               </h2>
               <p className="mt-6 text-base leading-relaxed" style={{ color: "var(--text-secondary)" }}>
-                The Global Intelligence Map uses aggregated visibility signals, platform analysis, industry patterns,
-                public digital behavior, search ecosystem indicators, and AI visibility structures to generate
-                directional business intelligence insights.
+                {tx(t.globalMap.intelligenceModel.body1, lang)}
               </p>
               <p className="mt-4 text-base leading-relaxed" style={{ color: "var(--text-secondary)" }}>
-                The system is designed for <span className="font-semibold" style={{ color: "var(--text-primary)" }}>strategic guidance and visibility analysis.</span>
+                {tx(t.globalMap.intelligenceModel.body2, lang)}{" "}<span className="font-semibold" style={{ color: "var(--text-primary)" }}>{tx(t.globalMap.intelligenceModel.body2b, lang)}</span>
               </p>
               <div
                 className="mt-8 flex items-start gap-4 rounded-2xl px-6 py-5"
@@ -532,16 +517,16 @@ export default function GlobalMapPage() {
                   <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>
                 </svg>
                 <p className="text-sm leading-relaxed" style={{ color: "var(--text-secondary)" }}>
-                  It is <strong style={{ color: "var(--text-primary)" }}>not</strong> a guarantee of rankings, performance, or market outcomes. Results are directional and based on aggregated pattern analysis.
+                  {tx(t.globalMap.intelligenceModel.warning, lang)}{" "}<strong style={{ color: "var(--text-primary)" }}>{tx(t.globalMap.intelligenceModel.warningB, lang)}</strong>{" "}{tx(t.globalMap.intelligenceModel.warningC, lang)}
                 </p>
               </div>
             </div>
             <div className="grid grid-cols-2 gap-4">
               {[
-                { label: "Visibility Signals", desc: "Platform reach & authority patterns", color: "#38bdf8" },
-                { label: "Industry Patterns", desc: "Aggregated sector behavior data", color: "#a78bfa" },
-                { label: "AI Ecosystems", desc: "LLM & AI search presence analysis", color: "#2dd4bf" },
-                { label: "Attention Behavior", desc: "Customer platform attention mapping", color: "#34d399" },
+                { label: tx(t.globalMap.intelligenceModel.signals.s1.label, lang), desc: tx(t.globalMap.intelligenceModel.signals.s1.desc, lang), color: "#38bdf8" },
+                { label: tx(t.globalMap.intelligenceModel.signals.s2.label, lang), desc: tx(t.globalMap.intelligenceModel.signals.s2.desc, lang), color: "#a78bfa" },
+                { label: tx(t.globalMap.intelligenceModel.signals.s3.label, lang), desc: tx(t.globalMap.intelligenceModel.signals.s3.desc, lang), color: "#2dd4bf" },
+                { label: tx(t.globalMap.intelligenceModel.signals.s4.label, lang), desc: tx(t.globalMap.intelligenceModel.signals.s4.desc, lang), color: "#34d399" },
               ].map(({ label, desc, color }) => (
                 <div key={label} className="group relative overflow-hidden rounded-2xl p-5 transition-all duration-300 hover:-translate-y-1" style={{ background: "var(--bg-card)", border: "1px solid var(--border)" }}>
                   <div className="pointer-events-none absolute -right-10 -top-10 h-24 w-24 rounded-full blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" style={{ background: `radial-gradient(circle, ${color}22, transparent 70%)` }} />
@@ -562,22 +547,22 @@ export default function GlobalMapPage() {
       >
         <div className="mx-auto max-w-6xl">
           <div className="mx-auto mb-16 max-w-3xl text-center">
-            <p className="mb-4 text-[11px] font-semibold uppercase tracking-[0.3em]" style={{ color: "var(--accent-cyan)" }}>Live Intelligence</p>
+            <p className="mb-4 text-[11px] font-semibold uppercase tracking-[0.3em]" style={{ color: "var(--accent-cyan)" }}>{tx(t.globalMap.liveIntelligence.kicker, lang)}</p>
             <h2 className="text-3xl font-bold tracking-tight sm:text-4xl md:text-[2.75rem] md:leading-tight" style={{ color: "var(--text-primary)" }}>
-              The Map Is Always Evolving
+              {tx(t.globalMap.liveIntelligence.heading, lang)}
             </h2>
             <p className="mt-5 text-base leading-relaxed" style={{ color: "var(--text-secondary)" }}>
-              Dynamic intelligence signals update across industries, reflecting real shifts in platform dominance, AI presence, and market attention.
+              {tx(t.globalMap.liveIntelligence.body, lang)}
             </p>
           </div>
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {[
-              { signal: "YouTube growing in this industry", color: "#34d399", icon: "↑", delay: "0s", badge: "TRENDING" },
-              { signal: "AI visibility increasing", color: "#38bdf8", icon: "◈", delay: "0.4s", badge: "LIVE" },
-              { signal: "High competition detected", color: "#fb923c", icon: "⚡", delay: "0.8s", badge: "ALERT" },
-              { signal: "Review-driven category", color: "#a78bfa", icon: "★", delay: "1.2s", badge: "SIGNAL" },
-              { signal: "Local trust signals dominate", color: "#2dd4bf", icon: "◎", delay: "1.6s", badge: "ACTIVE" },
-              { signal: "Content authority important", color: "#f472b6", icon: "✦", delay: "2s", badge: "KEY" },
+              { signal: tx(t.globalMap.liveIntelligence.signals.s1, lang), color: "#34d399", icon: "↑", delay: "0s",   badge: "TRENDING" },
+              { signal: tx(t.globalMap.liveIntelligence.signals.s2, lang), color: "#38bdf8", icon: "◈", delay: "0.4s", badge: "LIVE" },
+              { signal: tx(t.globalMap.liveIntelligence.signals.s3, lang), color: "#fb923c", icon: "⚡", delay: "0.8s", badge: "ALERT" },
+              { signal: tx(t.globalMap.liveIntelligence.signals.s4, lang), color: "#a78bfa", icon: "★", delay: "1.2s", badge: "SIGNAL" },
+              { signal: tx(t.globalMap.liveIntelligence.signals.s5, lang), color: "#2dd4bf", icon: "◎", delay: "1.6s", badge: "ACTIVE" },
+              { signal: tx(t.globalMap.liveIntelligence.signals.s6, lang), color: "#f472b6", icon: "✦", delay: "2s",   badge: "KEY" },
             ].map(({ signal, color, icon, delay, badge }) => (
               <div
                 key={signal}
@@ -643,20 +628,20 @@ export default function GlobalMapPage() {
         <div className="mx-auto max-w-6xl">
           <div className="grid gap-12 lg:grid-cols-2 lg:items-center">
             <div>
-              <p className="mb-4 text-[11px] font-semibold uppercase tracking-[0.3em]" style={{ color: "var(--accent-cyan)" }}>Compare Mode</p>
+              <p className="mb-4 text-[11px] font-semibold uppercase tracking-[0.3em]" style={{ color: "var(--accent-cyan)" }}>{tx(t.globalMap.compare.kicker, lang)}</p>
               <h2 className="text-3xl font-bold tracking-tight sm:text-4xl md:text-[2.75rem] md:leading-tight" style={{ color: "var(--text-primary)" }}>
-                Compare Professions Side by Side
+                {tx(t.globalMap.compare.heading, lang)}
               </h2>
               <p className="mt-6 text-base leading-relaxed" style={{ color: "var(--text-secondary)" }}>
-                Select any two professions to compare their full intelligence profile — platform dominance, visibility structure, AI presence, competition intensity, and attention patterns.
+                {tx(t.globalMap.compare.body, lang)}
               </p>
               <div className="mt-8 flex flex-col gap-3">
                 {[
-                  { label: "Platform Dominance", color: "#38bdf8" },
-                  { label: "Visibility Structure", color: "#a78bfa" },
-                  { label: "GEON Patterns", color: "#2dd4bf" },
-                  { label: "AI Presence", color: "#34d399" },
-                  { label: "Competition Intensity", color: "#fb923c" },
+                  { label: tx(t.globalMap.compare.metrics.m1, lang), color: "#38bdf8" },
+                  { label: tx(t.globalMap.compare.metrics.m2, lang), color: "#a78bfa" },
+                  { label: tx(t.globalMap.compare.metrics.m3, lang), color: "#2dd4bf" },
+                  { label: tx(t.globalMap.compare.metrics.m4, lang), color: "#34d399" },
+                  { label: tx(t.globalMap.compare.metrics.m5, lang), color: "#fb923c" },
                 ].map(({ label, color }) => (
                   <div key={label} className="flex items-center gap-3">
                     <span className="h-1.5 w-1.5 shrink-0 rounded-full" style={{ background: color }} />
@@ -669,17 +654,17 @@ export default function GlobalMapPage() {
                 className="mt-8 inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-semibold text-white transition-opacity hover:opacity-90"
                 style={{ background: "linear-gradient(135deg, #0ea5e9, #818cf8)" }}
               >
-                Open Compare Mode
+                {tx(t.globalMap.compare.cta, lang)}
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
               </Link>
             </div>
             {/* Visual comparison mockup */}
             <div className="flex flex-col gap-4">
               {[
-                { metric: "Platform Dominance", a: 82, b: 61, colorA: "#38bdf8", colorB: "#a78bfa", labelA: "Dentist", labelB: "SaaS Brand" },
-                { metric: "AI Presence", a: 45, b: 91, colorA: "#38bdf8", colorB: "#a78bfa", labelA: "Dentist", labelB: "SaaS Brand" },
-                { metric: "Competition", a: 74, b: 88, colorA: "#38bdf8", colorB: "#a78bfa", labelA: "Dentist", labelB: "SaaS Brand" },
-                { metric: "Local Signals", a: 95, b: 12, colorA: "#38bdf8", colorB: "#a78bfa", labelA: "Dentist", labelB: "SaaS Brand" },
+                { metric: tx(t.globalMap.compare.chartMetrics.platformDominance, lang), a: 82, b: 61, colorA: "#38bdf8", colorB: "#a78bfa", labelA: "Dentist", labelB: "SaaS Brand" },
+                { metric: tx(t.globalMap.compare.chartMetrics.aiPresence, lang),        a: 45, b: 91, colorA: "#38bdf8", colorB: "#a78bfa", labelA: "Dentist", labelB: "SaaS Brand" },
+                { metric: tx(t.globalMap.compare.chartMetrics.competition, lang),       a: 74, b: 88, colorA: "#38bdf8", colorB: "#a78bfa", labelA: "Dentist", labelB: "SaaS Brand" },
+                { metric: tx(t.globalMap.compare.chartMetrics.localSignals, lang),      a: 95, b: 12, colorA: "#38bdf8", colorB: "#a78bfa", labelA: "Dentist", labelB: "SaaS Brand" },
               ].map(({ metric, a, b, colorA, colorB, labelA, labelB }) => (
                 <div key={metric} className="rounded-2xl p-5" style={{ background: "var(--bg-card)", border: "1px solid var(--border)" }}>
                   <div className="mb-3 flex items-center justify-between">
@@ -717,26 +702,26 @@ export default function GlobalMapPage() {
       >
         <div className="mx-auto max-w-6xl">
           <div className="mx-auto mb-16 max-w-3xl text-center">
-            <p className="mb-4 text-[11px] font-semibold uppercase tracking-[0.3em]" style={{ color: "var(--accent-cyan)" }}>Visual Intelligence Layers</p>
+            <p className="mb-4 text-[11px] font-semibold uppercase tracking-[0.3em]" style={{ color: "var(--accent-cyan)" }}>{tx(t.globalMap.heatmap.kicker, lang)}</p>
             <h2 className="text-3xl font-bold tracking-tight sm:text-4xl md:text-[2.75rem] md:leading-tight" style={{ color: "var(--text-primary)" }}>
-              Intelligence Heatmap Layers
+              {tx(t.globalMap.heatmap.heading, lang)}
             </h2>
             <p className="mt-5 text-base leading-relaxed" style={{ color: "var(--text-secondary)" }}>
-              Color intensity reveals the true competitive landscape across every market dimension.
+              {tx(t.globalMap.heatmap.body, lang)}
             </p>
           </div>
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {[
-              { label: "Visibility Competition", desc: "How competitive the digital space is for this profession.", color: "#ef4444", orb: "rgba(239,68,68,0.1)", topLine: "from-transparent via-red-400/80 to-transparent", iconWrap: "from-red-500/50 to-orange-500/35 shadow-[0_0_28px_-6px_rgba(239,68,68,0.5)] ring-white/15", intensity: 87,
+              { label: tx(t.globalMap.heatmap.layers.l1.label, lang), desc: tx(t.globalMap.heatmap.layers.l1.desc, lang), color: "#ef4444", orb: "rgba(239,68,68,0.1)", topLine: "from-transparent via-red-400/80 to-transparent", iconWrap: "from-red-500/50 to-orange-500/35 shadow-[0_0_28px_-6px_rgba(239,68,68,0.5)] ring-white/15", intensity: 87,
                 icon: <svg className="h-6 w-6 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>,
               },
-              { label: "Customer Attention", desc: "Where and how customers direct attention in this market.", color: "#38bdf8", orb: "rgba(56,189,248,0.1)", topLine: "from-transparent via-sky-400/80 to-transparent", iconWrap: "from-sky-500/50 to-blue-600/35 shadow-[0_0_28px_-6px_rgba(14,165,233,0.55)] ring-white/15", intensity: 72,
+              { label: tx(t.globalMap.heatmap.layers.l2.label, lang), desc: tx(t.globalMap.heatmap.layers.l2.desc, lang), color: "#38bdf8", orb: "rgba(56,189,248,0.1)", topLine: "from-transparent via-sky-400/80 to-transparent", iconWrap: "from-sky-500/50 to-blue-600/35 shadow-[0_0_28px_-6px_rgba(14,165,233,0.55)] ring-white/15", intensity: 72,
                 icon: <svg className="h-6 w-6 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg>,
               },
-              { label: "Platform Dominance", desc: "Which platforms hold the most authority in this category.", color: "#a78bfa", orb: "rgba(167,139,250,0.1)", topLine: "from-transparent via-violet-400/75 to-transparent", iconWrap: "from-violet-500/45 to-purple-600/35 shadow-[0_0_28px_-6px_rgba(139,92,246,0.5)] ring-white/15", intensity: 65,
+              { label: tx(t.globalMap.heatmap.layers.l3.label, lang), desc: tx(t.globalMap.heatmap.layers.l3.desc, lang), color: "#a78bfa", orb: "rgba(167,139,250,0.1)", topLine: "from-transparent via-violet-400/75 to-transparent", iconWrap: "from-violet-500/45 to-purple-600/35 shadow-[0_0_28px_-6px_rgba(139,92,246,0.5)] ring-white/15", intensity: 65,
                 icon: <svg className="h-6 w-6 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>,
               },
-              { label: "AI Visibility Strength", desc: "How strongly AI systems represent this profession.", color: "#2dd4bf", orb: "rgba(45,212,191,0.1)", topLine: "from-transparent via-teal-400/80 to-transparent", iconWrap: "from-teal-500/45 to-cyan-600/35 shadow-[0_0_28px_-6px_rgba(20,184,166,0.48)] ring-white/15", intensity: 54,
+              { label: tx(t.globalMap.heatmap.layers.l4.label, lang), desc: tx(t.globalMap.heatmap.layers.l4.desc, lang), color: "#2dd4bf", orb: "rgba(45,212,191,0.1)", topLine: "from-transparent via-teal-400/80 to-transparent", iconWrap: "from-teal-500/45 to-cyan-600/35 shadow-[0_0_28px_-6px_rgba(20,184,166,0.48)] ring-white/15", intensity: 54,
                 icon: <svg className="h-6 w-6 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M12 2a10 10 0 0 1 10 10c0 5.52-4.48 10-10 10S2 17.52 2 12"/><path d="M12 6v6l4 2"/></svg>,
               },
             ].map(({ label, desc, color, orb, topLine, iconWrap, intensity, icon }) => (
@@ -786,27 +771,27 @@ export default function GlobalMapPage() {
 
         <div className="relative mx-auto max-w-4xl text-center">
           <p className="mb-4 text-[11px] font-semibold uppercase tracking-[0.3em]" style={{ color: "var(--accent-cyan)" }}>
-            GeoRepute Intelligence
+            {tx(t.globalMap.finalCta.kicker, lang)}
           </p>
           <h2 className="text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl" style={{ color: "#f8fafc" }}>
-            The Map Is Only the{" "}
+            {tx(t.globalMap.finalCta.heading1, lang)}{" "}
             <span className="bg-gradient-to-r from-sky-400 via-cyan-300 to-teal-300 bg-clip-text text-transparent">
-              Starting Point
+              {tx(t.globalMap.finalCta.heading2, lang)}
             </span>
           </h2>
           <p className="mx-auto mt-6 max-w-2xl text-base leading-relaxed" style={{ color: "rgba(248,250,252,0.6)" }}>
-            The Global Intelligence Map provides directional market intelligence. GeoRepute expands this into a full strategic visibility system.
+            {tx(t.globalMap.finalCta.body, lang)}
           </p>
 
           {/* Expansion list */}
           <div className="mx-auto mt-10 grid max-w-2xl gap-3 sm:grid-cols-2 text-left">
             {[
-              { item: "Visibility diagnostics", color: "#38bdf8" },
-              { item: "AI search analysis", color: "#a78bfa" },
-              { item: "Reputation intelligence", color: "#2dd4bf" },
-              { item: "Platform-specific visibility reports", color: "#34d399" },
-              { item: "Strategic growth recommendations", color: "#fb923c" },
-              { item: "GEO and AI visibility optimization", color: "#f472b6" },
+              { item: tx(t.globalMap.finalCta.items.i1, lang), color: "#38bdf8" },
+              { item: tx(t.globalMap.finalCta.items.i2, lang), color: "#a78bfa" },
+              { item: tx(t.globalMap.finalCta.items.i3, lang), color: "#2dd4bf" },
+              { item: tx(t.globalMap.finalCta.items.i4, lang), color: "#34d399" },
+              { item: tx(t.globalMap.finalCta.items.i5, lang), color: "#fb923c" },
+              { item: tx(t.globalMap.finalCta.items.i6, lang), color: "#f472b6" },
             ].map(({ item, color }) => (
               <div key={item} className="flex items-center gap-3 rounded-xl px-4 py-3" style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)" }}>
                 <span className="h-1.5 w-1.5 shrink-0 rounded-full" style={{ background: color }} />
@@ -822,7 +807,7 @@ export default function GlobalMapPage() {
               className="inline-flex items-center justify-center gap-2 rounded-full px-8 py-3.5 text-sm font-semibold text-white shadow-lg transition-opacity hover:opacity-90"
               style={{ background: "linear-gradient(135deg, #0ea5e9, #818cf8)" }}
             >
-              Analyze My Business
+              {tx(t.globalMap.finalCta.cta1, lang)}
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
             </Link>
             <Link
@@ -830,7 +815,7 @@ export default function GlobalMapPage() {
               className="inline-flex items-center justify-center gap-2 rounded-full px-8 py-3.5 text-sm font-semibold transition-colors duration-200"
               style={{ border: "1px solid rgba(255,255,255,0.15)", color: "rgba(248,250,252,0.85)", background: "rgba(255,255,255,0.05)" }}
             >
-              Generate My Visibility Report
+              {tx(t.globalMap.finalCta.cta2, lang)}
             </Link>
           </div>
         </div>

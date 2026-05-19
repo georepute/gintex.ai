@@ -1,7 +1,11 @@
+"use client";
+
 import Image from "next/image";
 import { Fragment } from "react";
 import { LEADER_PROFILE } from "@/data/about-leadership";
 import founderImg from "@/Gintex-images/ceo.png";
+import { useLang } from "@/components/LanguageContext";
+import { t, tx } from "@/lib/translations";
 
 function BioWithEmphasis({ text, name }: { text: string; name: string }) {
   const parts = text.split(name);
@@ -20,7 +24,12 @@ function BioWithEmphasis({ text, name }: { text: string; name: string }) {
 }
 
 export function AboutLeadershipSection() {
-  const { sectionHeading, name, role, imageAlt, bio, tagline } = LEADER_PROFILE;
+  const { lang } = useLang();
+  const { name, role, imageAlt } = LEADER_PROFILE;
+
+  const sectionHeading = tx(t.about.leadership.sectionHeading, lang);
+  const bio            = tx(t.about.leadership.bio, lang);
+  const tagline        = tx(t.about.leadership.tagline, lang);
 
   return (
     <section
@@ -35,13 +44,10 @@ export function AboutLeadershipSection() {
           {sectionHeading}
         </h2>
 
-        <div className="mt-12 grid gap-12 lg:mt-16 lg:grid-cols-2 lg:items-center lg:gap-16 xl:gap-20">
-          <div className="min-w-0 text-left lg:pr-4">
-            <div className="mb-5 flex flex-wrap items-baseline gap-x-3 gap-y-1">
-              <span
-                className="text-2xl font-bold tracking-tight sm:text-3xl transition-colors duration-300"
-                style={{ color: "var(--text-primary)" }}
-              >
+        <div className={`mt-12 grid gap-12 lg:mt-16 lg:grid-cols-2 lg:items-center lg:gap-16 xl:gap-20 ${lang === "he" ? "lg:flex lg:flex-row-reverse" : ""}`}>
+          <div className={`min-w-0 ${lang === "he" ? "text-right lg:pl-4" : "text-left lg:pr-4"}`}>
+            <div className={`mb-5 flex flex-wrap items-baseline gap-x-3 gap-y-1 ${lang === "he" ? "flex-row-reverse justify-end" : ""}`}>
+              <span className="text-2xl font-bold tracking-tight sm:text-3xl transition-colors duration-300" style={{ color: "var(--text-primary)" }}>
                 {name}
               </span>
               <span className="font-label text-[0.65rem] font-semibold uppercase tracking-[0.28em] text-cyan-500">
@@ -51,10 +57,7 @@ export function AboutLeadershipSection() {
             <BioWithEmphasis text={bio} name={name} />
           </div>
 
-          <div
-            className="relative mx-auto w-full max-w-md lg:mx-0 lg:max-w-none lg:justify-self-end"
-            data-cursor-hover
-          >
+          <div className="relative mx-auto w-full max-w-md lg:mx-0 lg:max-w-none lg:justify-self-end" data-cursor-hover>
             <div className="pointer-events-none absolute -inset-4 rounded-[2rem] bg-cyan-500/5 blur-2xl lg:-inset-6" aria-hidden />
             <div
               className="relative overflow-hidden rounded-2xl p-3 shadow-lg sm:p-3.5 transition-colors duration-300"
@@ -64,18 +67,8 @@ export function AboutLeadershipSection() {
                 className="relative aspect-[4/5] overflow-hidden rounded-xl sm:aspect-[3/4] transition-colors duration-300"
                 style={{ background: "var(--bg-subtle)" }}
               >
-                <Image
-                  src={founderImg}
-                  alt={imageAlt}
-                  fill
-                  className="object-cover object-[center_8%]"
-                  sizes="(max-width: 1024px) 100vw, 45vw"
-                  priority={false}
-                />
-                <div
-                  className="pointer-events-none absolute inset-0 rounded-xl shadow-[inset_0_0_0_1px_rgba(255,255,255,0.06)]"
-                  aria-hidden
-                />
+                <Image src={founderImg} alt={imageAlt} fill className="object-cover object-[center_8%]" sizes="(max-width: 1024px) 100vw, 45vw" priority={false} />
+                <div className="pointer-events-none absolute inset-0 rounded-xl shadow-[inset_0_0_0_1px_rgba(255,255,255,0.06)]" aria-hidden />
               </div>
             </div>
           </div>

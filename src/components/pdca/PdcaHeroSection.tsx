@@ -2,6 +2,8 @@
 
 import { motion, useAnimationFrame } from "framer-motion";
 import { useRef, useState } from "react";
+import { useLang } from "@/components/LanguageContext";
+import { t, tx } from "@/lib/translations";
 
 type PdcaPhase = {
   slug: string;
@@ -12,40 +14,12 @@ type PdcaPhase = {
   color: string;
 };
 
-const PHASES: readonly PdcaPhase[] = [
-  {
-    slug: "plan",
-    n: "1",
-    title: "Plan",
-    description: "Predictive modeling and scenario analysis powered by LLMs and GeoRepute-grade context.",
-    accent: "border-sky-400 bg-sky-400/10 text-sky-500",
-    color: "#38bdf8",
-  },
-  {
-    slug: "do",
-    n: "2",
-    title: "Do",
-    description: "Automated workflow execution and disciplined resource allocation across channels.",
-    accent: "border-[#a78bfa] bg-[#a78bfa]/10 text-[#a78bfa]",
-    color: "#a78bfa",
-  },
-  {
-    slug: "check",
-    n: "3",
-    title: "Check",
-    description: "Real-time anomaly detection, telemetry, and visibility into what is working—or drifting.",
-    accent: "border-[#20c997] bg-[#20c997]/10 text-[#20c997]",
-    color: "#20c997",
-  },
-  {
-    slug: "act",
-    n: "4",
-    title: "Act",
-    description: "Self-correcting feedback loops and strategic pivots grounded in what the data actually says.",
-    accent: "border-[#2563eb] bg-[#2563eb]/10 text-[#3b82f6]",
-    color: "#3b82f6",
-  },
-];
+const PHASE_STYLES = [
+  { slug: "plan",  n: "1", accent: "border-sky-400 bg-sky-400/10 text-sky-500",              color: "#38bdf8" },
+  { slug: "do",    n: "2", accent: "border-[#a78bfa] bg-[#a78bfa]/10 text-[#a78bfa]",        color: "#a78bfa" },
+  { slug: "check", n: "3", accent: "border-[#20c997] bg-[#20c997]/10 text-[#20c997]",        color: "#20c997" },
+  { slug: "act",   n: "4", accent: "border-[#2563eb] bg-[#2563eb]/10 text-[#3b82f6]",        color: "#3b82f6" },
+] as const;
 
 const CYCLE_MS = 2200;
 
@@ -106,7 +80,7 @@ function PhaseCard({ n, title, description, accent, color, active, index }: Pdca
   );
 }
 
-function CentreNode({ activeColor, activeIdx }: { activeColor: string; activeIdx: number }) {
+function CentreNode({ activeColor, activeTitle, coreLabel }: { activeColor: string; activeTitle: string; coreLabel: string }) {
   const [deg, setDeg] = useState(0);
   useAnimationFrame((t) => setDeg((t / 8000) * 360));
 
@@ -159,7 +133,7 @@ function CentreNode({ activeColor, activeIdx }: { activeColor: string; activeIdx
           className="font-label relative z-10 mt-1.5 text-[8px] font-bold uppercase tracking-[0.24em]"
           style={{ color: "var(--text-muted)" }}
         >
-          Gintex Core
+          {coreLabel}
         </p>
       </motion.div>
 
@@ -182,7 +156,7 @@ function CentreNode({ activeColor, activeIdx }: { activeColor: string; activeIdx
         transition={{ duration: 0.4 }}
         style={{ border: "1px solid" }}
       >
-        {PHASES[activeIdx].title}
+        {activeTitle}
       </motion.div>
     </div>
   );
@@ -191,6 +165,14 @@ function CentreNode({ activeColor, activeIdx }: { activeColor: string; activeIdx
 export function PdcaHeroSection() {
   const [activeIdx, setActiveIdx] = useState(0);
   const elapsed = useRef(0);
+  const { lang } = useLang();
+
+  const PHASES: readonly PdcaPhase[] = [
+    { ...PHASE_STYLES[0], title: tx(t.pdca.phases.plan.title, lang),  description: tx(t.pdca.phases.plan.desc, lang) },
+    { ...PHASE_STYLES[1], title: tx(t.pdca.phases.do.title, lang),    description: tx(t.pdca.phases.do.desc, lang) },
+    { ...PHASE_STYLES[2], title: tx(t.pdca.phases.check.title, lang), description: tx(t.pdca.phases.check.desc, lang) },
+    { ...PHASE_STYLES[3], title: tx(t.pdca.phases.act.title, lang),   description: tx(t.pdca.phases.act.desc, lang) },
+  ];
 
   useAnimationFrame((_, delta) => {
     elapsed.current += delta;
@@ -233,19 +215,19 @@ export function PdcaHeroSection() {
           transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
         >
           <p className="font-label text-[11px] font-semibold uppercase tracking-[0.32em] text-sky-500 sm:text-xs">
-            Intelligent optimization
+            {tx(t.pdca.hero.kicker, lang)}
           </p>
           <h1
             className="mt-5 text-3xl font-bold tracking-tight sm:mt-6 sm:text-4xl md:text-[2.65rem] md:leading-[1.12] transition-colors duration-300"
             style={{ color: "var(--text-primary)" }}
           >
-            A Continuous Intelligence & Optimization Framework
+            {tx(t.pdca.hero.heading, lang)}
           </h1>
           <p
             className="mx-auto mt-6 max-w-2xl text-base leading-relaxed sm:mt-7 sm:text-lg transition-colors duration-300"
             style={{ color: "var(--text-secondary)" }}
           >
-            We combine intelligence analysis, strategic planning, visibility execution, and continuous optimization into one integrated growth system.
+            {tx(t.pdca.hero.body, lang)}
           </p>
         </motion.header>
 
@@ -257,7 +239,7 @@ export function PdcaHeroSection() {
             ))}
           </div>
           <div className="mt-8 flex justify-center">
-            <CentreNode activeColor={activeColor} activeIdx={activeIdx} />
+            <CentreNode activeColor={activeColor} activeTitle={PHASES[activeIdx].title} coreLabel={tx(t.pdca.hero.gintexCore, lang)} />
           </div>
         </div>
 
@@ -271,7 +253,7 @@ export function PdcaHeroSection() {
           </div>
 
           {/* Centre */}
-          <CentreNode activeColor={activeColor} activeIdx={activeIdx} />
+          <CentreNode activeColor={activeColor} activeTitle={PHASES[activeIdx].title} coreLabel={tx(t.pdca.hero.gintexCore, lang)} />
 
           {/* Right: Do + Act */}
           <div className="flex w-56 flex-col gap-5 xl:w-64">

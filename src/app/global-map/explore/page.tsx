@@ -3,6 +3,8 @@
 import { useEffect, useRef } from "react";
 import Link from "next/link";
 import { useTheme } from "@/components/ThemeProvider";
+import { useLang } from "@/components/LanguageContext";
+import { t, tx } from "@/lib/translations";
 
 function sendTheme(iframe: HTMLIFrameElement, theme: string) {
   try {
@@ -12,6 +14,7 @@ function sendTheme(iframe: HTMLIFrameElement, theme: string) {
 
 export default function ExplorePage() {
   const { theme } = useTheme();
+  const { lang } = useLang();
   const iframeRef = useRef<HTMLIFrameElement>(null);
 
   useEffect(() => {
@@ -54,7 +57,7 @@ export default function ExplorePage() {
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
           <path d="M19 12H5M12 5l-7 7 7 7" />
         </svg>
-        Back
+        {tx(t.globalMap.explore.back, lang)}
       </Link>
 
       {/* Full-screen map */}

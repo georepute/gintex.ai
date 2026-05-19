@@ -1,3 +1,8 @@
+"use client";
+
+import { useLang } from "@/components/LanguageContext";
+import { t, tx } from "@/lib/translations";
+
 type EdgeCard = {
   id: string;
   wide: boolean;
@@ -5,41 +10,6 @@ type EdgeCard = {
   description: string;
   icon: "adaptive" | "ethical" | "precision" | "velocity";
 };
-
-const CARDS: EdgeCard[] = [
-  {
-    id: "adaptive",
-    wide: true,
-    title: "Adaptive architecture",
-    description:
-      "Stacks tuned to your reality—GeoRepute baselines, SEO and GEO, content, and distribution evolve as Google and AI-driven discovery shift, not months later.",
-    icon: "adaptive",
-  },
-  {
-    id: "ethical",
-    wide: false,
-    title: "Ethical AI",
-    description:
-      "Transparency, data boundaries, and bias-aware workflows are designed into the core—trust is a module, not an afterthought.",
-    icon: "ethical",
-  },
-  {
-    id: "precision",
-    wide: false,
-    title: "Precision",
-    description:
-      "Planning and execution tie to visibility, perception, and narrative signals—so every move aligns with intelligence, not guesswork.",
-    icon: "precision",
-  },
-  {
-    id: "velocity",
-    wide: true,
-    title: "Insight velocity",
-    description:
-      "From audit to action, signals compress into decisions you can ship—fast enough to matter in markets indexed by search and generative AI.",
-    icon: "velocity",
-  },
-];
 
 function EdgeIcon({ type }: { type: EdgeCard["icon"] }) {
   const cls = "h-8 w-8 text-cyan-500 sm:h-9 sm:w-9";
@@ -102,6 +72,15 @@ function BentoCard({ card }: { card: EdgeCard }) {
 }
 
 export function AboutEdgeSection() {
+  const { lang } = useLang();
+
+  const CARDS: EdgeCard[] = [
+    { id: "adaptive", wide: true,  title: tx(t.about.edge.cards.adaptive.title, lang), description: tx(t.about.edge.cards.adaptive.desc, lang), icon: "adaptive" },
+    { id: "ethical",  wide: false, title: tx(t.about.edge.cards.ethical.title, lang),  description: tx(t.about.edge.cards.ethical.desc, lang),  icon: "ethical"  },
+    { id: "precision",wide: false, title: tx(t.about.edge.cards.precision.title, lang),description: tx(t.about.edge.cards.precision.desc, lang),icon: "precision"},
+    { id: "velocity", wide: true,  title: tx(t.about.edge.cards.velocity.title, lang), description: tx(t.about.edge.cards.velocity.desc, lang), icon: "velocity" },
+  ];
+
   return (
     <section
       className="px-6 py-20 sm:px-10 sm:py-24 lg:py-28 transition-colors duration-300"
@@ -112,7 +91,7 @@ export function AboutEdgeSection() {
           className="text-center text-4xl font-bold leading-[1.1] tracking-tight sm:text-5xl md:text-[3.25rem] md:leading-[1.08] transition-colors duration-300"
           style={{ color: "var(--text-primary)" }}
         >
-          The Gintex Edge
+          {tx(t.about.edge.heading, lang)}
         </h2>
         <div className="mt-12 grid grid-cols-1 gap-4 sm:mt-14 sm:gap-5 md:grid-cols-3">
           {CARDS.map((card) => (

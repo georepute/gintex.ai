@@ -3,9 +3,12 @@
 import Link from "next/link";
 import { NewsletterForm } from "@/components/NewsletterForm";
 import { SocialIcons } from "@/components/SocialIcons";
+import { useLang } from "@/components/LanguageContext";
+import { t, tx } from "@/lib/translations";
 
 export function Footer() {
   const year = new Date().getFullYear();
+  const { lang } = useLang();
 
   return (
     <footer
@@ -24,22 +27,21 @@ export function Footer() {
               GINTEX AI
             </p>
             <p className="text-sm leading-snug" style={{ color: "var(--footer-muted)" }}>
-              AI visibility, reputation intelligence, and market positioning
-              systems for brands that take perception seriously.
+              {tx(t.footer.tagline, lang)}
             </p>
           </div>
 
           <div className="space-y-2.5">
             <h3 className="font-label text-xs font-bold uppercase tracking-wider" style={{ color: "var(--footer-muted)" }}>
-              Quick links
+              {tx(t.footer.quickLinks, lang)}
             </h3>
             <ul className="flex flex-col gap-2">
               {[
-                { href: "/services", label: "Services" },
-                { href: "/intelligence", label: "Intelligence" },
-                { href: "/pdca", label: "PDCA Framework" },
-                { href: "/global-map", label: "Global Intelligence Map" },
-                { href: "/about", label: "About Us" },
+                { href: "/services",     label: tx(t.footer.links.services, lang) },
+                { href: "/intelligence", label: tx(t.footer.links.intelligence, lang) },
+                { href: "/pdca",         label: tx(t.footer.links.pdca, lang) },
+                { href: "/global-map",   label: tx(t.footer.links.globalMap, lang) },
+                { href: "/about",        label: tx(t.footer.links.about, lang) },
               ].map(({ href, label }) => (
                 <li key={href}>
                   <Link
@@ -58,13 +60,13 @@ export function Footer() {
 
           <div className="space-y-2.5">
             <h3 className="font-label text-xs font-bold uppercase tracking-wider" style={{ color: "var(--footer-muted)" }}>
-              Resources
+              {tx(t.footer.resources, lang)}
             </h3>
             <ul className="flex flex-col gap-2">
               {[
-                { href: "/contact", label: "Contact" },
-                { href: "/privacy-policy", label: "Privacy Policy" },
-                { href: "/intelligence-report", label: "Intelligence Report" },
+                { href: "/contact",              label: tx(t.footer.links.contact, lang) },
+                { href: "/privacy-policy",       label: tx(t.footer.links.privacy, lang) },
+                { href: "/intelligence-report",  label: tx(t.footer.links.report, lang) },
               ].map(({ href, label }) => (
                 <li key={href}>
                   <Link
@@ -83,7 +85,7 @@ export function Footer() {
 
           <div className="space-y-2.5">
             <h3 className="font-label text-xs font-bold uppercase tracking-wider" style={{ color: "var(--footer-muted)" }}>
-              Newsletter
+              {tx(t.footer.newsletter, lang)}
             </h3>
             <NewsletterForm />
           </div>
@@ -100,9 +102,9 @@ export function Footer() {
           className="font-label mt-5 flex flex-col gap-3 pt-5 text-[11px] font-medium uppercase tracking-wider sm:mt-6 sm:flex-row sm:items-center sm:justify-between sm:pt-5"
           style={{ borderTop: "1px solid var(--footer-border)", color: "var(--footer-muted)" }}
         >
-          <p>© {year} GINTEX AI. Perception Intelligence.</p>
+          <p>© {year} GINTEX AI. {tx(t.footer.copyright, lang)}</p>
           <p className="normal-case text-sm tracking-normal sm:text-right" style={{ color: "var(--footer-muted)" }}>
-            Developed by{" "}
+            {tx(t.footer.developedBy, lang)}{" "}
             <span className="font-medium" style={{ color: "var(--footer-heading)" }}>
               Gintex
             </span>

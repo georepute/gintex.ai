@@ -2,6 +2,8 @@
 
 import Link from "next/link";
 import type { ServiceItem } from "@/data/services";
+import { useLang } from "@/components/LanguageContext";
+import { t, tx } from "@/lib/translations";
 
 const SYSTEM_STYLES: Record<string, {
   gradient: string;
@@ -40,6 +42,7 @@ const SYSTEM_STYLES: Record<string, {
 const FALLBACK = SYSTEM_STYLES["GeoRepute"];
 
 export function SystemCard({ system }: { system: ServiceItem }) {
+  const { lang } = useLang();
   const s = SYSTEM_STYLES[system.title] ?? FALLBACK;
 
   return (
@@ -78,7 +81,7 @@ export function SystemCard({ system }: { system: ServiceItem }) {
             className="h-1.5 w-1.5 rounded-full animate-pulse"
             style={{ background: s.badgeText }}
           />
-          Live System
+          {tx(t.services.liveSystem, lang)}
         </span>
 
         {/* External link arrow */}
@@ -114,7 +117,7 @@ export function SystemCard({ system }: { system: ServiceItem }) {
           className="font-label text-[11px] font-bold uppercase tracking-[0.18em] transition-colors duration-300 group-hover:opacity-100"
           style={{ color: s.badgeText }}
         >
-          Visit Platform
+          {tx(t.services.visitPlatform, lang)}
         </span>
         <span
           className="translate-x-0 transition-transform duration-300 group-hover:translate-x-1 text-xs"

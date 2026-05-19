@@ -5,6 +5,8 @@ import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { ThemeToggleFloat } from "@/components/ThemeToggleFloat";
+import { LanguageProvider } from "@/components/LanguageContext";
+import { HtmlDirWrapper } from "@/components/HtmlDirWrapper";
 import "./globals.css";
 
 const inter = Inter({
@@ -87,8 +89,10 @@ export default function RootLayout({
       lang="en"
       className={`${inter.variable} ${spaceGrotesk.variable} h-full antialiased`}
     >
-      <body className="flex min-h-screen flex-col font-sans">
+      <body>
+        <LanguageProvider>
         <ThemeProvider>
+        <HtmlDirWrapper>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
@@ -139,7 +143,9 @@ export default function RootLayout({
         <Header />
         <div className="flex flex-1 flex-col">{children}</div>
         <Footer />
+        </HtmlDirWrapper>
         </ThemeProvider>
+        </LanguageProvider>
       </body>
     </html>
   );

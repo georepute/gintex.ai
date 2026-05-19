@@ -1,7 +1,13 @@
+"use client";
+
 import Image from "next/image";
 import circleImg from "@/Gintex-images/circle.png";
+import { useLang } from "@/components/LanguageContext";
+import { t, tx } from "@/lib/translations";
 
 export function AboutPhilosophySection() {
+  const { lang } = useLang();
+
   return (
     <section
       className="px-6 py-20 sm:px-10 sm:py-24 lg:py-28 transition-colors duration-300"
@@ -10,33 +16,34 @@ export function AboutPhilosophySection() {
       <div className="mx-auto grid max-w-6xl items-center gap-14 lg:grid-cols-2 lg:gap-20 xl:gap-24">
         <div className="min-w-0 lg:pr-4">
           <p className="font-label text-[10px] font-semibold uppercase tracking-[0.38em] text-cyan-500 sm:text-[11px] sm:tracking-[0.4em]">
-            Philosophy
+            {tx(t.about.philosophy.kicker, lang)}
           </p>
           <h2
             className="mt-5 max-w-xl text-[2rem] font-bold leading-[1.15] tracking-tight sm:mt-6 sm:text-4xl sm:leading-[1.12] md:text-[2.75rem] md:leading-[1.1] transition-colors duration-300"
             style={{ color: "var(--text-primary)" }}
           >
-            The Neural Symphony
+            {tx(t.about.philosophy.heading, lang)}
           </h2>
           <div
             className="mt-8 max-w-lg space-y-6 text-[0.9375rem] leading-[1.75] sm:mt-9 sm:text-base sm:leading-[1.8] transition-colors duration-300"
             style={{ color: "var(--text-secondary)" }}
           >
             <p>
-              At Gintex AI, we believe data is not static numbers, but a
-              living, breathing narrative. Our philosophy centers on{" "}
-              <strong className="font-semibold transition-colors duration-300" style={{ color: "var(--text-primary)" }}>
-                &quot;The Neural Symphony&quot;
-              </strong>
-              —the harmonious integration of algorithmic precision and human
-              intuition.
+              {lang === "he" ? (
+                tx(t.about.philosophy.p1, lang)
+              ) : (
+                <>
+                  At Gintex AI, we believe data is not static numbers, but a
+                  living, breathing narrative. Our philosophy centers on{" "}
+                  <strong className="font-semibold transition-colors duration-300" style={{ color: "var(--text-primary)" }}>
+                    &quot;The Neural Symphony&quot;
+                  </strong>
+                  —the harmonious integration of algorithmic precision and human
+                  intuition.
+                </>
+              )}
             </p>
-            <p>
-              We don&apos;t just build models; we architect ecosystems where
-              intelligence evolves. Every line of code we write is a bridge
-              toward a future where decision-making is frictionless and
-              infinitely scalable.
-            </p>
+            <p>{tx(t.about.philosophy.p2, lang)}</p>
           </div>
         </div>
 

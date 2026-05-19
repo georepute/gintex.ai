@@ -1,41 +1,23 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { useLang } from "@/components/LanguageContext";
+import { t, tx } from "@/lib/translations";
 
-const BLOCKS = [
-  {
-    brand: "GeoRepute",
-    purpose: "Visibility & reputation intelligence system",
-    desc: "Scans how search engines, AI platforms, and digital ecosystems represent your organization, surfaces narrative gaps, and maps authority signals across the competitive landscape.",
-    color: "from-sky-500/40 to-blue-600/30",
-    glow: "rgba(56,189,248,0.5)",
-    ring: "rgba(56,189,248,0.25)",
-    dot: "bg-sky-400",
-    tag: "bg-sky-500/10 text-sky-400 border-sky-500/20",
-  },
-  {
-    brand: "OnlinePerception",
-    purpose: "Research, frameworks & perception intelligence",
-    desc: "The analytical research layer — publishing proprietary frameworks, competitive intelligence, and strategic resources that define how organizations should approach market perception.",
-    color: "from-violet-500/40 to-purple-600/30",
-    glow: "rgba(139,92,246,0.5)",
-    ring: "rgba(139,92,246,0.25)",
-    dot: "bg-violet-400",
-    tag: "bg-violet-500/10 text-violet-400 border-violet-500/20",
-  },
-  {
-    brand: "GINTEX",
-    purpose: "Strategic intelligence infrastructure",
-    desc: "The execution layer — translating intelligence into market positioning, authority infrastructure, and measurable strategic growth across SEO, GEO, and digital presence.",
-    color: "from-teal-500/40 to-cyan-600/30",
-    glow: "rgba(20,184,166,0.5)",
-    ring: "rgba(20,184,166,0.25)",
-    dot: "bg-teal-400",
-    tag: "bg-teal-500/10 text-teal-400 border-teal-500/20",
-  },
+const BLOCK_STYLES = [
+  { brand: "GeoRepute",        color: "from-sky-500/40 to-blue-600/30",    glow: "rgba(56,189,248,0.5)",  ring: "rgba(56,189,248,0.25)",  dot: "bg-sky-400",    tag: "bg-sky-500/10 text-sky-400 border-sky-500/20" },
+  { brand: "OnlinePerception", color: "from-violet-500/40 to-purple-600/30", glow: "rgba(139,92,246,0.5)", ring: "rgba(139,92,246,0.25)", dot: "bg-violet-400", tag: "bg-violet-500/10 text-violet-400 border-violet-500/20" },
+  { brand: "GINTEX",           color: "from-teal-500/40 to-cyan-600/30",   glow: "rgba(20,184,166,0.5)",  ring: "rgba(20,184,166,0.25)",  dot: "bg-teal-400",   tag: "bg-teal-500/10 text-teal-400 border-teal-500/20" },
 ] as const;
 
 export function EcosystemSection() {
+  const { lang } = useLang();
+
+  const BLOCKS = [
+    { ...BLOCK_STYLES[0], purpose: tx(t.ecosystem.b1.purpose, lang), desc: tx(t.ecosystem.b1.desc, lang) },
+    { ...BLOCK_STYLES[1], purpose: tx(t.ecosystem.b2.purpose, lang), desc: tx(t.ecosystem.b2.desc, lang) },
+    { ...BLOCK_STYLES[2], purpose: tx(t.ecosystem.b3.purpose, lang), desc: tx(t.ecosystem.b3.desc, lang) },
+  ];
   return (
     /* Always a dark strip regardless of theme — acts as a section separator */
     <section className="relative overflow-hidden bg-[#080c12] px-6 py-24 sm:px-10 sm:py-32">
@@ -56,20 +38,10 @@ export function EcosystemSection() {
           transition={{ duration: 0.6, ease: "easeOut" }}
         >
           <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl md:text-[2.6rem] md:leading-tight">
-            The{" "}
-            <span
-              style={{
-                background: "linear-gradient(135deg, rgb(56,189,248) 0%, rgb(139,92,246) 100%)",
-                WebkitBackgroundClip: "text",
-                WebkitTextFillColor: "transparent",
-              }}
-            >
-              GINTEX Intelligence
-            </span>{" "}
-            Ecosystem
+            {tx(t.ecosystem.heading, lang)}
           </h2>
           <p className="mt-5 text-base leading-relaxed text-gray-400 sm:text-lg">
-            Three interconnected platforms — each playing a distinct role in the analytical infrastructure that powers strategic market positioning.
+            {tx(t.ecosystem.sub, lang)}
           </p>
         </motion.header>
 
@@ -124,7 +96,7 @@ export function EcosystemSection() {
           <div className="flex items-center gap-3">
             <div className="h-px w-12 bg-gradient-to-r from-transparent to-sky-500/50" />
             <span className="text-[11px] font-semibold uppercase tracking-[0.22em] text-gray-500">
-              One unified intelligence layer
+              {tx(t.ecosystem.unifiedLayer, lang)}
             </span>
             <div className="h-px w-12 bg-gradient-to-l from-transparent to-sky-500/50" />
           </div>
