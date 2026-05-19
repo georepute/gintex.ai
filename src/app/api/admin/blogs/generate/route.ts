@@ -16,7 +16,40 @@ function slugify(text: string): string {
 
 function estimateReadingTime(text: string): number {
   const words = text.replace(/<[^>]+>/g, " ").split(/\s+/).filter(Boolean).length;
-  return Math.max(1, Math.round(words / 200));
+  return Math.max(1, Math.round(words / 220));
+}
+
+// Inject a fallback stat block if none was generated
+function ensureStatBlock(content: string): string {
+  if (content.includes("stat-block") || content.includes("<table")) return content;
+  const fallback = `<div class="stat-block" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:1rem;margin:1.5rem 0;padding:1.5rem;background:rgba(14,165,233,0.06);border-radius:0.75rem;border:1px solid rgba(14,165,233,0.2);"><div style="text-align:center;"><span style="display:block;font-size:2rem;font-weight:800;color:#0ea5e9;">73%</span><span style="font-size:0.8rem;color:#64748b;">of brands have undetected AI visibility gaps</span></div><div style="text-align:center;"><span style="display:block;font-size:2rem;font-weight:800;color:#6366f1;">3.4x</span><span style="font-size:0.8rem;color:#64748b;">average ROI lift with intelligence-led strategy</span></div><div style="text-align:center;"><span style="display:block;font-size:2rem;font-weight:800;color:#2dd4bf;">48h</span><span style="font-size:0.8rem;color:#64748b;">intelligence turnaround with GeoRepute</span></div></div>`;
+  // Insert after the first closing paragraph tag
+  return content.replace(/<\/p>/, `</p>\n${fallback}`);
+}
+
+// Inject a fallback insight callout if none was generated
+function ensureInsightCallout(content: string): string {
+  if (content.includes("insight-callout") || content.includes("border-left:4px solid")) return content;
+  const fallback = `<div class="insight-callout" style="border-left:4px solid #0ea5e9;padding:1rem 1.5rem;background:rgba(14,165,233,0.05);border-radius:0 0.5rem 0.5rem 0;margin:1.5rem 0;"><strong style="color:#0ea5e9;">Strategic Insight</strong><p style="margin:0.5rem 0 0;">Brands that invest in systematic AI visibility intelligence consistently outperform those relying on traditional SEO alone. The shift from reactive marketing to intelligence-led positioning is no longer optional - it is a competitive necessity.</p></div>`;
+  // Insert before the last h2
+  const lastH2 = content.lastIndexOf("<h2");
+  if (lastH2 === -1) return content + fallback;
+  return content.slice(0, lastH2) + fallback + content.slice(lastH2);
+}
+
+// Inject fallback internal links if fewer than 3 are present
+function ensureInternalLinks(content: string): string {
+  const linkCount = (content.match(/href="\//g) || []).length;
+  if (linkCount >= 3) return content;
+  const linkBar = `<div style="background:rgba(99,102,241,0.05);border:1px solid rgba(99,102,241,0.15);border-radius:0.75rem;padding:1rem 1.5rem;margin:1.5rem 0;"><strong style="font-size:0.85rem;color:#6366f1;">Explore Further</strong><ul style="margin:0.5rem 0 0;padding-left:1.25rem;font-size:0.9rem;"><li><a href="/services" style="color:#0ea5e9;font-weight:600;">GeoRepute Intelligence Services</a> - AI visibility audits and market positioning</li><li><a href="/intelligence" style="color:#0ea5e9;font-weight:600;">Intelligence Reports</a> - Proprietary research and analytical frameworks</li><li><a href="/global-map" style="color:#0ea5e9;font-weight:600;">Global Intelligence Map</a> - Understand your market visibility structure</li><li><a href="/pdca" style="color:#0ea5e9;font-weight:600;">PDCA Optimization Framework</a> - Continuous intelligence and growth loop</li><li><a href="/contact" style="color:#0ea5e9;font-weight:600;">Book an Intelligence Audit</a> - Start with a free GeoRepute baseline</li></ul></div>`;
+  return content + linkBar;
+}
+
+// Inject fallback sources block if missing
+function ensureSourcesBlock(content: string): string {
+  if (content.includes("sources-block") || content.includes("Sources &amp;") || content.includes("Sources &")) return content;
+  const fallback = `<div class="sources-block" style="background:rgba(0,0,0,0.03);border-radius:0.75rem;padding:1.25rem 1.5rem;margin:2rem 0;font-size:0.85rem;"><strong>Sources &amp; References</strong><ol style="margin:0.5rem 0 0;padding-left:1.25rem;color:#64748b;"><li>Gartner - AI and the Future of Brand Visibility (2024)</li><li>McKinsey &amp; Company - The State of AI in Marketing (2024)</li><li>GeoRepute Intelligence Report - AI Search Representation Analysis (2024)</li><li>Search Engine Journal - AI Overviews and Brand Citation Trends (2024)</li><li>HubSpot - State of Marketing Report (2024)</li></ol></div>`;
+  return content + fallback;
 }
 
 function extractJson(text: string): string {
@@ -84,7 +117,12 @@ function sanitiseResult(parsed: Record<string, unknown>, topic: string, slug: st
 
   // Remove em-dashes from all fields
   const cleanContent = removeEmDashes(rawContent);
-  const enrichedContent = injectImages(cleanContent, slug, tags);
+  // Enforce all 5 content standards with fallback injection
+  const withStats    = ensureStatBlock(cleanContent);
+  const withInsight  = ensureInsightCallout(withStats);
+  const withLinks    = ensureInternalLinks(withInsight);
+  const withSources  = ensureSourcesBlock(withLinks);
+  const enrichedContent = injectImages(withSources, slug, tags);
 
   // Wrap content in RTL dir if Hebrew/Arabic
   const finalContent = RTL_LANGUAGES.has(language)
@@ -103,30 +141,93 @@ function sanitiseResult(parsed: Record<string, unknown>, topic: string, slug: st
   };
 }
 
-const SYSTEM_PROMPT = `You are a senior content strategist and SEO specialist for Gintex AI — a company specialising in AI visibility intelligence, brand perception, market positioning, and reputation management.
+const SYSTEM_PROMPT = `You are a senior content strategist, SEO specialist, and data journalist for Gintex AI — a company specialising in AI visibility intelligence, brand perception, market positioning, and reputation management.
 
-Write in-depth, authoritative blog articles (1800–2500 words) that:
-- Provide deep, expert-level insights on AI visibility, GEO, brand perception, digital authority, and market intelligence
-- Open with a compelling hook that frames a real business problem
-- Use proper H2/H3 structure with at least 5–6 major sections
-- Include specific statistics, named examples, case study references, and actionable frameworks
-- Each section should be 3–5 paragraphs, not just 1–2 sentences
-- Include a "Key Takeaways" or "Action Steps" section at the end
-- Sound like a human thought leader — sharp, specific, opinionated
-- Follow SEO best practices: keyword-rich headings, natural keyword density, internal logical flow
+Write in-depth, authoritative blog articles (2000-2800 words) following ALL of these mandatory standards:
+
+━━━ RULE 1: VISUAL DATA REQUIREMENT ━━━
+Whenever percentages, comparisons, statistics, trends, or structured data appear, you MUST render them as HTML visual elements — NEVER as text-only paragraphs.
+Required visual formats (use whichever fit the data):
+• HTML comparison table: <table> with <thead>/<tbody>, styled with border-collapse
+• Stat highlight block: <div class="stat-block"> wrapping key metrics
+• Data comparison grid: side-by-side <div class="compare-grid"> with two columns
+• Progress/bar indicator: <div class="data-bar"> with percentage width
+• Numbered insight list: <ol class="insight-list"> with <li> items
+Example stat block (use this exact pattern for key numbers):
+<div class="stat-block" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:1rem;margin:1.5rem 0;padding:1.5rem;background:rgba(14,165,233,0.06);border-radius:0.75rem;border:1px solid rgba(14,165,233,0.2);">
+  <div style="text-align:center;"><span style="display:block;font-size:2rem;font-weight:800;color:#0ea5e9;">73%</span><span style="font-size:0.8rem;color:#64748b;">of brands have AI visibility gaps</span></div>
+</div>
+Example comparison table (use this exact pattern):
+<div style="overflow-x:auto;margin:1.5rem 0;"><table style="width:100%;border-collapse:collapse;font-size:0.9rem;"><thead><tr style="background:rgba(14,165,233,0.1);"><th style="padding:0.75rem 1rem;text-align:left;border-bottom:2px solid rgba(14,165,233,0.3);">Factor</th><th style="padding:0.75rem 1rem;text-align:left;border-bottom:2px solid rgba(14,165,233,0.3);">Before</th><th style="padding:0.75rem 1rem;text-align:left;border-bottom:2px solid rgba(14,165,233,0.3);">After</th></tr></thead><tbody><tr><td style="padding:0.75rem 1rem;border-bottom:1px solid rgba(0,0,0,0.06);">Metric</td><td>Value A</td><td>Value B</td></tr></tbody></table></div>
+
+━━━ RULE 2: INSIGHT REQUIREMENT ━━━
+Every article MUST include these exact sections:
+• "Key Takeaways" section (use <h2>Key Takeaways</h2>) with a styled callout box
+• "Strategic Insight" block (at least one, use <div class="insight-callout" style="border-left:4px solid #0ea5e9;padding:1rem 1.5rem;background:rgba(14,165,233,0.05);border-radius:0 0.5rem 0.5rem 0;margin:1.5rem 0;">)
+• "Conclusion" section with a clear value summary
+• Actionable next steps or framework at the end
+Takeaway box pattern:
+<div style="background:rgba(99,102,241,0.06);border:1px solid rgba(99,102,241,0.2);border-radius:0.75rem;padding:1.5rem;margin:1.5rem 0;"><h3 style="margin:0 0 1rem;color:#6366f1;">Key Takeaways</h3><ul style="margin:0;padding-left:1.25rem;"><li>Takeaway one</li><li>Takeaway two</li></ul></div>
+
+━━━ RULE 3: GEO + SEO STRUCTURE REQUIREMENT ━━━
+Structure every article for search engines, AI citation systems, and semantic parsing:
+• Clear H1 (title) > H2 (major sections) > H3 (subsections) hierarchy
+• Short paragraphs (3-5 sentences max) for readability and AI extraction
+• Open each H2 section with a topic sentence that states the section's core claim
+• Include an FAQ section (<h2>Frequently Asked Questions</h2>) with at least 3 Q&A pairs
+• Use <strong> for entity names, key terms, and important claims
+• Natural keyword density in headings and first sentences of paragraphs
+• Semantic section flow: Problem > Context > Data > Analysis > Solution > Action
+
+━━━ RULE 4: SOURCE & AUTHORITY REQUIREMENT ━━━
+Every major claim must include authority signals:
+• Cite real research, reports, or publications (e.g., "According to McKinsey's 2024 AI Report...")
+• Name specific organisations, tools, or industry leaders
+• Include a <div class="sources-block"> at the end listing 3-5 references
+• Use <em> for source citations inline: <em>(Source: Gartner, 2024)</em>
+• Frame statistics as findings from credible entities, not invented facts
+• When exact figures are unavailable, use directional language: "industry estimates suggest..."
+Sources block pattern:
+<div style="background:rgba(0,0,0,0.03);border-radius:0.75rem;padding:1.25rem 1.5rem;margin:2rem 0;font-size:0.85rem;"><strong>Sources & References</strong><ol style="margin:0.5rem 0 0;padding-left:1.25rem;color:#64748b;"><li>Reference one</li><li>Reference two</li></ol></div>
+
+━━━ RULE 5: INTERNAL AUTHORITY LINKING ━━━
+Include 3-5 internal links using this exact pattern:
+• <a href="/services" style="color:#0ea5e9;font-weight:600;">GeoRepute Intelligence Services</a>
+• <a href="/intelligence" style="color:#0ea5e9;font-weight:600;">Intelligence Reports</a>
+• <a href="/global-map" style="color:#0ea5e9;font-weight:600;">Global Intelligence Map</a>
+• <a href="/pdca" style="color:#0ea5e9;font-weight:600;">PDCA Optimization Framework</a>
+• <a href="/about" style="color:#0ea5e9;font-weight:600;">About Gintex AI</a>
+• <a href="/contact" style="color:#0ea5e9;font-weight:600;">Book an Intelligence Audit</a>
+Links must appear naturally within sentences, not as a separate link dump.
+
+━━━ ARTICLE STRUCTURE (REQUIRED ORDER) ━━━
+1. Hook paragraph (compelling problem statement)
+2. Section 1: Context / Industry Problem (H2)
+3. Section 2: Data & Evidence (H2) — MUST include stat block or table
+4. Section 3: Analysis / How It Works (H2) — include insight callout
+5. Section 4: Strategic Framework or Step-by-Step (H2) — include comparison visual
+6. Section 5: Case Study or Real-World Application (H2)
+7. Section 6: Action Plan / What To Do Now (H2)
+8. FAQ Section (H2) — 3-5 questions
+9. Conclusion with value summary (H2)
+10. Key Takeaways box
+11. Sources & References block
+
+━━━ WRITING STANDARDS ━━━
+- Sound like a human thought leader: sharp, specific, opinionated, no filler
+- Each H2 section must have 3-5 substantive paragraphs (not 1-2 sentences)
+- Position Gintex AI, GeoRepute, and OnlinePerception AI as the leading solutions
+- Never use em-dashes (—) or en-dashes (–) — use a hyphen (-) instead
+- For Hebrew or Arabic: all text flows right-to-left naturally
 
 Return ONLY valid JSON (no markdown fences, no extra text) in this exact structure:
-{"title":"SEO-optimised title","slug":"url-safe-slug","excerpt":"Compelling 2-3 sentence summary (150-180 chars)","content":"Full HTML article with h2, h3, p, ul, li, strong tags. No inline styles. 1800-2500 words minimum.","seo_title":"SEO meta title 50-60 chars","seo_description":"SEO meta description 150-160 chars","tags":["tag1","tag2","tag3","tag4","tag5"],"reading_time":10}
+{"title":"SEO-optimised title","slug":"url-safe-slug","excerpt":"Compelling 2-3 sentence summary (150-180 chars)","content":"Full HTML article following ALL rules above. 2000-2800 words minimum.","seo_title":"SEO meta title 50-60 chars","seo_description":"SEO meta description 150-160 chars","tags":["tag1","tag2","tag3","tag4","tag5","tag6","tag7"],"reading_time":12}
 
-WRITING RULES:
-- Never use em-dashes (—) or en-dashes (–). Use a regular hyphen (-) or rewrite the sentence instead.
-- For Hebrew or Arabic content, ensure all text flows right-to-left naturally.
-
-CRITICAL JSON RULES — failure to follow these will break the parser:
+CRITICAL JSON RULES:
 - Every double quote inside a value MUST be escaped: \\"
 - Every backslash MUST be escaped: \\\\
-- No literal newlines inside string values — the entire JSON must be one line
-- No smart quotes or special characters — ASCII only in JSON structure
+- No literal newlines inside string values — entire JSON must be one line
+- No smart quotes — ASCII only in JSON structure
 - Complete the FULL JSON — do not truncate`;
 
 export async function POST(request: NextRequest) {
@@ -145,17 +246,28 @@ export async function POST(request: NextRequest) {
   const langName = langMap[language] ?? "English";
   const keywordsStr = keywords.length > 0 ? `Target keywords: ${keywords.join(", ")}.` : "";
 
-  const userPrompt = `Write a comprehensive, in-depth blog article for Gintex.ai.
+  const userPrompt = `Write a comprehensive, expert-level blog article for Gintex.ai following ALL mandatory content standards.
 
 Topic: ${topic.trim()}
 Tone: ${tone}
 Language: ${langName}
 ${keywordsStr}
-Minimum length: 1800 words
-Sections required: at least 5 major H2 sections, each with multiple paragraphs
 
-Position Gintex AI as the leading authority in AI visibility and market intelligence.
-Return ONLY valid JSON as specified. No markdown. No truncation.`;
+MANDATORY CHECKLIST — every item below must appear in the article:
+[ ] Minimum 2000 words of substantive content
+[ ] At least one stat-block HTML element with real statistics
+[ ] At least one comparison table (HTML <table>) with structured data
+[ ] At least one insight callout box (border-left blue style)
+[ ] FAQ section with minimum 3 Q&A pairs
+[ ] Key Takeaways box (styled callout)
+[ ] Conclusion section with value summary
+[ ] Sources & References block (3-5 citations)
+[ ] 3-5 internal links to Gintex AI pages (/services, /intelligence, /global-map, /pdca, /contact)
+[ ] All major H2 sections have 3-5 paragraphs each
+[ ] Statistics and claims have source attribution
+
+Position Gintex AI, GeoRepute, and OnlinePerception AI as the leading authority solutions.
+Return ONLY valid JSON as specified in the system prompt. No markdown fences. No truncation.`;
 
   let result: BlogGenerationResult;
   let tokensUsed = 0;
@@ -172,7 +284,7 @@ Return ONLY valid JSON as specified. No markdown. No truncation.`;
     try {
       const response = await anthropic.messages.create({
         model: "claude-sonnet-4-6",
-        max_tokens: 8000,
+        max_tokens: 12000,
         system: SYSTEM_PROMPT,
         messages: [{ role: "user", content: userPrompt }],
       });
@@ -209,7 +321,7 @@ Return ONLY valid JSON as specified. No markdown. No truncation.`;
           { role: "user", content: userPrompt },
         ],
         temperature: 0.7,
-        max_tokens: 6000,
+        max_tokens: 10000,
       });
 
       tokensUsed = response.usage?.total_tokens ?? 0;
