@@ -1,6 +1,8 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { useLang } from "@/components/LanguageContext";
+import { t, tx } from "@/lib/translations";
 
 function AIVisibilityIcon({ className }: { className?: string }) {
   return (
@@ -43,11 +45,8 @@ function GrowthIcon({ className }: { className?: string }) {
   );
 }
 
-const FEATURES = [
+const FEATURE_STYLES = [
   {
-    title: "AI Visibility Intelligence",
-    desc: "How AI systems represent your brand",
-    body: "We audit how large language models, AI search engines, and emerging discovery platforms represent your organization. Gaps in your visibility infrastructure directly cost you authority — we close them with analytical precision.",
     Icon: AIVisibilityIcon,
     iconWrap: "from-blue-500/50 to-indigo-600/35 shadow-[0_0_28px_-6px_rgba(59,130,246,0.55)] ring-white/15",
     orb: "rgba(59,130,246,0.12)",
@@ -55,9 +54,6 @@ const FEATURES = [
     hoverColor: "rgba(59,130,246,0.12)",
   },
   {
-    title: "Reputation & Perception Intelligence",
-    desc: "How digital ecosystems shape market positioning",
-    body: "Your authority is built — or eroded — across media coverage, review platforms, forums, and public narrative. We analyze, map, and strategically reposition the signals that define how markets perceive you.",
     Icon: ReputationIcon,
     iconWrap: "from-violet-500/45 to-purple-600/35 shadow-[0_0_28px_-6px_rgba(139,92,246,0.5)] ring-white/15",
     orb: "rgba(139,92,246,0.1)",
@@ -65,9 +61,6 @@ const FEATURES = [
     hoverColor: "rgba(139,92,246,0.1)",
   },
   {
-    title: "Strategic Growth Infrastructure",
-    desc: "Translating intelligence into market positioning",
-    body: "Intelligence without execution is just data. We build the SEO architecture, GEO content systems, and authority frameworks that compound visibility into measurable strategic growth over time.",
     Icon: GrowthIcon,
     iconWrap: "from-teal-500/45 to-cyan-600/35 shadow-[0_0_28px_-6px_rgba(20,184,166,0.48)] ring-white/15",
     orb: "rgba(20,184,166,0.1)",
@@ -77,6 +70,13 @@ const FEATURES = [
 ] as const;
 
 export function FeaturesSection() {
+  const { lang } = useLang();
+
+  const FEATURES = [
+    { title: tx(t.features.f1.title, lang), desc: tx(t.features.f1.desc, lang), body: tx(t.features.f1.body, lang), ...FEATURE_STYLES[0] },
+    { title: tx(t.features.f2.title, lang), desc: tx(t.features.f2.desc, lang), body: tx(t.features.f2.body, lang), ...FEATURE_STYLES[1] },
+    { title: tx(t.features.f3.title, lang), desc: tx(t.features.f3.desc, lang), body: tx(t.features.f3.body, lang), ...FEATURE_STYLES[2] },
+  ];
   return (
     <section
       className="px-6 py-20 sm:px-10 sm:py-28 transition-colors duration-300"
@@ -94,14 +94,13 @@ export function FeaturesSection() {
             className="text-3xl font-bold tracking-tight sm:text-4xl md:text-[2.75rem] md:leading-tight transition-colors duration-300"
             style={{ color: "var(--text-primary)" }}
           >
-            We Analyze How the Market Sees You
+            {tx(t.features.heading, lang)}
           </h2>
           <p
             className="mt-5 max-w-2xl mx-auto text-base leading-relaxed sm:text-lg transition-colors duration-300"
             style={{ color: "var(--text-secondary)" }}
           >
-            Most companies invest in marketing without fully understanding how they are represented across AI systems, search engines, digital media, and public perception.
-            GINTEX combines strategic consulting, proprietary analytical frameworks, and intelligence systems to help organizations make better market decisions.
+            {tx(t.features.subheading, lang)}
           </p>
         </motion.header>
 

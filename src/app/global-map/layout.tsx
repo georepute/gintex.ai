@@ -5,10 +5,5 @@ export const metadata: Metadata = {
 };
 
 export default function GlobalMapLayout({ children }: { children: React.ReactNode }) {
-  return (
-    <>
-      <style>{`body { overflow: hidden !important; }`}</style>
-      {children}
-    </>
-  );
+  return <>{children}</>;
 }

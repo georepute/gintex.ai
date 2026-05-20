@@ -2,16 +2,8 @@
 
 import { useEffect, useRef, useState, useCallback } from "react";
 import { motion, useMotionValue, useSpring } from "framer-motion";
-
-// ─── Data ────────────────────────────────────────────────────────────────────
-
-const STEPS = [
-  { n: "01", title: "Analyze",  detail: "GeoReput scan",    icon: "⬡" },
-  { n: "02", title: "Decide",   detail: "Strategy engine",  icon: "◈" },
-  { n: "03", title: "Position", detail: "SEO + GEO",        icon: "◎" },
-  { n: "04", title: "Execute",  detail: "Dashboard",        icon: "⬟" },
-  { n: "05", title: "Improve",  detail: "Loop",             icon: "⟳" },
-] as const;
+import { useLang } from "@/components/LanguageContext";
+import { t, tx } from "@/lib/translations";
 
 const STEP_DURATION = 2600;
 
@@ -71,10 +63,12 @@ function AmbientOrb({ x, y, size, color, delay }: {
 
 // ─── Node component ───────────────────────────────────────────────────────────
 
+type StepData = { n: string; title: string; detail: string; icon: string };
+
 function StepNode({
   step, isActive, isCompleted, index,
 }: {
-  step: typeof STEPS[number];
+  step: StepData;
   isActive: boolean;
   isCompleted: boolean;
   index: number;
@@ -309,6 +303,15 @@ function StepNode({
 
 export function OptimizationLoopSection() {
   const [active, setActive] = useState(0);
+  const { lang } = useLang();
+
+  const STEPS = [
+    { n: "01", title: tx(t.loop.steps.s1.title, lang), detail: tx(t.loop.steps.s1.detail, lang), icon: "⬡" },
+    { n: "02", title: tx(t.loop.steps.s2.title, lang), detail: tx(t.loop.steps.s2.detail, lang), icon: "◈" },
+    { n: "03", title: tx(t.loop.steps.s3.title, lang), detail: tx(t.loop.steps.s3.detail, lang), icon: "◎" },
+    { n: "04", title: tx(t.loop.steps.s4.title, lang), detail: tx(t.loop.steps.s4.detail, lang), icon: "⬟" },
+    { n: "05", title: tx(t.loop.steps.s5.title, lang), detail: tx(t.loop.steps.s5.detail, lang), icon: "⟳" },
+  ] as const;
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
   const springX = useSpring(mouseX, { stiffness: 40, damping: 20 });
@@ -394,12 +397,11 @@ export function OptimizationLoopSection() {
               transition={{ duration: 1.4, repeat: Infinity }}
             />
             <span className="text-[11px] font-semibold uppercase tracking-[0.2em] text-sky-400/90">
-              Live Pipeline
+              {tx(t.loop.badge, lang)}
             </span>
           </motion.div>
 
           <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl md:text-[2.6rem] md:leading-[1.15]">
-            A Continuous{" "}
             <span
               className="relative inline-block"
               style={{
@@ -408,11 +410,11 @@ export function OptimizationLoopSection() {
                 WebkitTextFillColor: "transparent",
               }}
             >
-              Optimization Loop
+              {tx(t.loop.heading, lang)}
             </span>
           </h2>
           <p className="mt-4 text-sm font-semibold uppercase tracking-[0.28em] text-sky-400/70">
-            From analyze to improve
+            {tx(t.loop.sub, lang)}
           </p>
         </motion.header>
 

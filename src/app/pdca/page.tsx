@@ -6,7 +6,7 @@ import { PdcaPhaseDetailSections } from "@/components/pdca/PdcaPhaseDetailSectio
 export const metadata: Metadata = {
   title: "PDCA Framework | Gintex Ai",
   description:
-    "Plan, Do, Check, Act—reimagined with AI and GeoReput intelligence for faster optimization and clearer ROI.",
+    "Plan, Do, Check, Act—reimagined with AI and GeoRepute intelligence for faster optimization and clearer ROI.",
 };
 
 export default function PdcaPage() {

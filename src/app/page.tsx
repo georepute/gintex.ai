@@ -4,7 +4,7 @@ import { CoreCapabilitiesSection } from "@/components/home/CoreCapabilitiesSecti
 export const metadata: Metadata = {
   title: "Gintex AI — AI Visibility, Reputation & Market Intelligence",
   description:
-    "Control how AI systems, search engines, and digital markets perceive your brand. GeoReput audits, SEO systems, reputation intelligence, and strategic authority-building.",
+    "Control how AI systems, search engines, and digital markets perceive your brand. GeoRepute audits, SEO systems, reputation intelligence, and strategic authority-building.",
   alternates: { canonical: "https://gintex-ai.vercel.app" },
 };
 import { EcosystemSection } from "@/components/home/EcosystemSection";

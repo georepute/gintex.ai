@@ -5,6 +5,8 @@ import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { ThemeToggleFloat } from "@/components/ThemeToggleFloat";
+import { LanguageProvider } from "@/components/LanguageContext";
+import { HtmlDirWrapper } from "@/components/HtmlDirWrapper";
 import "./globals.css";
 
 const inter = Inter({
@@ -30,7 +32,7 @@ export const metadata: Metadata = {
     template: "%s | Gintex AI",
   },
   description:
-    "Control how AI systems, search engines, and digital markets perceive your brand. GeoReput audits, SEO systems, reputation intelligence, and strategic authority-building for growth-focused businesses.",
+    "Control how AI systems, search engines, and digital markets perceive your brand. GeoRepute audits, SEO systems, reputation intelligence, and strategic authority-building for growth-focused businesses.",
   keywords: [
     "AI visibility",
     "reputation intelligence",
@@ -39,7 +41,7 @@ export const metadata: Metadata = {
     "market intelligence",
     "brand perception",
     "digital authority",
-    "GeoReput",
+    "GeoRepute",
     "GEON intelligence",
   ],
   authors: [{ name: "Gintex AI", url: "https://gintex-ai.vercel.app" }],
@@ -87,8 +89,10 @@ export default function RootLayout({
       lang="en"
       className={`${inter.variable} ${spaceGrotesk.variable} h-full antialiased`}
     >
-      <body className="flex min-h-screen flex-col font-sans">
+      <body>
+        <LanguageProvider>
         <ThemeProvider>
+        <HtmlDirWrapper>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
@@ -100,7 +104,7 @@ export default function RootLayout({
               url: "https://gintex-ai.vercel.app",
               logo: "https://gintex-ai.vercel.app/logo.png",
               description:
-                "AI visibility, reputation intelligence, and strategic market positioning systems for brands. GeoReput audits, SEO optimization, and digital authority-building.",
+                "AI visibility, reputation intelligence, and strategic market positioning systems for brands. GeoRepute audits, SEO optimization, and digital authority-building.",
               foundingDate: "2024",
               areaServed: "Worldwide",
               serviceType: [
@@ -124,7 +128,7 @@ export default function RootLayout({
                 "@type": "OfferCatalog",
                 name: "Gintex AI Services",
                 itemListElement: [
-                  { "@type": "Offer", itemOffered: { "@type": "Service", name: "GeoReput Market Execution" } },
+                  { "@type": "Offer", itemOffered: { "@type": "Service", name: "GeoRepute Market Execution" } },
                   { "@type": "Offer", itemOffered: { "@type": "Service", name: "AI Visibility Intelligence" } },
                   { "@type": "Offer", itemOffered: { "@type": "Service", name: "Reputation & Perception Intelligence" } },
                   { "@type": "Offer", itemOffered: { "@type": "Service", name: "Marketing Audit" } },
@@ -139,7 +143,9 @@ export default function RootLayout({
         <Header />
         <div className="flex flex-1 flex-col">{children}</div>
         <Footer />
+        </HtmlDirWrapper>
         </ThemeProvider>
+        </LanguageProvider>
       </body>
     </html>
   );

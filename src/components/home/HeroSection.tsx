@@ -5,6 +5,8 @@ import Link from "next/link";
 import { useRef } from "react";
 import { motion, useScroll, useTransform, useSpring } from "framer-motion";
 import heroImage from "@/Gintex-images/Main img 1.png";
+import { useLang } from "@/components/LanguageContext";
+import { t, tx } from "@/lib/translations";
 
 const container = {
   hidden: {},
@@ -60,6 +62,7 @@ export function HeroSection() {
   const rawY = useTransform(scrollYProgress, [0, 1], [0, 60]);
   const imageY = useSpring(rawY, { stiffness: 60, damping: 20 });
   const rawOpacity = useTransform(scrollYProgress, [0, 0.6], [1, 0]);
+  const { lang } = useLang();
 
   return (
     <section
@@ -132,7 +135,7 @@ export function HeroSection() {
                 animate={{ opacity: [1, 0.3, 1], scale: [1, 0.65, 1] }}
                 transition={{ duration: 1.6, repeat: Infinity }}
               />
-              Marketing Evolution
+              {tx(t.hero.badge, lang)}
             </motion.div>
           </motion.div>
 
@@ -142,14 +145,14 @@ export function HeroSection() {
             style={{ color: "var(--text-primary)" }}
             variants={fadeUp}
           >
-            Strategic Intelligence for{" "}
+            {tx(t.hero.heading1, lang)}{" "}
             <motion.span
               className="relative inline-block bg-gradient-to-r from-sky-400 via-cyan-300 to-teal-300 bg-clip-text text-transparent"
               animate={{ backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"] }}
               transition={{ duration: 5, repeat: Infinity, ease: "linear" }}
               style={{ backgroundSize: "200% 200%" }}
             >
-              Market Visibility
+              {tx(t.hero.heading2, lang)}
             </motion.span>
           </motion.h1>
 
@@ -159,7 +162,7 @@ export function HeroSection() {
             style={{ color: "var(--text-secondary)" }}
             variants={fadeUp}
           >
-            We help organizations understand how markets, AI systems, search engines, and digital ecosystems perceive their business - transforming intelligence into measurable strategic growth.
+            {tx(t.hero.body, lang)}
           </motion.p>
 
           {/* CTAs */}
@@ -177,7 +180,7 @@ export function HeroSection() {
                 href="/contact"
                 className="inline-flex items-center justify-center whitespace-nowrap rounded-full bg-gradient-to-r from-blue-600 to-purple-600 px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-blue-900/30"
               >
-                Explore GeoRepute
+                {tx(t.hero.cta1, lang)}
               </Link>
             </motion.div>
 
@@ -193,7 +196,7 @@ export function HeroSection() {
                 className="inline-flex items-center justify-center whitespace-nowrap rounded-full px-6 py-3 text-sm font-semibold transition-colors duration-300"
                 style={{ color: "var(--text-primary)" }}
               >
-                View Intelligence Reports
+                {tx(t.hero.cta2, lang)}
               </Link>
             </motion.div>
           </motion.div>
@@ -205,8 +208,8 @@ export function HeroSection() {
             variants={fadeUp}
           >
             <span className="h-px w-5 bg-sky-400/60" />
-            Powered by{" "}
-            <span className="font-semibold tracking-wide text-sky-500">the GeoRepute Intelligence Infrastructure</span>
+            {tx(t.hero.poweredBy, lang)}{" "}
+            <span className="font-semibold tracking-wide text-sky-500">{tx(t.hero.infra, lang)}</span>
           </motion.p>
 
           {/* Stats row */}
@@ -216,9 +219,9 @@ export function HeroSection() {
             variants={fadeUp}
           >
             {[
-              { value: "3.4×", label: "Avg. ROI lift" },
-              { value: "98%",  label: "Uptime SLA"   },
-              { value: "500+", label: "Brands served" },
+              { value: "3.4×", label: tx(t.hero.statRoi, lang) },
+              { value: "98%",  label: tx(t.hero.statUptime, lang) },
+              { value: "500+", label: tx(t.hero.statBrands, lang) },
             ].map(({ value, label }) => (
               <div key={label} className="flex flex-col gap-0.5">
                 <motion.span
@@ -305,7 +308,7 @@ export function HeroSection() {
               animate={{ opacity: [1, 0.3, 1], scale: [1, 0.7, 1] }}
               transition={{ duration: 1.4, repeat: Infinity }}
             />
-            <span className="text-[11px] font-semibold transition-colors duration-300" style={{ color: "var(--text-primary)" }}>AI Live</span>
+            <span className="text-[11px] font-semibold transition-colors duration-300" style={{ color: "var(--text-primary)" }}>{tx(t.hero.aiLive, lang)}</span>
           </motion.div>
         </motion.div>
       </div>
@@ -317,12 +320,12 @@ export function HeroSection() {
       >
         <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-3 px-6">
           {[
-            "70+ Proprietary Intelligence Reports",
-            "Strategic Market Analysis",
-            "AI Visibility & Reputation Intelligence",
-            "SEO & GEO Infrastructure",
-            "Executive Advisory",
-            "Political & Public Intelligence",
+            tx(t.hero.strip.r1, lang),
+            tx(t.hero.strip.r2, lang),
+            tx(t.hero.strip.r3, lang),
+            tx(t.hero.strip.r4, lang),
+            tx(t.hero.strip.r5, lang),
+            tx(t.hero.strip.r6, lang),
           ].map((item) => (
             <span
               key={item}

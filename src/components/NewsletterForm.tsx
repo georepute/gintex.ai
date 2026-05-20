@@ -1,5 +1,8 @@
 "use client";
 
+import { useLang } from "@/components/LanguageContext";
+import { t, tx } from "@/lib/translations";
+
 function ArrowIcon() {
   return (
     <svg
@@ -21,6 +24,7 @@ function ArrowIcon() {
 }
 
 export function NewsletterForm() {
+  const { lang } = useLang();
   return (
     <form
       onSubmit={(e) => e.preventDefault()}
@@ -29,7 +33,7 @@ export function NewsletterForm() {
       <input
         type="email"
         name="email"
-        placeholder="Enter email"
+        placeholder={tx(t.footer.emailPlaceholder, lang)}
         autoComplete="email"
         className="w-full py-2.5 pl-3.5 pr-11 text-sm outline-none transition-colors duration-300"
         style={{

@@ -1,33 +1,21 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { useLang } from "@/components/LanguageContext";
+import { t, tx } from "@/lib/translations";
 
-const TESTIMONIALS = [
-  {
-    quote:
-      "GINTEX gave us a level of market intelligence we didn't know was possible. We now understand exactly how our industry perceives us — and how to strategically change it.",
-    name: "Marcus Thorne",
-    role: "CMO, Veloce Global",
-    initials: "MT",
-    accentBorder: "#38bdf8",
-    avatarBg: "rgba(14,165,233,0.08)",
-    avatarText: "#0369a1",
-    avatarRing: "rgba(14,165,233,0.2)",
-  },
-  {
-    quote:
-      "This is not a marketing vendor. This is a strategic intelligence partner. The depth of their analytical frameworks is unlike anything we've encountered.",
-    name: "Elena Vance",
-    role: "Founder, Aura Digital",
-    initials: "EV",
-    accentBorder: "#a78bfa",
-    avatarBg: "rgba(139,92,246,0.08)",
-    avatarText: "#7c3aed",
-    avatarRing: "rgba(139,92,246,0.2)",
-  },
+const TESTIMONIAL_STYLES = [
+  { name: "Marcus Thorne", role: "CMO, Veloce Global",    initials: "MT", accentBorder: "#38bdf8", avatarBg: "rgba(14,165,233,0.08)",  avatarText: "#0369a1", avatarRing: "rgba(14,165,233,0.2)" },
+  { name: "Elena Vance",   role: "Founder, Aura Digital", initials: "EV", accentBorder: "#a78bfa", avatarBg: "rgba(139,92,246,0.08)", avatarText: "#7c3aed", avatarRing: "rgba(139,92,246,0.2)" },
 ] as const;
 
 export function TestimonialsSection() {
+  const { lang } = useLang();
+
+  const TESTIMONIALS = [
+    { ...TESTIMONIAL_STYLES[0], quote: tx(t.testimonials.t1.quote, lang) },
+    { ...TESTIMONIAL_STYLES[1], quote: tx(t.testimonials.t2.quote, lang) },
+  ];
   return (
     <section
       className="px-6 py-24 sm:px-10 sm:py-28 transition-colors duration-300"
@@ -45,13 +33,13 @@ export function TestimonialsSection() {
             className="text-left text-3xl font-bold tracking-tight sm:text-4xl lg:text-[2.65rem] lg:leading-tight transition-colors duration-300"
             style={{ color: "var(--text-primary)" }}
           >
-            What Our Clients Say
+            {tx(t.testimonials.heading, lang)}
           </h2>
           <p
             className="mt-5 text-left text-base leading-relaxed sm:text-lg transition-colors duration-300"
             style={{ color: "var(--text-secondary)" }}
           >
-            Organizations that have used GINTEX intelligence infrastructure to understand and improve their strategic market position.
+            {tx(t.testimonials.sub, lang)}
           </p>
         </motion.header>
 

@@ -1,26 +1,29 @@
 "use client";
 
 import { motion } from "framer-motion";
-
-const STATS = [
-  { value: "500+",  label: "Organizations Analyzed"       },
-  { value: "94%",   label: "Visibility Improvement"       },
-  { value: "3.4×",  label: "Avg. Strategic Growth Lift"   },
-  { value: "48h",   label: "Intelligence Turnaround"      },
-] as const;
-
-const INDUSTRIES = [
-  "SaaS & Tech",
-  "Finance & Fintech",
-  "Healthcare",
-  "E-commerce",
-  "Legal & Consulting",
-  "Real Estate",
-  "Media & Publishing",
-  "Startups",
-] as const;
+import { useLang } from "@/components/LanguageContext";
+import { t, tx } from "@/lib/translations";
 
 export function TrustedBy() {
+  const { lang } = useLang();
+
+  const STATS = [
+    { value: "500+", label: tx(t.trustedBy.stats.analyzed, lang) },
+    { value: "94%",  label: tx(t.trustedBy.stats.improvement, lang) },
+    { value: "3.4×", label: tx(t.trustedBy.stats.growth, lang) },
+    { value: "48h",  label: tx(t.trustedBy.stats.turnaround, lang) },
+  ];
+
+  const INDUSTRIES = [
+    tx(t.trustedBy.industries.saas, lang),
+    tx(t.trustedBy.industries.finance, lang),
+    tx(t.trustedBy.industries.health, lang),
+    tx(t.trustedBy.industries.ecom, lang),
+    tx(t.trustedBy.industries.legal, lang),
+    tx(t.trustedBy.industries.realty, lang),
+    tx(t.trustedBy.industries.media, lang),
+    tx(t.trustedBy.industries.startups, lang),
+  ];
   return (
     <section
       className="px-6 py-14 sm:px-10 sm:py-16 transition-colors duration-300"
@@ -36,7 +39,7 @@ export function TrustedBy() {
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
         >
-          Trusted by organizations across industries worldwide
+          {tx(t.trustedBy.tagline, lang)}
         </motion.p>
 
         {/* Stats row */}

@@ -312,8 +312,8 @@ export function PremiumCursor() {
   return (
     <div
       ref={layerRef}
-      className="pointer-events-none fixed inset-0 overflow-hidden"
-      style={{ zIndex: z }}
+      className="pointer-events-none fixed inset-0"
+      style={{ zIndex: z, overflow: "visible" }}
       aria-hidden
     >
       <div ref={particleRootRef} className="pointer-events-none absolute inset-0" />

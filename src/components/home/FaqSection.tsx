@@ -2,29 +2,8 @@
 
 import { useId, useState } from "react";
 import { motion } from "framer-motion";
-
-const FAQS = [
-  {
-    q: "How does Gintex integrate with our existing tools?",
-    a: "We use secure APIs and connectors to work alongside your CRM, analytics, ad platforms, and content systems—so you keep your stack while we layer intelligence on top, without forcing a disruptive migration.",
-  },
-  {
-    q: "Is our data secure when using Gintex AI?",
-    a: "Yes. We treat your data with strict access controls, encryption in transit and at rest where applicable, and clear data-handling practices. We're happy to walk through security, retention, and compliance questions with your team.",
-  },
-  {
-    q: "What is a typical ramp-up or engagement timeline?",
-    a: "Most engagements start with discovery and audit (often a few weeks), followed by roadmap and quick wins, then ongoing execution and optimization. Exact timing depends on scope, channels, and how fast your team can collaborate.",
-  },
-  {
-    q: "Who is Gintex built for?",
-    a: "Marketing and growth teams, founders, and enterprises that want clearer perception in AI and search, stronger visibility, and execution that ties back to measurable outcomes—not one-off campaigns with no feedback loop.",
-  },
-  {
-    q: "How do you measure success?",
-    a: "We align on KPIs up front—visibility, pipeline, efficiency, or revenue proxies—then report through dashboards and reviews so you can see what changed, why, and what to do next in the optimization loop.",
-  },
-] as const;
+import { useLang } from "@/components/LanguageContext";
+import { t, tx } from "@/lib/translations";
 
 function Chevron({ open }: { open: boolean }) {
   return (
@@ -47,6 +26,15 @@ function Chevron({ open }: { open: boolean }) {
 export function FaqSection() {
   const baseId = useId();
   const [openIndex, setOpenIndex] = useState<number | null>(0);
+  const { lang } = useLang();
+
+  const FAQS = [
+    { q: tx(t.faq.q1.q, lang), a: tx(t.faq.q1.a, lang) },
+    { q: tx(t.faq.q2.q, lang), a: tx(t.faq.q2.a, lang) },
+    { q: tx(t.faq.q3.q, lang), a: tx(t.faq.q3.a, lang) },
+    { q: tx(t.faq.q4.q, lang), a: tx(t.faq.q4.a, lang) },
+    { q: tx(t.faq.q5.q, lang), a: tx(t.faq.q5.a, lang) },
+  ];
 
   return (
     <section
@@ -62,7 +50,7 @@ export function FaqSection() {
           viewport={{ once: true, margin: "-80px" }}
           transition={{ duration: 0.6, ease: "easeOut" }}
         >
-          Frequently Asked
+          {tx(t.faq.heading, lang)}
         </motion.h2>
 
         <div className="mt-12 flex flex-col gap-4">
