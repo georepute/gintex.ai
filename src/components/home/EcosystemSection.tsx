@@ -1,8 +1,18 @@
 "use client";
 
+import Image from "next/image";
 import { motion } from "framer-motion";
 import { useLang } from "@/components/LanguageContext";
 import { t, tx } from "@/lib/translations";
+import geoReputeLogo from "@/Gintex-images/Gemini_Generated_Image_ukv1kbukv1kbukv1-removebg-preview.png";
+import onlinePerceptionLogo from "@/Gintex-images/l2-removebg-preview.png";
+import gintexLogo from "@/Gintex-images/WhatsApp_Image_2026-02-07_at_13.37.12-removebg-preview (1).png";
+
+const LOGOS: Record<string, { src: typeof geoReputeLogo; width: number; height: number }> = {
+  GeoRepute:        { src: geoReputeLogo,        width: 56,  height: 56  },
+  OnlinePerception: { src: onlinePerceptionLogo, width: 160, height: 44  },
+  GINTEX:           { src: gintexLogo,           width: 56,  height: 56  },
+};
 
 const BLOCK_STYLES = [
   { brand: "GeoRepute",        color: "from-sky-500/40 to-blue-600/30",    glow: "rgba(56,189,248,0.5)",  ring: "rgba(56,189,248,0.25)",  dot: "bg-sky-400",    tag: "bg-sky-500/10 text-sky-400 border-sky-500/20" },
@@ -66,6 +76,20 @@ export function EcosystemSection() {
                 className="pointer-events-none absolute -right-16 -top-16 h-36 w-36 rounded-full opacity-0 blur-3xl transition-opacity duration-500 group-hover:opacity-100"
                 style={{ background: `radial-gradient(circle, ${glow.replace("0.5", "0.25")} 0%, transparent 70%)` }}
               />
+              {/* Logo */}
+              {LOGOS[brand] && (
+                <div className="mb-4 flex items-center" style={{ height: LOGOS[brand].height }}>
+                  <Image
+                    src={LOGOS[brand].src}
+                    alt={brand}
+                    width={LOGOS[brand].width}
+                    height={LOGOS[brand].height}
+                    className="object-contain object-left"
+                    style={{ maxHeight: LOGOS[brand].height, width: "auto" }}
+                  />
+                </div>
+              )}
+
               <div className="mb-5 flex items-center gap-3">
                 <motion.span
                   className={`h-2.5 w-2.5 rounded-full ${dot}`}
