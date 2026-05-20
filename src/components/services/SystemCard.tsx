@@ -5,12 +5,12 @@ import Link from "next/link";
 import type { ServiceItem } from "@/data/services";
 import { useLang } from "@/components/LanguageContext";
 import { t, tx } from "@/lib/translations";
-import copyUpLogo from "@/Gintex-images/image (7).png";
-import onlinePerceptionLogo from "@/Gintex-images/WhatsApp Image 2026-02-03 at 20.54.01 (1) (3).jpeg";
+import copyUpLogo from "@/Gintex-images/l1-removebg-preview.png";
+import onlinePerceptionLogo from "@/Gintex-images/l2-removebg-preview.png";
 
 const LOGOS: Record<string, { src: typeof copyUpLogo; width: number; height: number; pill?: boolean }> = {
-  CopyApp: { src: copyUpLogo, width: 300, height: 90, pill: false },
-  "OnlinePerception AI": { src: onlinePerceptionLogo, width: 220, height: 60 },
+  CopyApp: { src: copyUpLogo, width: 280, height: 80, pill: false },
+  "OnlinePerception AI": { src: onlinePerceptionLogo, width: 240, height: 70 },
 };
 
 const SYSTEM_STYLES: Record<string, {
@@ -105,7 +105,7 @@ export function SystemCard({ system }: { system: ServiceItem }) {
 
       {/* Logo or Title */}
       {LOGOS[system.title] ? (
-        <div className="relative mb-1 flex items-center" style={{ height: 90 }}>
+        <div className="relative mb-1 flex items-center" style={{ height: 80 }}>
           <Image
             src={LOGOS[system.title].src}
             alt={system.title}
@@ -113,10 +113,8 @@ export function SystemCard({ system }: { system: ServiceItem }) {
             height={LOGOS[system.title].height}
             className="object-contain object-left"
             style={{
-              maxHeight: 90,
+              maxHeight: 80,
               width: "auto",
-              mixBlendMode: "multiply",
-              filter: "contrast(1.1) saturate(1.2)",
             }}
           />
         </div>

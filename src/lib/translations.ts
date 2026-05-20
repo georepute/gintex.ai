@@ -399,6 +399,9 @@ export const t = {
         en: "GINTEX operates where data, perception, and strategy meet. No more feelings. No more guessing. Decisions based on truth.",
         he: "GINTEX פועלת במקום שבו נתונים, תפיסה ואסטרטגיה נפגשים. אין יותר תחושות. אין יותר ניחושים. החלטות המבוססות על אמת.",
       },
+      viewCerts:  { en: "View Certifications", he: "צפה בתעודות" },
+      certsTitle: { en: "Certifications",      he: "תעודות" },
+      certsClose: { en: "Close",               he: "סגור" },
     },
     journey: {
       heading: { en: "The Journey", he: "המסע" },
