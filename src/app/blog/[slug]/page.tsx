@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
 import type { Blog } from "@/types/blog";
+import BlogContent from "@/components/blog/BlogContent";
 
 export const revalidate = 60;
 
@@ -59,7 +60,9 @@ export default async function BlogDetailPage({ params }: Props) {
   const blog = await getBlog(slug);
   if (!blog) notFound();
 
-  const jsonLd = {
+  const siteUrl = "https://gintex-ai.vercel.app";
+
+  const articleSchema = {
     "@context": "https://schema.org",
     "@type": "Article",
     headline: blog.title,
@@ -67,15 +70,74 @@ export default async function BlogDetailPage({ params }: Props) {
     image: blog.cover_image ?? undefined,
     datePublished: blog.published_at ?? undefined,
     dateModified: blog.updated_at,
-    author: { "@type": "Organization", name: "Gintex AI", url: "https://gintex-ai.vercel.app" },
+    author: {
+      "@type": "Person",
+      name: "Gintex AI Editorial Team",
+      url: `${siteUrl}/about`,
+      worksFor: { "@type": "Organization", name: "Gintex AI", url: siteUrl },
+    },
     publisher: {
       "@type": "Organization",
       name: "Gintex AI",
-      logo: { "@type": "ImageObject", url: "https://gintex-ai.vercel.app/logo.png" },
+      url: siteUrl,
+      logo: { "@type": "ImageObject", url: `${siteUrl}/logo.png` },
     },
-    url: `https://gintex-ai.vercel.app/blog/${blog.slug}`,
+    url: `${siteUrl}/blog/${blog.slug}`,
+    mainEntityOfPage: { "@type": "WebPage", "@id": `${siteUrl}/blog/${blog.slug}` },
     keywords: (blog.tags ?? []).join(", "),
+    articleSection: "AI Visibility Intelligence",
+    inLanguage: blog.language ?? "en",
+    isPartOf: { "@type": "Blog", name: "Gintex AI Intelligence", url: `${siteUrl}/intelligence` },
   };
+
+  const organizationSchema = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    name: "Gintex AI",
+    url: siteUrl,
+    logo: { "@type": "ImageObject", url: `${siteUrl}/logo.png` },
+    description: "AI visibility intelligence, brand perception analysis, and reputation management platform.",
+    sameAs: [siteUrl],
+    knowsAbout: [
+      "AI Visibility Intelligence",
+      "Brand Perception Analysis",
+      "GEO Optimization",
+      "Generative Engine Optimization",
+      "Reputation Management",
+      "AI Search Optimization",
+    ],
+  };
+
+  // Extract FAQ pairs from content for FAQ schema
+  const faqSchema = (() => {
+    const content = blog.content ?? "";
+    const faqSection = content.match(/<h[23][^>]*>(?:Frequently Asked Questions|FAQ)[^<]*<\/h[23]>([\s\S]*?)(?=<h2|$)/i);
+    if (!faqSection) return null;
+    const pairs: { question: string; answer: string }[] = [];
+    const qRegex = /<(?:h3|strong|dt)[^>]*>(.*?)<\/(?:h3|strong|dt)>/gi;
+    const aRegex = /<p[^>]*>(.*?)<\/p>/gi;
+    const sectionHtml = faqSection[1];
+    let qMatch;
+    while ((qMatch = qRegex.exec(sectionHtml)) !== null) {
+      const q = qMatch[1].replace(/<[^>]+>/g, "").trim();
+      aRegex.lastIndex = qMatch.index;
+      const aMatch = aRegex.exec(sectionHtml);
+      const a = aMatch ? aMatch[1].replace(/<[^>]+>/g, "").trim() : "";
+      if (q && a) pairs.push({ question: q, answer: a });
+    }
+    if (pairs.length === 0) return null;
+    return {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      mainEntity: pairs.map(({ question, answer }) => ({
+        "@type": "Question",
+        name: question,
+        acceptedAnswer: { "@type": "Answer", text: answer },
+      })),
+    };
+  })();
+
+  const jsonLd = articleSchema;
 
   const isRtl = RTL_LANGS.has(blog.language ?? "en");
   const dir = isRtl ? "rtl" : "ltr";
@@ -84,6 +146,10 @@ export default async function BlogDetailPage({ params }: Props) {
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }} />
+      {faqSchema && (
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
+      )}
 
       <main className="flex flex-1 flex-col" style={{ background: "var(--bg-page)", color: "var(--text-primary)" }}>
         {/* Hero */}
@@ -157,10 +223,7 @@ export default async function BlogDetailPage({ params }: Props) {
 
         {/* Article content */}
         <article className="px-6 pb-20 pt-10 sm:px-10" dir={dir}>
-          <div
-            className={`blog-content mx-auto max-w-3xl${isRtl ? " blog-content-rtl" : ""}`}
-            dangerouslySetInnerHTML={{ __html: blog.content ?? "" }}
-          />
+          <BlogContent html={blog.content ?? ""} isRtl={isRtl} />
         </article>
 
         {/* Footer CTA */}

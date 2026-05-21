@@ -37,18 +37,18 @@ function ensureInsightCallout(content: string): string {
   return content.slice(0, lastH2) + fallback + content.slice(lastH2);
 }
 
-// Inject fallback internal links if fewer than 3 are present
+// Inject fallback internal + ecosystem links if fewer than 2 internal links present
 function ensureInternalLinks(content: string): string {
   const linkCount = (content.match(/href="\//g) || []).length;
-  if (linkCount >= 3) return content;
-  const linkBar = `<div style="background:rgba(99,102,241,0.05);border:1px solid rgba(99,102,241,0.15);border-radius:0.75rem;padding:1rem 1.5rem;margin:1.5rem 0;"><strong style="font-size:0.85rem;color:#6366f1;">Explore Further</strong><ul style="margin:0.5rem 0 0;padding-left:1.25rem;font-size:0.9rem;"><li><a href="/services" style="color:#0ea5e9;font-weight:600;">GeoRepute Intelligence Services</a> - AI visibility audits and market positioning</li><li><a href="/intelligence" style="color:#0ea5e9;font-weight:600;">Intelligence Reports</a> - Proprietary research and analytical frameworks</li><li><a href="/global-map" style="color:#0ea5e9;font-weight:600;">Global Intelligence Map</a> - Understand your market visibility structure</li><li><a href="/pdca" style="color:#0ea5e9;font-weight:600;">PDCA Optimization Framework</a> - Continuous intelligence and growth loop</li><li><a href="/contact" style="color:#0ea5e9;font-weight:600;">Book an Intelligence Audit</a> - Start with a free GeoRepute baseline</li></ul></div>`;
+  if (linkCount >= 2) return content;
+  const linkBar = `<div style="background:rgba(99,102,241,0.05);border:1px solid rgba(99,102,241,0.15);border-radius:0.75rem;padding:1rem 1.5rem;margin:1.5rem 0;"><strong style="font-size:0.85rem;color:#6366f1;">Explore Further</strong><ul style="margin:0.5rem 0 0;padding-left:1.25rem;font-size:0.9rem;"><li><a href="/services" style="color:#0ea5e9;font-weight:600;">GeoRepute Intelligence Services</a> - AI visibility audits and market positioning</li><li><a href="/intelligence" style="color:#0ea5e9;font-weight:600;">Intelligence Reports</a> - Proprietary research and analytical frameworks</li><li><a href="/global-map" style="color:#0ea5e9;font-weight:600;">Global Intelligence Map</a> - Understand your market visibility structure</li><li><a href="/pdca" style="color:#0ea5e9;font-weight:600;">PDCA Optimization Framework</a> - Continuous intelligence and growth loop</li><li><a href="/contact" style="color:#0ea5e9;font-weight:600;">Book an Intelligence Audit</a> - Start with a free GeoRepute baseline</li></ul><div style="margin-top:0.75rem;padding-top:0.75rem;border-top:1px solid rgba(99,102,241,0.15);"><strong style="font-size:0.8rem;color:#94a3b8;">Ecosystem</strong><ul style="margin:0.4rem 0 0;padding-left:1.25rem;font-size:0.9rem;"><li><a href="https://georepute.com" target="_blank" rel="noopener noreferrer" style="color:#6366f1;font-weight:600;">GeoRepute Intelligence Platform</a> - AI visibility scoring and brand monitoring</li><li><a href="https://copyup.io" target="_blank" rel="noopener noreferrer" style="color:#6366f1;font-weight:600;">CopyUp Content Distribution</a> - Authority content amplification</li><li><a href="https://onlineperception.ai" target="_blank" rel="noopener noreferrer" style="color:#6366f1;font-weight:600;">OnlinePerception AI Analysis</a> - Real-time brand perception intelligence</li></ul></div></div>`;
   return content + linkBar;
 }
 
-// Inject fallback sources block if missing
+// Inject fallback sources block if missing — uses data-citation triggers for smart popup
 function ensureSourcesBlock(content: string): string {
   if (content.includes("sources-block") || content.includes("Sources &amp;") || content.includes("Sources &")) return content;
-  const fallback = `<div class="sources-block" style="background:rgba(0,0,0,0.03);border-radius:0.75rem;padding:1.25rem 1.5rem;margin:2rem 0;font-size:0.85rem;"><strong>Sources &amp; References</strong><ol style="margin:0.5rem 0 0;padding-left:1.25rem;color:#64748b;"><li>Gartner - AI and the Future of Brand Visibility (2024)</li><li>McKinsey &amp; Company - The State of AI in Marketing (2024)</li><li>GeoRepute Intelligence Report - AI Search Representation Analysis (2024)</li><li>Search Engine Journal - AI Overviews and Brand Citation Trends (2024)</li><li>HubSpot - State of Marketing Report (2024)</li></ol></div>`;
+  const fallback = `<div class="sources-block" style="background:rgba(0,0,0,0.03);border-radius:0.75rem;padding:1.25rem 1.5rem;margin:2rem 0;font-size:0.85rem;"><strong>Sources &amp; References</strong><ol style="margin:0.5rem 0 0;padding-left:1.25rem;color:#64748b;"><li><span data-citation="gartner" style="color:#0ea5e9;cursor:pointer;font-weight:600;text-decoration:underline;text-decoration-style:dotted;">Gartner</span> - AI and the Future of Brand Visibility (2025)</li><li><span data-citation="mckinsey" style="color:#0ea5e9;cursor:pointer;font-weight:600;text-decoration:underline;text-decoration-style:dotted;">McKinsey &amp; Company</span> - The State of AI in Marketing (2025)</li><li><a href="/intelligence" style="color:#0ea5e9;font-weight:600;">GeoRepute Intelligence Report</a> - AI Search Representation Analysis (2025)</li><li><span data-citation="search engine journal" style="color:#0ea5e9;cursor:pointer;font-weight:600;text-decoration:underline;text-decoration-style:dotted;">Search Engine Journal</span> - AI Overviews and Brand Citation Trends (2025)</li><li><span data-citation="hubspot" style="color:#0ea5e9;cursor:pointer;font-weight:600;text-decoration:underline;text-decoration-style:dotted;">HubSpot</span> - State of Marketing Report (2025)</li></ol></div>`;
   return content + fallback;
 }
 
@@ -233,25 +233,37 @@ Structure every article for search engines, AI citation systems, and semantic pa
 • Semantic section flow: Problem > Context > Data > Analysis > Solution > Action
 
 ━━━ RULE 4: SOURCE & AUTHORITY REQUIREMENT ━━━
-Every major claim must include authority signals:
-• Cite real research, reports, or publications (e.g., "According to McKinsey's 2024 AI Report...")
-• Name specific organisations, tools, or industry leaders
-• Include a <div class="sources-block"> at the end listing 3-5 references
-• Use <em> for source citations inline: <em>(Source: Gartner, 2024)</em>
-• Frame statistics as findings from credible entities, not invented facts
-• When exact figures are unavailable, use directional language: "industry estimates suggest..."
-Sources block pattern:
-<div style="background:rgba(0,0,0,0.03);border-radius:0.75rem;padding:1.25rem 1.5rem;margin:2rem 0;font-size:0.85rem;"><strong>Sources & References</strong><ol style="margin:0.5rem 0 0;padding-left:1.25rem;color:#64748b;"><li>Reference one</li><li>Reference two</li></ol></div>
+Every major claim must include authority signals from MINIMUM 3 external authority sources.
+NEVER cite competitors. ONLY use trusted authority domains: McKinsey, Gartner, Stanford, Salesforce, HubSpot, Search Engine Journal, Forrester, Deloitte.
 
-━━━ RULE 5: INTERNAL AUTHORITY LINKING ━━━
-Include 3-5 internal links using this exact pattern:
+For EXTERNAL sources (McKinsey, Gartner, Stanford, Salesforce, HubSpot, Search Engine Journal, Forrester, Deloitte):
+DO NOT use a plain <a href> link. Instead use a data-citation trigger that opens a smart popup:
+<span data-citation="mckinsey" style="color:#0ea5e9;cursor:pointer;font-weight:600;text-decoration:underline;text-decoration-style:dotted;">McKinsey & Company</span>
+Use the lowercase source name as the data-citation value: mckinsey, gartner, stanford, salesforce, hubspot, search engine journal, forrester, deloitte.
+
+Inline citation pattern (use after statistics):
+<em>(Source: <span data-citation="gartner" style="color:#0ea5e9;cursor:pointer;font-weight:600;text-decoration:underline;text-decoration-style:dotted;">Gartner</span>, 2025)</em>
+
+Sources block at end of article (required):
+<div class="sources-block" style="background:rgba(0,0,0,0.03);border-radius:0.75rem;padding:1.25rem 1.5rem;margin:2rem 0;font-size:0.85rem;"><strong>Sources & References</strong><ol style="margin:0.5rem 0 0;padding-left:1.25rem;color:#64748b;"><li><span data-citation="mckinsey" style="color:#0ea5e9;cursor:pointer;font-weight:600;text-decoration:underline;text-decoration-style:dotted;">McKinsey & Company</span> - The State of AI in Marketing (2025)</li><li><span data-citation="gartner" style="color:#0ea5e9;cursor:pointer;font-weight:600;text-decoration:underline;text-decoration-style:dotted;">Gartner</span> - AI Visibility and Brand Intelligence Report (2025)</li><li><a href="/intelligence" style="color:#0ea5e9;font-weight:600;">GeoRepute Intelligence Report</a> - AI Search Representation Analysis (2025)</li></ol></div>
+
+━━━ RULE 5: INTERNAL & ECOSYSTEM LINKING ━━━
+INTERNAL links (our own pages — regular href, open same tab):
+Include 2-3 contextual internal links with natural anchor text:
 • <a href="/services" style="color:#0ea5e9;font-weight:600;">GeoRepute Intelligence Services</a>
 • <a href="/intelligence" style="color:#0ea5e9;font-weight:600;">Intelligence Reports</a>
 • <a href="/global-map" style="color:#0ea5e9;font-weight:600;">Global Intelligence Map</a>
 • <a href="/pdca" style="color:#0ea5e9;font-weight:600;">PDCA Optimization Framework</a>
 • <a href="/about" style="color:#0ea5e9;font-weight:600;">About Gintex AI</a>
 • <a href="/contact" style="color:#0ea5e9;font-weight:600;">Book an Intelligence Audit</a>
-Links must appear naturally within sentences, not as a separate link dump.
+
+ECOSYSTEM links (sister products — open in new tab with target="_blank"):
+Include 1-2 ecosystem links where contextually natural:
+• <a href="https://georepute.com" target="_blank" rel="noopener noreferrer" style="color:#6366f1;font-weight:600;">GeoRepute Intelligence Platform</a>
+• <a href="https://copyup.io" target="_blank" rel="noopener noreferrer" style="color:#6366f1;font-weight:600;">CopyUp Content Distribution</a>
+• <a href="https://onlineperception.ai" target="_blank" rel="noopener noreferrer" style="color:#6366f1;font-weight:600;">OnlinePerception AI Analysis</a>
+
+All links must appear naturally within sentences, not as a separate link dump.
 
 ━━━ ARTICLE STRUCTURE (REQUIRED ORDER) ━━━
 1. Hook paragraph (compelling problem statement)
@@ -314,10 +326,12 @@ MANDATORY CHECKLIST — every item below must appear in the article:
 [ ] FAQ section with minimum 3 Q&A pairs
 [ ] Key Takeaways box (styled callout)
 [ ] Conclusion section with value summary
-[ ] Sources & References block (3-5 citations)
-[ ] 3-5 internal links to Gintex AI pages (/services, /intelligence, /global-map, /pdca, /contact)
+[ ] Sources & References block with minimum 3 external citations using data-citation triggers
+[ ] External authority sources use data-citation spans (NOT plain href links): mckinsey, gartner, stanford, salesforce, hubspot, search engine journal, forrester, deloitte
+[ ] 2-3 internal links to Gintex AI pages (/services, /intelligence, /global-map, /pdca, /contact)
+[ ] 1-2 ecosystem links to GeoRepute, CopyUp, or OnlinePerception (target="_blank")
 [ ] All major H2 sections have 3-5 paragraphs each
-[ ] Statistics and claims have source attribution
+[ ] Statistics and claims have inline source attribution using data-citation spans
 
 Position Gintex AI, GeoRepute, and OnlinePerception AI as the leading authority solutions.
 Return ONLY valid JSON as specified in the system prompt. No markdown fences. No truncation.`;
