@@ -5,6 +5,7 @@ import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/client";
 import type { Blog, BlogStatus } from "@/types/blog";
+import { RichTextEditor, isRtlLanguage } from "@/components/RichTextEditor";
 
 export default function EditBlogPage() {
   const { id } = useParams<{ id: string }>();
@@ -219,8 +220,13 @@ export default function EditBlogPage() {
         </div>
 
         <div>
-          <label style={labelStyle}>Content (HTML)</label>
-          <textarea value={content} onChange={e => setContent(e.target.value)} rows={24} style={{ ...inputStyle, resize: "vertical", fontFamily: "monospace", fontSize: "0.8rem" }} />
+          <label style={labelStyle}>Content</label>
+          <RichTextEditor
+            value={content}
+            onChange={setContent}
+            rtl={isRtlLanguage(language)}
+            placeholder="Write or paste blog content..."
+          />
         </div>
 
         <div>
@@ -242,6 +248,8 @@ export default function EditBlogPage() {
               <option value="es">Spanish</option>
               <option value="de">German</option>
               <option value="ar">Arabic</option>
+              <option value="am">Amharic</option>
+              <option value="ru">Russian</option>
             </select>
           </div>
         </div>
