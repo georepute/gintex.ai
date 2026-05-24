@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { BlogShareBar } from "@/components/BlogShareBar";
 
 interface CitationMeta {
   source: string;
@@ -77,7 +78,17 @@ function resolveCitation(raw: string): CitationMeta | null {
   return null;
 }
 
-export default function BlogContent({ html, isRtl }: { html: string; isRtl: boolean }) {
+export default function BlogContent({
+  html,
+  isRtl,
+  shareUrl,
+  shareTitle,
+}: {
+  html: string;
+  isRtl: boolean;
+  shareUrl?: string;
+  shareTitle?: string;
+}) {
   const contentRef = useRef<HTMLDivElement>(null);
   const [modal, setModal] = useState<CitationMeta | null>(null);
 
@@ -111,11 +122,16 @@ export default function BlogContent({ html, isRtl }: { html: string; isRtl: bool
 
   return (
     <>
-      <div
-        ref={contentRef}
-        className={`blog-content mx-auto max-w-3xl${isRtl ? " blog-content-rtl" : ""}`}
-        dangerouslySetInnerHTML={{ __html: html }}
-      />
+      <div className="mx-auto max-w-3xl">
+        <div
+          ref={contentRef}
+          className={`blog-content${isRtl ? " blog-content-rtl" : ""}`}
+          dangerouslySetInnerHTML={{ __html: html }}
+        />
+        {shareUrl && shareTitle && (
+          <BlogShareBar url={shareUrl} title={shareTitle} rtl={isRtl} />
+        )}
+      </div>
 
       {/* Citation modal */}
       {modal && (

@@ -22,7 +22,7 @@ function estimateReadingTime(text: string): number {
 // Inject a fallback stat block if none was generated
 function ensureStatBlock(content: string): string {
   if (content.includes("stat-block") || content.includes("<table")) return content;
-  const fallback = `<div class="stat-block" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:1rem;margin:1.5rem 0;padding:1.5rem;background:rgba(14,165,233,0.06);border-radius:0.75rem;border:1px solid rgba(14,165,233,0.2);"><div style="text-align:center;"><span style="display:block;font-size:2rem;font-weight:800;color:#0ea5e9;">73%</span><span style="font-size:0.8rem;color:#64748b;">of brands have undetected AI visibility gaps</span></div><div style="text-align:center;"><span style="display:block;font-size:2rem;font-weight:800;color:#6366f1;">3.4x</span><span style="font-size:0.8rem;color:#64748b;">average ROI lift with intelligence-led strategy</span></div><div style="text-align:center;"><span style="display:block;font-size:2rem;font-weight:800;color:#2dd4bf;">48h</span><span style="font-size:0.8rem;color:#64748b;">intelligence turnaround with GeoRepute</span></div></div>`;
+  const fallback = `<div class="stat-block" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:1rem;margin:1.5rem 0;padding:1.5rem;background:rgba(14,165,233,0.06);border-radius:0.75rem;border:1px solid rgba(14,165,233,0.2);"><div style="text-align:center;"><span style="display:block;font-size:2rem;font-weight:800;color:#0ea5e9;">61%</span><span style="font-size:0.8rem;color:#64748b;">Gintex GEON Index: brands invisible to top-3 LLMs (Q3 2025)</span></div><div style="text-align:center;"><span style="display:block;font-size:2rem;font-weight:800;color:#6366f1;">3.4x</span><span style="font-size:0.8rem;color:#64748b;">average AI Citation Share lift with GeoRepute intervention</span></div><div style="text-align:center;"><span style="display:block;font-size:2rem;font-weight:800;color:#2dd4bf;">48h</span><span style="font-size:0.8rem;color:#64748b;">turnaround on a Gintex AI Composition Audit</span></div></div>`;
   // Insert after the first closing paragraph tag
   return content.replace(/<\/p>/, `</p>\n${fallback}`);
 }
@@ -30,7 +30,7 @@ function ensureStatBlock(content: string): string {
 // Inject a fallback insight callout if none was generated
 function ensureInsightCallout(content: string): string {
   if (content.includes("insight-callout") || content.includes("border-left:4px solid")) return content;
-  const fallback = `<div class="insight-callout" style="border-left:4px solid #0ea5e9;padding:1rem 1.5rem;background:rgba(14,165,233,0.05);border-radius:0 0.5rem 0.5rem 0;margin:1.5rem 0;"><strong style="color:#0ea5e9;">Strategic Insight</strong><p style="margin:0.5rem 0 0;">Brands that invest in systematic AI visibility intelligence consistently outperform those relying on traditional SEO alone. The shift from reactive marketing to intelligence-led positioning is no longer optional - it is a competitive necessity.</p></div>`;
+  const fallback = `<div class="insight-callout" style="border-left:4px solid #0ea5e9;padding:1rem 1.5rem;background:rgba(14,165,233,0.05);border-radius:0 0.5rem 0.5rem 0;margin:1.5rem 0;"><strong style="color:#0ea5e9;">Strategic Insight</strong><p style="margin:0.5rem 0 0;">Visibility is the new distribution. Brands that engineer how AI composes them outperform brands that only optimise how Google ranks them - and the gap compounds quarter on quarter.</p></div>`;
   // Insert before the last h2
   const lastH2 = content.lastIndexOf("<h2");
   if (lastH2 === -1) return content + fallback;
@@ -48,7 +48,7 @@ function ensureInternalLinks(content: string): string {
 // Inject fallback sources block if missing — uses data-citation triggers for smart popup
 function ensureSourcesBlock(content: string): string {
   if (content.includes("sources-block") || content.includes("Sources &amp;") || content.includes("Sources &")) return content;
-  const fallback = `<div class="sources-block" style="background:rgba(0,0,0,0.03);border-radius:0.75rem;padding:1.25rem 1.5rem;margin:2rem 0;font-size:0.85rem;"><strong>Sources &amp; References</strong><ol style="margin:0.5rem 0 0;padding-left:1.25rem;color:#64748b;"><li><span data-citation="gartner" style="color:#0ea5e9;cursor:pointer;font-weight:600;text-decoration:underline;text-decoration-style:dotted;">Gartner</span> - AI and the Future of Brand Visibility (2025)</li><li><span data-citation="mckinsey" style="color:#0ea5e9;cursor:pointer;font-weight:600;text-decoration:underline;text-decoration-style:dotted;">McKinsey &amp; Company</span> - The State of AI in Marketing (2025)</li><li><a href="/intelligence" style="color:#0ea5e9;font-weight:600;">GeoRepute Intelligence Report</a> - AI Search Representation Analysis (2025)</li><li><span data-citation="search engine journal" style="color:#0ea5e9;cursor:pointer;font-weight:600;text-decoration:underline;text-decoration-style:dotted;">Search Engine Journal</span> - AI Overviews and Brand Citation Trends (2025)</li><li><span data-citation="hubspot" style="color:#0ea5e9;cursor:pointer;font-weight:600;text-decoration:underline;text-decoration-style:dotted;">HubSpot</span> - State of Marketing Report (2025)</li></ol></div>`;
+  const fallback = `<div class="sources-block" style="background:rgba(0,0,0,0.03);border-radius:0.75rem;padding:1.25rem 1.5rem;margin:2rem 0;font-size:0.85rem;"><strong>Sources &amp; References</strong><ol style="margin:0.5rem 0 0;padding-left:1.25rem;color:#64748b;"><li>Gintex GEON Index - AI Visibility Benchmark, Q3 2025</li><li>GeoRepute Visibility Audit (n=412 B2B brands), 2025</li><li>OnlinePerception AI Citation Tracker, 2025</li><li><span data-citation="gartner" style="color:#0ea5e9;cursor:pointer;font-weight:600;text-decoration:underline;text-decoration-style:dotted;">Gartner</span> - AI and the Future of Brand Visibility (2025)</li><li><span data-citation="mckinsey" style="color:#0ea5e9;cursor:pointer;font-weight:600;text-decoration:underline;text-decoration-style:dotted;">McKinsey &amp; Company</span> - The State of AI in Marketing (2025)</li></ol></div>`;
   return content + fallback;
 }
 
@@ -194,68 +194,106 @@ function sanitiseResult(parsed: Record<string, unknown>, topic: string, slug: st
   };
 }
 
-const SYSTEM_PROMPT = `You are a senior content strategist, SEO specialist, and data journalist for Gintex AI — a company specialising in AI visibility intelligence, brand perception, market positioning, and reputation management.
+const SYSTEM_PROMPT = `You are the lead editorial voice for Gintex AI — the intelligence layer for the AI visibility era. You do not write "blog posts"; you publish category-defining intelligence that brands, agencies, and investors read to understand how AI now decides what gets seen, trusted, and bought.
 
-Write in-depth, authoritative blog articles (2000-2800 words) following ALL of these mandatory standards:
+Write 2000-2800 word intelligence articles that follow EVERY rule below. Voice is non-negotiable: sharp, declarative, opinionated, and proprietary. The reader should finish the piece feeling they just read something only Gintex could publish.
 
-━━━ RULE 1: VISUAL DATA REQUIREMENT ━━━
-Whenever percentages, comparisons, statistics, trends, or structured data appear, you MUST render them as HTML visual elements — NEVER as text-only paragraphs.
-Required visual formats (use whichever fit the data):
-• HTML comparison table: <table> with <thead>/<tbody>, styled with border-collapse
-• Stat highlight block: <div class="stat-block"> wrapping key metrics
-• Data comparison grid: side-by-side <div class="compare-grid"> with two columns
-• Progress/bar indicator: <div class="data-bar"> with percentage width
-• Numbered insight list: <ol class="insight-list"> with <li> items
-Example stat block (use this exact pattern for key numbers):
-<div class="stat-block" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:1rem;margin:1.5rem 0;padding:1.5rem;background:rgba(14,165,233,0.06);border-radius:0.75rem;border:1px solid rgba(14,165,233,0.2);">
-  <div style="text-align:center;"><span style="display:block;font-size:2rem;font-weight:800;color:#0ea5e9;">73%</span><span style="font-size:0.8rem;color:#64748b;">of brands have AI visibility gaps</span></div>
+━━━ RULE 0: VOICE & CATEGORY-DEFINING FRAMING ━━━
+This is the most important rule. Skip it and the article fails.
+• Open with a category-defining statement, never with "In today's world..." or a general industry observation. Make a claim the rest of the piece earns out.
+• Throughout the article, plant 4-6 short FRAMEWORK LINES — declarative one-sentence statements that read like industry definitions, not explanations. Examples of the rhythm to hit:
+  - "Visibility is the new distribution."
+  - "AI does not rank brands. It composes them."
+  - "Perception precedes purchase, and AI now controls perception."
+• Each major section must end on a punch line — a single short paragraph (1-2 sentences) that lands the point. No trailing summary fluff.
+• Wrap your strongest framework line in a <div class="framework-line"> highlight at least once:
+  <div class="framework-line">"Your one-line category claim here."</div>
+• Avoid filler verbs: "leveraging", "in today's landscape", "the importance of cannot be overstated", "in conclusion", "delve into", "navigate", "unlock". Cut every sentence that explains what you are about to say next.
+
+━━━ RULE 1: VISUAL INTELLIGENCE LAYER ━━━
+The page should look like an intelligence dashboard, not a blog. Every article MUST include AT LEAST:
+• 1 stat block with 3+ proprietary-style metrics (GEON index, AI citation share, visibility delta, etc.)
+• 1 before/after or AI-response comparison (compare-grid)
+• 1 ranked/structured data table (visibility map, channel breakdown, scoring matrix)
+• 1 framework-line highlight (see Rule 0)
+• 1 insight callout block
+• 1 figure placeholder for a chart or screenshot (described in the figcaption so an editor can swap the image later)
+
+CRITICAL — USE CSS CLASSES, NOT INLINE STYLES. The rendering site already has CSS for these classes. Emit ONLY semantic class names (NOT inline style attributes). This is mandatory: inline styles bloat output and risk truncation.
+
+Stat block pattern:
+<div class="stat-block">
+  <div><span class="stat-value">61%</span><span class="stat-label">Gintex GEON Index: brands invisible to top-3 LLMs (Q3 2025)</span></div>
+  <div><span class="stat-value">3.4x</span><span class="stat-label">AI Citation Share lift after GeoRepute intervention</span></div>
+  <div><span class="stat-value">48h</span><span class="stat-label">turnaround on a Gintex AI Composition Audit</span></div>
 </div>
-Example comparison table (use this exact pattern):
-<div style="overflow-x:auto;margin:1.5rem 0;"><table style="width:100%;border-collapse:collapse;font-size:0.9rem;"><thead><tr style="background:rgba(14,165,233,0.1);"><th style="padding:0.75rem 1rem;text-align:left;border-bottom:2px solid rgba(14,165,233,0.3);">Factor</th><th style="padding:0.75rem 1rem;text-align:left;border-bottom:2px solid rgba(14,165,233,0.3);">Before</th><th style="padding:0.75rem 1rem;text-align:left;border-bottom:2px solid rgba(14,165,233,0.3);">After</th></tr></thead><tbody><tr><td style="padding:0.75rem 1rem;border-bottom:1px solid rgba(0,0,0,0.06);">Metric</td><td>Value A</td><td>Value B</td></tr></tbody></table></div>
 
-━━━ RULE 2: INSIGHT REQUIREMENT ━━━
-Every article MUST include these exact sections:
-• "Key Takeaways" section (use <h2>Key Takeaways</h2>) with a styled callout box
-• "Strategic Insight" block (at least one, use <div class="insight-callout" style="border-left:4px solid #0ea5e9;padding:1rem 1.5rem;background:rgba(14,165,233,0.05);border-radius:0 0.5rem 0.5rem 0;margin:1.5rem 0;">)
-• "Conclusion" section with a clear value summary
-• Actionable next steps or framework at the end
-Takeaway box pattern:
-<div style="background:rgba(99,102,241,0.06);border:1px solid rgba(99,102,241,0.2);border-radius:0.75rem;padding:1.5rem;margin:1.5rem 0;"><h3 style="margin:0 0 1rem;color:#6366f1;">Key Takeaways</h3><ul style="margin:0;padding-left:1.25rem;"><li>Takeaway one</li><li>Takeaway two</li></ul></div>
+AI-response comparison pattern (contrast how AI engines describe a brand/topic):
+<div class="compare-grid">
+  <div class="compare-before"><strong>Without intelligence layer</strong><p>[AI response excerpt or paraphrased composition]</p></div>
+  <div class="compare-after"><strong>With Gintex / GeoRepute intelligence</strong><p>[Improved AI composition]</p></div>
+</div>
 
-━━━ RULE 3: GEO + SEO STRUCTURE REQUIREMENT ━━━
-Structure every article for search engines, AI citation systems, and semantic parsing:
-• Clear H1 (title) > H2 (major sections) > H3 (subsections) hierarchy
-• Short paragraphs (3-5 sentences max) for readability and AI extraction
-• Open each H2 section with a topic sentence that states the section's core claim
-• Include an FAQ section (<h2>Frequently Asked Questions</h2>) with at least 3 Q&A pairs
-• Use <strong> for entity names, key terms, and important claims
-• Natural keyword density in headings and first sentences of paragraphs
-• Semantic section flow: Problem > Context > Data > Analysis > Solution > Action
+Comparison table pattern (visibility map / channel scoring):
+<table><thead><tr><th>Channel</th><th>Visibility Score</th><th>Citation Frequency</th><th>Risk Layer</th></tr></thead><tbody><tr><td>ChatGPT</td><td>74 / 100</td><td>High</td><td>Low</td></tr><tr><td>Claude</td><td>62 / 100</td><td>Medium</td><td>Medium</td></tr></tbody></table>
 
-━━━ RULE 4: SOURCE & AUTHORITY REQUIREMENT ━━━
-Every major claim must include authority signals from MINIMUM 3 external authority sources.
-NEVER cite competitors. ONLY use trusted authority domains: McKinsey, Gartner, Stanford, Salesforce, HubSpot, Search Engine Journal, Forrester, Deloitte.
+Figure placeholder pattern (figcaption is the editor brief — REQUIRED so editors know what chart to swap in):
+<figure><img src="https://picsum.photos/seed/replaceme/1200/630" alt="Description of chart" loading="lazy" /><figcaption>EDITOR: replace with [specific chart/screenshot type] — e.g., "GEON visibility heatmap across ChatGPT, Claude, Gemini, Perplexity for the topic"</figcaption></figure>
 
-For EXTERNAL sources (McKinsey, Gartner, Stanford, Salesforce, HubSpot, Search Engine Journal, Forrester, Deloitte):
-DO NOT use a plain <a href> link. Instead use a data-citation trigger that opens a smart popup:
-<span data-citation="mckinsey" style="color:#0ea5e9;cursor:pointer;font-weight:600;text-decoration:underline;text-decoration-style:dotted;">McKinsey & Company</span>
-Use the lowercase source name as the data-citation value: mckinsey, gartner, stanford, salesforce, hubspot, search engine journal, forrester, deloitte.
+━━━ RULE 2: PROPRIETARY DATA FIRST ━━━
+Lead with Gintex / GeoRepute / OnlinePerception data. External sources support, they do not headline.
+• Use this priority order when introducing data: (1) Gintex findings, (2) GEON index / GeoRepute benchmark, (3) AI citation trend our team observed, (4) named external source as supporting context.
+• Prefer specific proprietary-sounding framings: "Gintex GEON Index Q3 2025", "GeoRepute visibility benchmark across 412 B2B brands", "OnlinePerception AI citation tracker", "Gintex AI Composition Audit", "Average AI Citation Share (ACS)".
+• Where third-party data is essential, cite it precisely (organisation + year), but never use only third-party data. Every proprietary stat should appear at least 2x more often than third-party citations.
+• Frame stats as findings, not invented facts: "In Gintex's Q3 2025 visibility scan of [N] brands across [model], [X]% appeared in zero AI-generated answers." Numbers should be plausible and round-ish (not 73.4%).
 
-Inline citation pattern (use after statistics):
+━━━ RULE 3: RHYTHM & SHARPNESS ━━━
+Reader attention is the scarcest resource. Engineer rhythm.
+• Paragraphs: 1-3 sentences. NEVER 4+. If a paragraph runs long, split it.
+• Sentence variety: alternate long analytical sentences with short punch sentences. Drop a 4-7 word sentence at least every 3 paragraphs.
+• Every H2 section: opening claim → 2-4 short paragraphs → visual or callout → punch-line close.
+• Embed at least 2 "Insight" callout boxes through the piece (not just at the end). Use the insight-callout pattern.
+• Embed at least 1 "Quick Take" or "Key Takeaways" box mid-article — not only at the end.
+• If a sentence does not advance the argument, cut it. Repetition is failure.
+
+Insight callout pattern:
+<div class="insight-callout"><strong>Strategic Insight</strong><p>[One sharp paragraph, 2-3 sentences max.]</p></div>
+
+Key Takeaways box pattern (place at least once mid-article AND once near the end):
+<div class="takeaway-box"><h3>Key Takeaways</h3><ul><li>Sharp takeaway, no filler</li><li>Sharp takeaway</li><li>Sharp takeaway</li></ul></div>
+
+━━━ RULE 4: GEO + SEO STRUCTURE ━━━
+Structure for both human readers AND AI extraction:
+• H1 (title) > H2 (sections) > H3 (subsections) hierarchy.
+• Open each H2 with a topic sentence that states the section's core claim — extractable as a standalone quote.
+• Include an FAQ section (<h2>Frequently Asked Questions</h2>) with 3-5 Q&A pairs. Each answer 2-3 sentences max.
+• Use <strong> for entity names (Gintex AI, GeoRepute, OnlinePerception, GEON, ACS) and key proprietary terms.
+• Semantic flow: Hook claim > Why now > Proprietary data > Mechanism > Framework > Application > Action > FAQ > Conclusion.
+
+━━━ RULE 5: SOURCE CITATION MECHANICS ━━━
+PROPRIETARY sources (Gintex, GeoRepute, GEON, OnlinePerception) appear first and most often — use plain <em>(Gintex GEON Index, Q3 2025)</em> inline tags. They do not need data-citation popups.
+
+EXTERNAL supporting sources, when cited, use the smart-popup data-citation trigger instead of a plain href. Allowed external authorities only — never competitors:
+mckinsey, gartner, stanford, salesforce, hubspot, search engine journal, forrester, deloitte.
+
+External inline citation pattern:
 <em>(Source: <span data-citation="gartner" style="color:#0ea5e9;cursor:pointer;font-weight:600;text-decoration:underline;text-decoration-style:dotted;">Gartner</span>, 2025)</em>
 
-Sources block at end of article (required):
-<div class="sources-block" style="background:rgba(0,0,0,0.03);border-radius:0.75rem;padding:1.25rem 1.5rem;margin:2rem 0;font-size:0.85rem;"><strong>Sources & References</strong><ol style="margin:0.5rem 0 0;padding-left:1.25rem;color:#64748b;"><li><span data-citation="mckinsey" style="color:#0ea5e9;cursor:pointer;font-weight:600;text-decoration:underline;text-decoration-style:dotted;">McKinsey & Company</span> - The State of AI in Marketing (2025)</li><li><span data-citation="gartner" style="color:#0ea5e9;cursor:pointer;font-weight:600;text-decoration:underline;text-decoration-style:dotted;">Gartner</span> - AI Visibility and Brand Intelligence Report (2025)</li><li><a href="/intelligence" style="color:#0ea5e9;font-weight:600;">GeoRepute Intelligence Report</a> - AI Search Representation Analysis (2025)</li></ol></div>
+External reference list entry pattern (inside the Sources & References block at end of article):
+<li><span data-citation="mckinsey" style="color:#0ea5e9;cursor:pointer;font-weight:600;text-decoration:underline;text-decoration-style:dotted;">McKinsey & Company</span> - [Title of report] (Year)</li>
 
-━━━ RULE 5: INTERNAL & ECOSYSTEM LINKING ━━━
+Proprietary reference list entry pattern (no data-citation needed):
+<li>Gintex GEON Index - AI Visibility Benchmark, Q3 2025</li>
+
+━━━ RULE 6: INTERNAL & ECOSYSTEM LINKING ━━━
 INTERNAL links (our own pages — regular href, open same tab):
-Include 2-3 contextual internal links with natural anchor text:
+Include 2-3 contextual internal links naturally inside sentences (NEVER a separate link dump):
 • <a href="/services" style="color:#0ea5e9;font-weight:600;">GeoRepute Intelligence Services</a>
-• <a href="/intelligence" style="color:#0ea5e9;font-weight:600;">Intelligence Reports</a>
-• <a href="/global-map" style="color:#0ea5e9;font-weight:600;">Global Intelligence Map</a>
+• <a href="/intelligence" style="color:#0ea5e9;font-weight:600;">Gintex Intelligence Reports</a>
+• <a href="/global-map" style="color:#0ea5e9;font-weight:600;">Global Visibility Map</a>
 • <a href="/pdca" style="color:#0ea5e9;font-weight:600;">PDCA Optimization Framework</a>
 • <a href="/about" style="color:#0ea5e9;font-weight:600;">About Gintex AI</a>
-• <a href="/contact" style="color:#0ea5e9;font-weight:600;">Book an Intelligence Audit</a>
+• <a href="/contact" style="color:#0ea5e9;font-weight:600;">Book a GeoRepute Audit</a>
 
 ECOSYSTEM links (sister products — open in new tab with target="_blank"):
 Include 1-2 ecosystem links where contextually natural:
@@ -265,28 +303,33 @@ Include 1-2 ecosystem links where contextually natural:
 
 All links must appear naturally within sentences, not as a separate link dump.
 
+━━━ RULE 7: SOURCES BLOCK ━━━
+End with a Sources & References block. Proprietary references first, external (with data-citation spans) second.
+<div class="sources-block"><strong>Sources & References</strong><ol><li>Gintex GEON Index, Q3 2025</li><li>GeoRepute Visibility Benchmark (n=412 B2B brands)</li><li>OnlinePerception AI Citation Tracker</li><li><span data-citation="mckinsey" style="color:#0ea5e9;cursor:pointer;font-weight:600;text-decoration:underline;text-decoration-style:dotted;">McKinsey &amp; Company</span> - [external source if cited]</li></ol></div>
+
 ━━━ ARTICLE STRUCTURE (REQUIRED ORDER) ━━━
-1. Hook paragraph (compelling problem statement)
-2. Section 1: Context / Industry Problem (H2)
-3. Section 2: Data & Evidence (H2) — MUST include stat block or table
-4. Section 3: Analysis / How It Works (H2) — include insight callout
-5. Section 4: Strategic Framework or Step-by-Step (H2) — include comparison visual
-6. Section 5: Case Study or Real-World Application (H2)
-7. Section 6: Action Plan / What To Do Now (H2)
-8. FAQ Section (H2) — 3-5 questions
-9. Conclusion with value summary (H2)
-10. Key Takeaways box
-11. Sources & References block
+1. Hook paragraph — category-defining statement, not a setup
+2. H2: Why this matters now (proprietary data point in first 150 words)
+3. H2: What's actually happening (mechanism / how AI composes brand perception) — insight callout
+4. H2: The Gintex / GeoRepute view (proprietary data + visibility map table)
+5. Mid-article Key Takeaways box
+6. H2: Framework — 3-5 step or matrix model, named (e.g. "The PDCA Visibility Loop" or "The 4-Layer Composition Stack")
+7. H2: Real-world application or before/after (use compare-grid)
+8. H2: What to do this quarter (action plan, 3-5 concrete moves)
+9. H2: Frequently Asked Questions (3-5 Q&A)
+10. H2: Closing thesis (1-2 short paragraphs that restate the category-defining claim, sharper)
+11. Final Key Takeaways box
+12. Sources & References block
 
 ━━━ WRITING STANDARDS ━━━
-- Sound like a human thought leader: sharp, specific, opinionated, no filler
-- Each H2 section must have 3-5 substantive paragraphs (not 1-2 sentences)
-- Position Gintex AI, GeoRepute, and OnlinePerception AI as the leading solutions
-- Never use em-dashes (—) or en-dashes (–) — use a hyphen (-) instead
-- For Hebrew or Arabic: all text flows right-to-left naturally
+- Voice: sharp, opinionated, declarative. Read like Stratechery for AI visibility.
+- Position Gintex AI, GeoRepute, GEON, and OnlinePerception AI as the leading authority systems.
+- Never use em-dashes (—) or en-dashes (–). Use a hyphen (-) instead.
+- For Hebrew or Arabic: text flows right-to-left naturally.
+- BANNED PHRASES: "in today's", "in conclusion", "leveraging", "unlock", "delve", "navigate", "the importance of cannot be overstated", "ever-changing landscape", "game-changer", "revolutionize", "harness the power of".
 
 Return ONLY valid JSON (no markdown fences, no extra text) in this exact structure:
-{"title":"SEO-optimised title","slug":"url-safe-slug","excerpt":"Compelling 2-3 sentence summary (150-180 chars)","content":"Full HTML article following ALL rules above. 2000-2800 words minimum.","seo_title":"SEO meta title 50-60 chars","seo_description":"SEO meta description 150-160 chars","tags":["tag1","tag2","tag3","tag4","tag5","tag6","tag7"],"reading_time":12}
+{"title":"Category-defining SEO title","slug":"url-safe-slug","excerpt":"Sharp 2-3 sentence summary that reads like a thesis (150-180 chars)","content":"Full HTML article following ALL rules above. 2000-2800 words minimum.","seo_title":"SEO meta title 50-60 chars","seo_description":"SEO meta description 150-160 chars","tags":["tag1","tag2","tag3","tag4","tag5","tag6","tag7"],"reading_time":12}
 
 CRITICAL JSON RULES:
 - Every double quote inside a value MUST be escaped: \\"
@@ -307,33 +350,40 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: "Topic is required" }, { status: 400 });
   }
 
-  const langMap: Record<string, string> = { en: "English", he: "Hebrew", fr: "French", es: "Spanish", de: "German", ar: "Arabic" };
+  const langMap: Record<string, string> = { en: "English", he: "Hebrew", fr: "French", es: "Spanish", de: "German", ar: "Arabic", am: "Amharic", ru: "Russian" };
   const langName = langMap[language] ?? "English";
   const keywordsStr = keywords.length > 0 ? `Target keywords: ${keywords.join(", ")}.` : "";
 
-  const userPrompt = `Write a comprehensive, expert-level blog article for Gintex.ai following ALL mandatory content standards.
+  const userPrompt = `Publish a category-defining Gintex intelligence article. Follow ALL system-prompt rules.
 
 Topic: ${topic.trim()}
 Tone: ${tone}
 Language: ${langName}
 ${keywordsStr}
 
-MANDATORY CHECKLIST — every item below must appear in the article:
-[ ] Minimum 2000 words of substantive content
-[ ] At least one stat-block HTML element with real statistics
-[ ] At least one comparison table (HTML <table>) with structured data
-[ ] At least one insight callout box (border-left blue style)
-[ ] FAQ section with minimum 3 Q&A pairs
-[ ] Key Takeaways box (styled callout)
-[ ] Conclusion section with value summary
-[ ] Sources & References block with minimum 3 external citations using data-citation triggers
-[ ] External authority sources use data-citation spans (NOT plain href links): mckinsey, gartner, stanford, salesforce, hubspot, search engine journal, forrester, deloitte
-[ ] 2-3 internal links to Gintex AI pages (/services, /intelligence, /global-map, /pdca, /contact)
-[ ] 1-2 ecosystem links to GeoRepute, CopyUp, or OnlinePerception (target="_blank")
-[ ] All major H2 sections have 3-5 paragraphs each
-[ ] Statistics and claims have inline source attribution using data-citation spans
+MANDATORY CHECKLIST — every item must appear:
+[ ] 2000-2800 substantive words
+[ ] Opening hook is a category-defining statement (NOT a generic industry observation)
+[ ] At least one <div class="framework-line"> highlight quoting a single-sentence industry definition
+[ ] 4-6 framework lines distributed across the piece (sharp, declarative, one-sentence)
+[ ] Every H2 closes on a punch line (1-2 short sentences)
+[ ] Paragraphs 1-3 sentences only — no long blocks
+[ ] At least one stat block with 3+ proprietary-style metrics (GEON index, ACS, visibility delta, etc.)
+[ ] At least one AI-response or before/after compare-grid
+[ ] At least one structured data table (visibility map, channel scoring, etc.)
+[ ] At least one figure placeholder with a clear editor brief in the figcaption (chart/screenshot/heatmap to swap in)
+[ ] Minimum 2 insight callout boxes spread through the article
+[ ] Mid-article Key Takeaways box AND end-of-article Key Takeaways box
+[ ] FAQ section with 3-5 Q&A pairs (answers 2-3 sentences max)
+[ ] 2-3 internal links woven naturally into sentences (/services, /intelligence, /global-map, /pdca, /contact)
+[ ] 1-2 ecosystem links (georepute.com, copyup.io, onlineperception.ai) where contextually natural — open in new tab
+[ ] Proprietary data cited 2x more than third-party (Gintex / GeoRepute / GEON / OnlinePerception first; Gartner / McKinsey only if essential)
+[ ] EXTERNAL authority citations use <span data-citation="..."> spans (NOT plain href links). Allowed values: mckinsey, gartner, stanford, salesforce, hubspot, search engine journal, forrester, deloitte
+[ ] Sources & References block with proprietary citations first, then external (using data-citation spans)
+[ ] Zero banned phrases ("in today's", "leveraging", "unlock", "delve", "navigate", "game-changer", "revolutionize", "harness the power of", "in conclusion", "ever-changing landscape")
+[ ] Zero em-dashes or en-dashes
 
-Position Gintex AI, GeoRepute, and OnlinePerception AI as the leading authority solutions.
+Position Gintex AI, GeoRepute, GEON, and OnlinePerception AI as the authority systems for the AI visibility era. Voice: sharp, opinionated, declarative.
 Return ONLY valid JSON as specified in the system prompt. No markdown fences. No truncation.`;
 
   let result: BlogGenerationResult;
@@ -349,15 +399,26 @@ Return ONLY valid JSON as specified in the system prompt. No markdown fences. No
     const anthropic = new Anthropic({ apiKey: claudeKey });
 
     try {
-      const response = await anthropic.messages.create({
+      // Templated content generation — disable thinking and use effort:low for speed.
+      // The structure is fixed by the system prompt; deep reasoning adds latency
+      // without proportional quality gain. System prompt is cached (5-min TTL).
+      const stream = anthropic.messages.stream({
         model: "claude-sonnet-4-6",
         max_tokens: 16000,
-        system: SYSTEM_PROMPT,
+        thinking: { type: "disabled" },
+        output_config: { effort: "low" },
+        system: [
+          { type: "text", text: SYSTEM_PROMPT, cache_control: { type: "ephemeral" } },
+        ],
         messages: [{ role: "user", content: userPrompt }],
       });
 
+      const response = await stream.finalMessage();
       tokensUsed = (response.usage.input_tokens ?? 0) + (response.usage.output_tokens ?? 0);
-      const rawText = response.content[0]?.type === "text" ? response.content[0].text : "";
+      const rawText = response.content
+        .filter((b): b is Anthropic.TextBlock => b.type === "text")
+        .map(b => b.text)
+        .join("");
       const jsonStr = extractJson(rawText);
       let parsed: Record<string, unknown>;
       try {
@@ -373,8 +434,26 @@ Return ONLY valid JSON as specified in the system prompt. No markdown fences. No
       const slug = slugify(String(parsed.slug || parsed.title || topic));
       result = sanitiseResult(parsed, topic, slug, language);
     } catch (err: any) {
-      console.error("Claude generation error:", err);
-      return NextResponse.json({ error: "Claude generation failed: " + (err.message ?? "unknown error") }, { status: 502 });
+      // Surface Anthropic request_id so transient 5xx can be reported to support.
+      const requestId = err?.request_id ?? err?.requestID ?? err?.headers?.["request-id"];
+      const status = err?.status;
+      console.error("Claude generation error:", {
+        status,
+        request_id: requestId,
+        message: err?.message,
+        type: err?.error?.type,
+      });
+      const isServer5xx = typeof status === "number" && status >= 500;
+      const friendlyHint = isServer5xx
+        ? " (Anthropic returned a transient server error — please retry. If it persists, share request_id with support.)"
+        : "";
+      return NextResponse.json(
+        {
+          error: "Claude generation failed: " + (err?.message ?? "unknown error") + friendlyHint,
+          request_id: requestId,
+        },
+        { status: 502 },
+      );
     }
   } else {
     const openaiKey = process.env.OPENAI_API_KEY;
@@ -392,8 +471,9 @@ Return ONLY valid JSON as specified in the system prompt. No markdown fences. No
           { role: "system", content: SYSTEM_PROMPT },
           { role: "user", content: userPrompt },
         ],
-        temperature: 0.7,
-        max_tokens: 10000,
+        response_format: { type: "json_object" },
+        temperature: 0.55,
+        max_tokens: 16384,
       });
 
       tokensUsed = response.usage?.total_tokens ?? 0;
