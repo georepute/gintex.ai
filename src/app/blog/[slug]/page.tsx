@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
 import type { Blog } from "@/types/blog";
+import { BlogShareBar } from "@/components/BlogShareBar";
 
 export const revalidate = 60;
 
@@ -157,10 +158,17 @@ export default async function BlogDetailPage({ params }: Props) {
 
         {/* Article content */}
         <article className="px-6 pb-20 pt-10 sm:px-10" dir={dir}>
-          <div
-            className={`blog-content mx-auto max-w-3xl${isRtl ? " blog-content-rtl" : ""}`}
-            dangerouslySetInnerHTML={{ __html: blog.content ?? "" }}
-          />
+          <div className="mx-auto max-w-3xl">
+            <div
+              className={`blog-content${isRtl ? " blog-content-rtl" : ""}`}
+              dangerouslySetInnerHTML={{ __html: blog.content ?? "" }}
+            />
+            <BlogShareBar
+              url={`https://gintex-ai.vercel.app/blog/${blog.slug}`}
+              title={blog.title}
+              rtl={isRtl}
+            />
+          </div>
         </article>
 
         {/* Footer CTA */}
@@ -193,114 +201,6 @@ export default async function BlogDetailPage({ params }: Props) {
           </div>
         </div>
       </main>
-
-      <style>{`
-        .blog-content h1, .blog-content h2, .blog-content h3, .blog-content h4 {
-          font-weight: 700;
-          line-height: 1.3;
-          margin-top: 2rem;
-          margin-bottom: 0.75rem;
-          color: var(--text-primary);
-        }
-        .blog-content h1 { font-size: 1.875rem; }
-        .blog-content h2 { font-size: 1.5rem; border-bottom: 1px solid var(--border); padding-bottom: 0.5rem; }
-        .blog-content h3 { font-size: 1.25rem; }
-        .blog-content p {
-          margin-bottom: 1.25rem;
-          line-height: 1.8;
-          color: var(--text-secondary);
-          font-size: 1rem;
-        }
-        .blog-content ul, .blog-content ol {
-          margin: 1rem 0 1.5rem 1.5rem;
-          color: var(--text-secondary);
-          line-height: 1.8;
-        }
-        .blog-content ul { list-style-type: disc; }
-        .blog-content ol { list-style-type: decimal; }
-        .blog-content li { margin-bottom: 0.4rem; }
-        .blog-content a {
-          color: var(--accent-cyan);
-          text-decoration: underline;
-          text-decoration-color: transparent;
-          transition: text-decoration-color 0.2s;
-        }
-        .blog-content a:hover { text-decoration-color: var(--accent-cyan); }
-        .blog-content blockquote {
-          border-left: 3px solid var(--accent-cyan);
-          padding: 0.75rem 1.25rem;
-          margin: 1.5rem 0;
-          background: var(--accent-cyan-bg);
-          border-radius: 0 0.5rem 0.5rem 0;
-          font-style: italic;
-          color: var(--text-secondary);
-        }
-        .blog-content table {
-          width: 100%;
-          border-collapse: collapse;
-          margin: 1.5rem 0;
-          font-size: 0.875rem;
-        }
-        .blog-content th {
-          background: var(--bg-muted);
-          font-weight: 600;
-          text-align: left;
-          padding: 0.625rem 0.875rem;
-          border: 1px solid var(--border);
-        }
-        .blog-content td {
-          padding: 0.625rem 0.875rem;
-          border: 1px solid var(--border);
-          color: var(--text-secondary);
-        }
-        .blog-content pre {
-          background: var(--bg-muted);
-          border: 1px solid var(--border);
-          border-radius: 0.5rem;
-          padding: 1rem 1.25rem;
-          overflow-x: auto;
-          font-size: 0.875rem;
-          margin: 1.5rem 0;
-        }
-        .blog-content code {
-          font-family: ui-monospace, monospace;
-          font-size: 0.875em;
-          background: var(--bg-muted);
-          padding: 0.15em 0.4em;
-          border-radius: 0.25rem;
-        }
-        .blog-content pre code { background: none; padding: 0; }
-        .blog-content img {
-          max-width: 100%;
-          height: auto;
-          border-radius: 0.5rem;
-          margin: 1.5rem 0;
-        }
-        .blog-content strong { font-weight: 600; color: var(--text-primary); }
-        .blog-content em { font-style: italic; }
-        .blog-content hr { border: none; border-top: 1px solid var(--border); margin: 2rem 0; }
-
-        /* ── RTL overrides (Hebrew / Arabic) ── */
-        .blog-content-rtl { direction: rtl; text-align: right; }
-        .blog-content-rtl h1,
-        .blog-content-rtl h2,
-        .blog-content-rtl h3,
-        .blog-content-rtl h4 { text-align: right; direction: rtl; }
-        .blog-content-rtl p { text-align: right; direction: rtl; }
-        .blog-content-rtl ul,
-        .blog-content-rtl ol { margin: 1rem 1.5rem 1.5rem 0; padding-right: 1.5rem; padding-left: 0; text-align: right; }
-        .blog-content-rtl li { text-align: right; }
-        .blog-content-rtl blockquote {
-          border-left: none;
-          border-right: 3px solid var(--accent-cyan);
-          border-radius: 0.5rem 0 0 0.5rem;
-          text-align: right;
-        }
-        .blog-content-rtl table,
-        .blog-content-rtl th,
-        .blog-content-rtl td { text-align: right; direction: rtl; }
-        .blog-content-rtl div { direction: rtl; }
-      `}</style>
     </>
   );
 }

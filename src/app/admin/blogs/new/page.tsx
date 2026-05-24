@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import type { BlogGenerationInput } from "@/types/blog";
+import { RichTextEditor, isRtlLanguage } from "@/components/RichTextEditor";
 
 const TONE_OPTIONS = [
   { value: "professional", label: "Professional" },
@@ -18,6 +19,8 @@ const LANGUAGE_OPTIONS = [
   { value: "es", label: "Spanish" },
   { value: "de", label: "German" },
   { value: "ar", label: "Arabic" },
+  { value: "am", label: "Amharic" },
+  { value: "ru", label: "Russian" },
 ];
 
 const MODEL_OPTIONS = [
@@ -320,12 +323,12 @@ export default function NewBlogPage() {
             </div>
 
             <div>
-              <label style={labelStyle}>Content (HTML)</label>
-              <textarea
+              <label style={labelStyle}>Content</label>
+              <RichTextEditor
                 value={editContent}
-                onChange={e => setEditContent(e.target.value)}
-                rows={20}
-                style={{ ...inputStyle, resize: "vertical", fontFamily: "monospace", fontSize: "0.8rem" }}
+                onChange={setEditContent}
+                rtl={isRtlLanguage(language)}
+                placeholder="The generated article will appear here. Edit freely — what you see is what the blog will look like."
               />
             </div>
 

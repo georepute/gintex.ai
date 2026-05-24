@@ -84,19 +84,19 @@ export function Header() {
         borderBottom: "1px solid var(--header-border)",
       }}
     >
-      <div className="relative mx-auto flex max-w-[1400px] flex-col gap-4 px-6 py-4 sm:px-10 lg:flex-row lg:items-center lg:justify-between lg:gap-0">
-        <div className="flex items-center justify-between gap-4">
-          <Link href="/" className="flex items-center">
+      <div className="relative mx-auto flex max-w-[1400px] flex-col gap-4 px-4 py-4 sm:px-6 lg:px-8 xl:flex-row xl:items-center xl:justify-between xl:gap-6 xl:px-10">
+        <div className="flex flex-col items-center gap-3 xl:flex-row xl:justify-between xl:gap-4">
+          <Link href="/" className="flex shrink-0 items-center xl:self-auto">
             <Image
               src="/logo.png"
               alt="Gintex AI"
               width={260}
               height={88}
-              className="h-20 w-auto object-contain"
+              className="h-14 w-auto object-contain sm:h-16 xl:h-20"
               priority
             />
           </Link>
-          <div className="flex shrink-0 items-center gap-2 lg:hidden">
+          <div className="flex shrink-0 flex-wrap items-center justify-center gap-2 xl:hidden">
             <ConsultationLink />
             <Link
               href="/admin/login"
@@ -110,7 +110,7 @@ export function Header() {
         </div>
 
         <nav
-          className="flex flex-wrap justify-center gap-x-6 gap-y-2 text-sm sm:gap-8 lg:absolute lg:left-1/2 lg:-translate-x-1/2 lg:flex-nowrap lg:justify-start"
+          className="flex flex-wrap justify-center gap-x-5 gap-y-2 text-sm sm:gap-x-6 xl:min-w-0 xl:flex-1 xl:flex-nowrap xl:justify-center xl:gap-x-5 2xl:gap-x-7"
           aria-label="Main"
         >
           {NAV_LINKS.map(({ href, en, he }) => {
@@ -123,7 +123,7 @@ export function Header() {
               <Link
                 key={href}
                 href={href}
-                className="border-b-2 pb-1 transition-colors duration-200"
+                className="whitespace-nowrap border-b-2 pb-1 transition-colors duration-200"
                 style={{
                   borderColor: isActive ? "var(--text-primary)" : "transparent",
                   color: isActive ? "var(--text-primary)" : "var(--text-secondary)",
@@ -136,7 +136,7 @@ export function Header() {
           })}
         </nav>
 
-        <div className="hidden shrink-0 items-center gap-3 lg:flex">
+        <div className="hidden shrink-0 items-center gap-3 xl:flex">
           <ConsultationLink />
           <Link
             href="/admin/login"
