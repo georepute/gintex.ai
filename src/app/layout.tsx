@@ -28,11 +28,11 @@ export const metadata: Metadata = {
     apple: "/favicon.png",
   },
   title: {
-    default: "Gintex AI — AI Visibility, Reputation & Market Intelligence",
+    default: "Gintex AI — Control How the Market Sees You",
     template: "%s | Gintex AI",
   },
   description:
-    "Control how AI systems, search engines, and digital markets perceive your brand. GeoRepute audits, SEO systems, reputation intelligence, and strategic authority-building for growth-focused businesses.",
+    "Business Visibility Intelligence — Control how the market, AI systems, and search engines see your brand.",
   keywords: [
     "AI visibility",
     "reputation intelligence",
@@ -49,28 +49,26 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://gintex-ai.vercel.app"),
   alternates: { canonical: "/" },
   openGraph: {
-    title: "Gintex AI — Control How the Market Sees You",
-    description:
-      "AI visibility audits, reputation intelligence, and market positioning systems. See exactly how AI and search engines represent your brand — then reshape it.",
+    title: "Gintex AI",
+    description: "Control How the Market Sees You — Business Visibility Intelligence",
     url: "https://gintex-ai.vercel.app",
     siteName: "Gintex AI",
     type: "website",
     locale: "en_US",
     images: [
       {
-        url: "https://gintex-ai.vercel.app/logo.png",
+        url: "https://gintex-ai.vercel.app/act-gintex.jpeg",
         width: 1200,
         height: 630,
-        alt: "Gintex AI — AI Visibility & Market Intelligence",
+        alt: "Gintex AI — Control How the Market Sees You",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Gintex AI — Control How the Market Sees You",
-    description:
-      "AI visibility audits, reputation intelligence, and market positioning systems.",
-    images: ["https://gintex-ai.vercel.app/logo.png"],
+    title: "Gintex AI",
+    description: "Control How the Market Sees You — Business Visibility Intelligence",
+    images: ["https://gintex-ai.vercel.app/act-gintex.jpeg"],
   },
   robots: {
     index: true,
