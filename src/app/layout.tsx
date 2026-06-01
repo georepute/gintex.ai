@@ -44,20 +44,20 @@ export const metadata: Metadata = {
     "GeoRepute",
     "GEON intelligence",
   ],
-  authors: [{ name: "Gintex AI", url: "https://gintex-ai.vercel.app" }],
+  authors: [{ name: "Gintex AI", url: "https://www.gintex.ai" }],
   creator: "Gintex AI",
-  metadataBase: new URL("https://gintex-ai.vercel.app"),
+  metadataBase: new URL("https://www.gintex.ai"),
   alternates: { canonical: "/" },
   openGraph: {
     title: "Gintex AI",
     description: "Control How the Market Sees You — Business Visibility Intelligence",
-    url: "https://gintex-ai.vercel.app",
+    url: "https://www.gintex.ai",
     siteName: "Gintex AI",
     type: "website",
     locale: "en_US",
     images: [
       {
-        url: "https://gintex-ai.vercel.app/act-gintex.jpeg",
+        url: "https://www.gintex.ai/act-gintex.jpeg",
         width: 1200,
         height: 630,
         alt: "Gintex AI — Control How the Market Sees You",
@@ -68,7 +68,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Gintex AI",
     description: "Control How the Market Sees You — Business Visibility Intelligence",
-    images: ["https://gintex-ai.vercel.app/act-gintex.jpeg"],
+    images: ["https://www.gintex.ai/act-gintex.jpeg"],
   },
   robots: {
     index: true,
@@ -100,8 +100,8 @@ export default function RootLayout({
               "@type": "Organization",
               name: "Gintex AI",
               alternateName: "GINTEX",
-              url: "https://gintex-ai.vercel.app",
-              logo: "https://gintex-ai.vercel.app/logo.png",
+              url: "https://www.gintex.ai",
+              logo: "https://www.gintex.ai/logo.png",
               description:
                 "AI visibility, reputation intelligence, and strategic market positioning systems for brands. GeoRepute audits, SEO optimization, and digital authority-building.",
               foundingDate: "2024",
@@ -115,12 +115,12 @@ export default function RootLayout({
                 "Strategic Growth Infrastructure",
               ],
               sameAs: [
-                "https://gintex-ai.vercel.app",
+                "https://www.gintex.ai",
               ],
               contactPoint: {
                 "@type": "ContactPoint",
                 contactType: "customer service",
-                url: "https://gintex-ai.vercel.app/contact",
+                url: "https://www.gintex.ai/contact",
                 availableLanguage: "English",
               },
               hasOfferCatalog: {
