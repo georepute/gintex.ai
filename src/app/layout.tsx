@@ -57,9 +57,9 @@ export const metadata: Metadata = {
     locale: "en_US",
     images: [
       {
-        url: "https://www.gintex.ai/act-gintex.jpeg",
-        width: 1200,
-        height: 630,
+        url: "https://www.gintex.ai/Gemini_Generated_Image_h46cjzh46cjzh46c.png",
+        width: 1024,
+        height: 1024,
         alt: "Gintex AI — Control How the Market Sees You",
       },
     ],
@@ -68,7 +68,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Gintex AI",
     description: "Control How the Market Sees You — Business Visibility Intelligence",
-    images: ["https://www.gintex.ai/act-gintex.jpeg"],
+    images: ["https://www.gintex.ai/Gemini_Generated_Image_h46cjzh46cjzh46c.png"],
   },
   robots: {
     index: true,
