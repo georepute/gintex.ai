@@ -763,6 +763,8 @@ export const t = {
       about:       { en: "About Us",                 he: "אודותינו" },
       contact:     { en: "Contact",                  he: "צור קשר" },
       privacy:     { en: "Privacy Policy",           he: "מדיניות פרטיות" },
+      cookies:     { en: "Cookie Policy",            he: "מדיניות עוגיות" },
+      terms:       { en: "Terms of Use",             he: "תנאי שימוש" },
       report:      { en: "Intelligence Report",      he: "דוח מודיעין" },
     },
     emailPlaceholder: { en: "Enter email", he: "הכנס אימייל" },

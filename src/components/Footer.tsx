@@ -64,9 +64,10 @@ export function Footer() {
             </h3>
             <ul className="flex flex-col gap-2">
               {[
-                { href: "/contact",              label: tx(t.footer.links.contact, lang) },
-                { href: "/privacy-policy",       label: tx(t.footer.links.privacy, lang) },
-                { href: "/intelligence-report",  label: tx(t.footer.links.report, lang) },
+                { href: "/contact",        label: tx(t.footer.links.contact, lang) },
+                { href: "/privacy-policy", label: tx(t.footer.links.privacy, lang) },
+                { href: "/cookie-policy",  label: tx(t.footer.links.cookies, lang) },
+                { href: "/terms-of-use",   label: tx(t.footer.links.terms, lang) },
               ].map(({ href, label }) => (
                 <li key={href}>
                   <Link

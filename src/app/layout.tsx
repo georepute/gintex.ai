@@ -7,6 +7,7 @@ import { ThemeProvider } from "@/components/ThemeProvider";
 import { ThemeToggleFloat } from "@/components/ThemeToggleFloat";
 import { LanguageProvider } from "@/components/LanguageContext";
 import { HtmlDirWrapper } from "@/components/HtmlDirWrapper";
+import { CookieConsentBanner } from "@/components/CookieConsentBanner";
 import "./globals.css";
 
 const inter = Inter({
@@ -142,6 +143,7 @@ export default function RootLayout({
         <Header />
         <div className="flex flex-1 flex-col">{children}</div>
         <Footer />
+        <CookieConsentBanner />
         </HtmlDirWrapper>
         </ThemeProvider>
         </LanguageProvider>
