@@ -89,7 +89,7 @@ export default function RootLayout({
       className={`${inter.variable} ${spaceGrotesk.variable} h-full antialiased`}
       suppressHydrationWarning
     >
-      <body>
+      <body suppressHydrationWarning>
         <LanguageProvider>
         <ThemeProvider>
         <HtmlDirWrapper>

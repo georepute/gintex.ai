@@ -297,6 +297,8 @@ export const t = {
       emailLabel: { en: "Email us",      he: "שלח אימייל" },
       phoneLabel: { en: "Phone",         he: "טלפון" },
       hqLabel:    { en: "Headquarters",  he: "מטה" },
+      emailCta:    { en: "Email us",        he: "שלח אימייל" },
+      whatsappCta: { en: "Chat on WhatsApp", he: "צ'אט בוואטסאפ" },
       socialLabel:{ en: "Digital presence", he: "נוכחות דיגיטלית" },
     },
     form: {
