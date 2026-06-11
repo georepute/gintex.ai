@@ -4,6 +4,7 @@ import OpenAI from "openai";
 import Anthropic from "@anthropic-ai/sdk";
 import type { BlogGenerationInput, BlogGenerationResult } from "@/types/blog";
 import { slugify } from "@/lib/slug";
+import { stripEditorPlaceholders } from "@/lib/content";
 
 function estimateReadingTime(text: string): number {
   const words = text.replace(/<[^>]+>/g, " ").split(/\s+/).filter(Boolean).length;
@@ -122,8 +123,8 @@ function sanitiseResult(parsed: Record<string, unknown>, topic: string, slug: st
   const rawContent = String(parsed.content || "").trim();
   const tags = Array.isArray(parsed.tags) ? parsed.tags.map(String).slice(0, 8) : [];
 
-  // Remove em-dashes from all fields
-  const cleanContent = removeEmDashes(rawContent);
+  // Remove em-dashes + any leaked "EDITOR: replace with..." placeholders
+  const cleanContent = stripEditorPlaceholders(removeEmDashes(rawContent));
   // Enforce all 5 content standards with fallback injection
   const withStats    = ensureStatBlock(cleanContent);
   const withInsight  = ensureInsightCallout(withStats);
@@ -171,7 +172,6 @@ The page should look like an intelligence dashboard, not a blog. Every article M
 • 1 ranked/structured data table (visibility map, channel breakdown, scoring matrix)
 • 1 framework-line highlight (see Rule 0)
 • 1 insight callout block
-• 1 figure placeholder for a chart or screenshot (described in the figcaption so an editor can swap the image later)
 
 CRITICAL — USE CSS CLASSES, NOT INLINE STYLES. The rendering site already has CSS for these classes. Emit ONLY semantic class names (NOT inline style attributes). This is mandatory: inline styles bloat output and risk truncation.
 
@@ -191,8 +191,7 @@ AI-response comparison pattern (contrast how AI engines describe a brand/topic):
 Comparison table pattern (visibility map / channel scoring):
 <table><thead><tr><th>Channel</th><th>Visibility Score</th><th>Citation Frequency</th><th>Risk Layer</th></tr></thead><tbody><tr><td>ChatGPT</td><td>74 / 100</td><td>High</td><td>Low</td></tr><tr><td>Claude</td><td>62 / 100</td><td>Medium</td><td>Medium</td></tr></tbody></table>
 
-Figure placeholder pattern (figcaption is the editor brief — REQUIRED so editors know what chart to swap in):
-<figure><img src="https://picsum.photos/seed/replaceme/1200/630" alt="Description of chart" loading="lazy" /><figcaption>EDITOR: replace with [specific chart/screenshot type] — e.g., "GEON visibility heatmap across ChatGPT, Claude, Gemini, Perplexity for the topic"</figcaption></figure>
+Do NOT insert any image, <figure>, or <figcaption> tags, and never write editorial notes like "EDITOR:" or "replace with" into the article. Images are added automatically after generation; your job is the written content only.
 
 ━━━ RULE 2: PROPRIETARY DATA FIRST ━━━
 Lead with Gintex / GeoRepute / OnlinePerception data. External sources support, they do not headline.
@@ -325,7 +324,6 @@ MANDATORY CHECKLIST — every item must appear:
 [ ] At least one stat block with 3+ proprietary-style metrics (GEON index, ACS, visibility delta, etc.)
 [ ] At least one AI-response or before/after compare-grid
 [ ] At least one structured data table (visibility map, channel scoring, etc.)
-[ ] At least one figure placeholder with a clear editor brief in the figcaption (chart/screenshot/heatmap to swap in)
 [ ] Minimum 2 insight callout boxes spread through the article
 [ ] Mid-article Key Takeaways box AND end-of-article Key Takeaways box
 [ ] FAQ section with 3-5 Q&A pairs (answers 2-3 sentences max)
