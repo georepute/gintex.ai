@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
-import { notFound } from "next/navigation";
+import { notFound, permanentRedirect } from "next/navigation";
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
 import type { Blog } from "@/types/blog";
 import BlogContent from "@/components/blog/BlogContent";
+import { AuthorCard } from "@/components/AuthorCard";
 
 export const revalidate = 60;
 
@@ -19,6 +20,18 @@ async function getBlog(slug: string): Promise<Blog | null> {
     .single();
   if (error || !data) return null;
   return data as Blog;
+}
+
+// Resolve an old/changed slug to the current one via the redirects table.
+// Returns the current slug, or null if this URL was never a redirect source.
+async function resolveRedirectTarget(slug: string): Promise<string | null> {
+  const supabase = await createClient();
+  const { data } = await supabase
+    .from("blog_redirects")
+    .select("new_slug")
+    .eq("old_slug", slug)
+    .maybeSingle();
+  return data?.new_slug ?? null;
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
@@ -58,7 +71,16 @@ function formatDate(iso: string | null, lang?: string): string {
 export default async function BlogDetailPage({ params }: Props) {
   const { slug } = await params;
   const blog = await getBlog(slug);
-  if (!blog) notFound();
+
+  // On a miss, check whether this is an old slug with a redirect on record.
+  // permanentRedirect() serves a 308 (Permanent) response from a Server
+  // Component — the App Router equivalent of a 301; both preserve SEO rankings
+  // and indexed URLs. The redirect row records 301 as the semantic intent.
+  if (!blog) {
+    const target = await resolveRedirectTarget(slug);
+    if (target && target !== slug) permanentRedirect(`/blog/${target}`);
+    notFound();
+  }
 
   const siteUrl = "https://gintex-ai.vercel.app";
 
@@ -230,6 +252,9 @@ export default async function BlogDetailPage({ params }: Props) {
             shareTitle={blog.title}
           />
         </article>
+
+        {/* About the Author */}
+        <AuthorCard />
 
         {/* Footer CTA */}
         <div
