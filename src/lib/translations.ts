@@ -658,6 +658,9 @@ export const t = {
         he: "אנו מפרסמים מחקר על נראות AI, תפיסת מותג, מסגרות GEO ומודיעין שוק.",
       },
     },
+    reportsHeading: { en: "Intelligence Reports", he: "דוחות מודיעין" },
+    articlesHeading: { en: "Articles", he: "מאמרים" },
+    reportBadge: { en: "Report", he: "דוח" },
     minRead: { en: "min read", he: "דקות קריאה" },
   },
 

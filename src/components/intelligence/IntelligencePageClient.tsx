@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import type { Blog } from "@/types/blog";
+import type { IntelligenceReport } from "@/types/report";
 import { useLang } from "@/components/LanguageContext";
 import { t, tx } from "@/lib/translations";
 
@@ -14,8 +15,129 @@ function formatDate(iso: string | null, lang: "en" | "he"): string {
   });
 }
 
-export function IntelligencePageClient({ blogs }: { blogs: Blog[] }) {
+// Shared card shape for both blog articles and intelligence reports.
+interface ContentCard {
+  id: string;
+  href: string;
+  title: string;
+  excerpt: string | null;
+  cover_image: string | null;
+  tags: string[] | null;
+  published_at: string | null;
+  reading_time: number | null;
+  badge?: string;   // e.g. "Report" — omitted for articles
+  noImage?: boolean; // reports are intentionally image-free
+}
+
+function Card({ card, lang }: { card: ContentCard; lang: "en" | "he" }) {
+  return (
+    <Link
+      href={card.href}
+      className="group relative flex flex-col overflow-hidden rounded-2xl transition-all duration-300 hover:-translate-y-0.5"
+      style={{ border: "1px solid var(--border)", background: "var(--bg-card)" }}
+    >
+      {card.noImage ? (
+        // Image-free (reports): a slim brand accent strip instead of a cover.
+        <span
+          className="absolute inset-x-0 top-0 h-1"
+          style={{ background: "linear-gradient(90deg, #0ea5e9, #818cf8)" }}
+          aria-hidden
+        />
+      ) : card.cover_image ? (
+        <div className="aspect-[16/9] overflow-hidden" style={{ background: "var(--bg-muted)" }}>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={card.cover_image}
+            alt={card.title}
+            className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+          />
+        </div>
+      ) : (
+        <div
+          className="aspect-[16/9]"
+          style={{ background: "linear-gradient(135deg, var(--accent-cyan-bg) 0%, rgba(129,140,248,0.06) 100%)" }}
+        />
+      )}
+
+      <div className={`flex flex-1 flex-col p-5 ${card.noImage ? "pt-6" : ""} ${lang === "he" ? "text-right" : "text-left"}`}>
+        <div className={`mb-3 flex flex-wrap items-center gap-1.5 ${lang === "he" ? "justify-end" : ""}`}>
+          {card.badge && (
+            <span
+              className="rounded-full px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide"
+              style={{ background: "rgba(124,58,237,0.12)", color: "#7c3aed" }}
+            >
+              {card.badge}
+            </span>
+          )}
+          {(card.tags ?? []).slice(0, 3).map((tag) => (
+            <span
+              key={tag}
+              className="rounded-full px-2 py-0.5 text-[10px] font-medium"
+              style={{ background: "var(--accent-cyan-bg)", color: "var(--accent-cyan)" }}
+            >
+              {tag}
+            </span>
+          ))}
+        </div>
+
+        <h3 className="text-base font-semibold leading-snug transition-colors group-hover:text-sky-400" style={{ color: "var(--text-primary)" }}>
+          {card.title}
+        </h3>
+
+        {card.excerpt && (
+          <p className="mt-2 line-clamp-3 text-sm leading-relaxed" style={{ color: "var(--text-muted)" }}>
+            {card.excerpt}
+          </p>
+        )}
+
+        <div className={`mt-auto flex items-center gap-3 pt-4 text-xs ${lang === "he" ? "flex-row-reverse" : ""}`} style={{ color: "var(--text-muted)" }}>
+          {card.published_at && <span>{formatDate(card.published_at, lang)}</span>}
+          {card.reading_time && (
+            <>
+              <span>·</span>
+              <span>{card.reading_time} {tx(t.intelligence.minRead, lang)}</span>
+            </>
+          )}
+        </div>
+      </div>
+    </Link>
+  );
+}
+
+export function IntelligencePageClient({
+  blogs,
+  reports = [],
+}: {
+  blogs: Blog[];
+  reports?: IntelligenceReport[];
+}) {
   const { lang } = useLang();
+
+  const reportCards: ContentCard[] = reports.map((r) => ({
+    id: r.id,
+    href: `/intelligence-report/${r.slug}`,
+    title: r.title ?? "",
+    excerpt: r.excerpt,
+    cover_image: null,
+    tags: r.tags,
+    published_at: r.published_at,
+    reading_time: r.reading_time,
+    badge: tx(t.intelligence.reportBadge, lang),
+    noImage: true,
+  }));
+
+  const blogCards: ContentCard[] = blogs.map((b) => ({
+    id: b.id,
+    href: `/blog/${b.slug}`,
+    title: b.title,
+    excerpt: b.excerpt,
+    cover_image: b.cover_image,
+    tags: b.tags,
+    published_at: b.published_at,
+    reading_time: b.reading_time,
+  }));
+
+  const isEmpty = reportCards.length === 0 && blogCards.length === 0;
 
   return (
     <main className="flex flex-1 flex-col transition-colors duration-300" style={{ background: "var(--bg-page)", color: "var(--text-primary)" }}>
@@ -34,10 +156,9 @@ export function IntelligencePageClient({ blogs }: { blogs: Blog[] }) {
         </div>
       </section>
 
-      {/* Blog grid */}
       <section className="flex-1 px-6 py-16 sm:px-10">
-        <div className="mx-auto max-w-6xl">
-          {blogs.length === 0 ? (
+        <div className="mx-auto max-w-6xl space-y-16">
+          {isEmpty ? (
             <div className="flex flex-col items-center justify-center py-24 text-center">
               <div
                 className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-2xl"
@@ -56,68 +177,31 @@ export function IntelligencePageClient({ blogs }: { blogs: Blog[] }) {
               </p>
             </div>
           ) : (
-            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-              {blogs.map((blog) => (
-                <Link
-                  key={blog.id}
-                  href={`/blog/${blog.slug}`}
-                  className="group flex flex-col overflow-hidden rounded-2xl transition-all duration-300"
-                  style={{ border: "1px solid var(--border)", background: "var(--bg-card)" }}
-                >
-                  {blog.cover_image ? (
-                    <div className="aspect-[16/9] overflow-hidden" style={{ background: "var(--bg-muted)" }}>
-                      {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img
-                        src={blog.cover_image}
-                        alt={blog.title}
-                        className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-                      />
-                    </div>
-                  ) : (
-                    <div
-                      className="aspect-[16/9]"
-                      style={{ background: "linear-gradient(135deg, var(--accent-cyan-bg) 0%, rgba(129,140,248,0.06) 100%)" }}
-                    />
-                  )}
-
-                  <div className={`flex flex-1 flex-col p-5 ${lang === "he" ? "text-right" : "text-left"}`}>
-                    {blog.tags && blog.tags.length > 0 && (
-                      <div className={`mb-3 flex flex-wrap gap-1.5 ${lang === "he" ? "justify-end" : ""}`}>
-                        {blog.tags.slice(0, 3).map((tag) => (
-                          <span
-                            key={tag}
-                            className="rounded-full px-2 py-0.5 text-[10px] font-medium"
-                            style={{ background: "var(--accent-cyan-bg)", color: "var(--accent-cyan)" }}
-                          >
-                            {tag}
-                          </span>
-                        ))}
-                      </div>
-                    )}
-
-                    <h2 className="text-base font-semibold leading-snug transition-colors group-hover:text-sky-400" style={{ color: "var(--text-primary)" }}>
-                      {blog.title}
-                    </h2>
-
-                    {blog.excerpt && (
-                      <p className="mt-2 line-clamp-3 text-sm leading-relaxed" style={{ color: "var(--text-muted)" }}>
-                        {blog.excerpt}
-                      </p>
-                    )}
-
-                    <div className={`mt-auto flex items-center gap-3 pt-4 text-xs ${lang === "he" ? "flex-row-reverse" : ""}`} style={{ color: "var(--text-muted)" }}>
-                      {blog.published_at && <span>{formatDate(blog.published_at, lang)}</span>}
-                      {blog.reading_time && (
-                        <>
-                          <span>·</span>
-                          <span>{blog.reading_time} {tx(t.intelligence.minRead, lang)}</span>
-                        </>
-                      )}
-                    </div>
+            <>
+              {/* Intelligence Reports section */}
+              {reportCards.length > 0 && (
+                <div className={lang === "he" ? "text-right" : "text-left"}>
+                  <h2 className="mb-6 text-2xl font-bold tracking-tight" style={{ color: "var(--text-primary)" }}>
+                    {tx(t.intelligence.reportsHeading, lang)}
+                  </h2>
+                  <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                    {reportCards.map((card) => <Card key={card.id} card={card} lang={lang} />)}
                   </div>
-                </Link>
-              ))}
-            </div>
+                </div>
+              )}
+
+              {/* Articles section */}
+              {blogCards.length > 0 && (
+                <div className={lang === "he" ? "text-right" : "text-left"}>
+                  <h2 className="mb-6 text-2xl font-bold tracking-tight" style={{ color: "var(--text-primary)" }}>
+                    {tx(t.intelligence.articlesHeading, lang)}
+                  </h2>
+                  <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                    {blogCards.map((card) => <Card key={card.id} card={card} lang={lang} />)}
+                  </div>
+                </div>
+              )}
+            </>
           )}
         </div>
       </section>
