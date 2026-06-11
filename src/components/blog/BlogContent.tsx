@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { BlogShareBar } from "@/components/BlogShareBar";
+import { stripEditorPlaceholders } from "@/lib/content";
 
 interface CitationMeta {
   source: string;
@@ -92,6 +93,10 @@ export default function BlogContent({
   const contentRef = useRef<HTMLDivElement>(null);
   const [modal, setModal] = useState<CitationMeta | null>(null);
 
+  // Strip any leaked "EDITOR: replace with..." placeholder figures so they never
+  // render — fixes already-published articles without a content migration.
+  const cleanHtml = stripEditorPlaceholders(html);
+
   useEffect(() => {
     const el = contentRef.current;
     if (!el) return;
@@ -126,7 +131,7 @@ export default function BlogContent({
         <div
           ref={contentRef}
           className={`blog-content${isRtl ? " blog-content-rtl" : ""}`}
-          dangerouslySetInnerHTML={{ __html: html }}
+          dangerouslySetInnerHTML={{ __html: cleanHtml }}
         />
         {shareUrl && shareTitle && (
           <BlogShareBar url={shareUrl} title={shareTitle} rtl={isRtl} />
