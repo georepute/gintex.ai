@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import type { BlogGenerationInput } from "@/types/blog";
 import { RichTextEditor, isRtlLanguage } from "@/components/RichTextEditor";
+import { SlugField } from "@/components/admin/SlugField";
 
 const TONE_OPTIONS = [
   { value: "professional", label: "Professional" },
@@ -56,6 +57,8 @@ export default function NewBlogPage() {
   const [editSeoDesc, setEditSeoDesc] = useState("");
   const [editTags, setEditTags] = useState("");
   const [editCoverImage, setEditCoverImage] = useState("");
+  const [editSlug, setEditSlug] = useState("");
+  const [slugValid, setSlugValid] = useState(true);
 
   async function handleGenerate(e: React.FormEvent) {
     e.preventDefault();
@@ -88,6 +91,7 @@ export default function NewBlogPage() {
       setEditSeoDesc(data.seo_description);
       setEditTags(data.tags.join(", "));
       setEditCoverImage(data.cover_image ?? "");
+      setEditSlug(data.slug ?? "");
     } catch (err: any) {
       setError(err.message ?? "Something went wrong");
     } finally {
@@ -106,7 +110,7 @@ export default function NewBlogPage() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           title: editTitle.trim() || generated.title,
-          slug: generated.slug,
+          slug: editSlug.trim() || generated.slug,
           excerpt: editExcerpt.trim() || generated.excerpt,
           content: editContent.trim() || generated.content,
           seo_title: editSeoTitle.trim() || generated.seo_title,
@@ -312,6 +316,12 @@ export default function NewBlogPage() {
               <input type="text" value={editTitle} onChange={e => setEditTitle(e.target.value)} style={inputStyle} />
             </div>
 
+            <SlugField
+              value={editSlug}
+              onChange={setEditSlug}
+              onValidityChange={setSlugValid}
+            />
+
             <div>
               <label style={labelStyle}>Excerpt / Summary</label>
               <textarea
@@ -351,8 +361,6 @@ export default function NewBlogPage() {
             <div className="flex items-center gap-3 pt-2">
               <div className="flex items-center gap-2 text-xs" style={{ color: "rgba(255,255,255,0.3)" }}>
                 <span>~{generated.reading_time} min read</span>
-                <span>·</span>
-                <span>Slug: {generated.slug}</span>
               </div>
             </div>
 
@@ -365,7 +373,7 @@ export default function NewBlogPage() {
             <div className="flex flex-wrap gap-3 border-t pt-5" style={{ borderColor: "rgba(255,255,255,0.08)" }}>
               <button
                 onClick={() => handleSave("draft")}
-                disabled={saving}
+                disabled={saving || !slugValid}
                 className="rounded-lg px-4 py-2.5 text-sm font-medium transition-opacity disabled:opacity-50"
                 style={{ background: "rgba(255,255,255,0.06)", color: "rgba(255,255,255,0.7)", border: "1px solid rgba(255,255,255,0.1)" }}
               >
@@ -373,7 +381,7 @@ export default function NewBlogPage() {
               </button>
               <button
                 onClick={() => handleSave("published")}
-                disabled={saving}
+                disabled={saving || !slugValid}
                 className="rounded-lg px-4 py-2.5 text-sm font-semibold text-white transition-opacity disabled:opacity-50"
                 style={{ background: "linear-gradient(135deg, #0ea5e9, #818cf8)" }}
               >

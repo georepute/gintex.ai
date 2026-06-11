@@ -7,6 +7,7 @@ import { ThemeProvider } from "@/components/ThemeProvider";
 import { ThemeToggleFloat } from "@/components/ThemeToggleFloat";
 import { LanguageProvider } from "@/components/LanguageContext";
 import { HtmlDirWrapper } from "@/components/HtmlDirWrapper";
+import { CookieConsentBanner } from "@/components/CookieConsentBanner";
 import "./globals.css";
 
 const inter = Inter({
@@ -28,11 +29,11 @@ export const metadata: Metadata = {
     apple: "/favicon.png",
   },
   title: {
-    default: "Gintex AI — AI Visibility, Reputation & Market Intelligence",
+    default: "Gintex AI — Control How the Market Sees You",
     template: "%s | Gintex AI",
   },
   description:
-    "Control how AI systems, search engines, and digital markets perceive your brand. GeoRepute audits, SEO systems, reputation intelligence, and strategic authority-building for growth-focused businesses.",
+    "Business Visibility Intelligence — Control how the market, AI systems, and search engines see your brand.",
   keywords: [
     "AI visibility",
     "reputation intelligence",
@@ -44,33 +45,31 @@ export const metadata: Metadata = {
     "GeoRepute",
     "GEON intelligence",
   ],
-  authors: [{ name: "Gintex AI", url: "https://gintex-ai.vercel.app" }],
+  authors: [{ name: "Gintex AI", url: "https://www.gintex.ai" }],
   creator: "Gintex AI",
-  metadataBase: new URL("https://gintex-ai.vercel.app"),
+  metadataBase: new URL("https://www.gintex.ai"),
   alternates: { canonical: "/" },
   openGraph: {
-    title: "Gintex AI — Control How the Market Sees You",
-    description:
-      "AI visibility audits, reputation intelligence, and market positioning systems. See exactly how AI and search engines represent your brand — then reshape it.",
-    url: "https://gintex-ai.vercel.app",
+    title: "Gintex AI",
+    description: "Control How the Market Sees You — Business Visibility Intelligence",
+    url: "https://www.gintex.ai",
     siteName: "Gintex AI",
     type: "website",
     locale: "en_US",
     images: [
       {
-        url: "https://gintex-ai.vercel.app/logo.png",
-        width: 1200,
-        height: 630,
-        alt: "Gintex AI — AI Visibility & Market Intelligence",
+        url: "https://www.gintex.ai/Gemini_Generated_Image_h46cjzh46cjzh46c.png",
+        width: 1024,
+        height: 1024,
+        alt: "Gintex AI — Control How the Market Sees You",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Gintex AI — Control How the Market Sees You",
-    description:
-      "AI visibility audits, reputation intelligence, and market positioning systems.",
-    images: ["https://gintex-ai.vercel.app/logo.png"],
+    title: "Gintex AI",
+    description: "Control How the Market Sees You — Business Visibility Intelligence",
+    images: ["https://www.gintex.ai/Gemini_Generated_Image_h46cjzh46cjzh46c.png"],
   },
   robots: {
     index: true,
@@ -88,8 +87,9 @@ export default function RootLayout({
     <html
       lang="en"
       className={`${inter.variable} ${spaceGrotesk.variable} h-full antialiased`}
+      suppressHydrationWarning
     >
-      <body>
+      <body suppressHydrationWarning>
         <LanguageProvider>
         <ThemeProvider>
         <HtmlDirWrapper>
@@ -101,8 +101,8 @@ export default function RootLayout({
               "@type": "Organization",
               name: "Gintex AI",
               alternateName: "GINTEX",
-              url: "https://gintex-ai.vercel.app",
-              logo: "https://gintex-ai.vercel.app/logo.png",
+              url: "https://www.gintex.ai",
+              logo: "https://www.gintex.ai/logo.png",
               description:
                 "AI visibility, reputation intelligence, and strategic market positioning systems for brands. GeoRepute audits, SEO optimization, and digital authority-building.",
               foundingDate: "2024",
@@ -116,12 +116,12 @@ export default function RootLayout({
                 "Strategic Growth Infrastructure",
               ],
               sameAs: [
-                "https://gintex-ai.vercel.app",
+                "https://www.gintex.ai",
               ],
               contactPoint: {
                 "@type": "ContactPoint",
                 contactType: "customer service",
-                url: "https://gintex-ai.vercel.app/contact",
+                url: "https://www.gintex.ai/contact",
                 availableLanguage: "English",
               },
               hasOfferCatalog: {
@@ -143,6 +143,7 @@ export default function RootLayout({
         <Header />
         <div className="flex flex-1 flex-col">{children}</div>
         <Footer />
+        <CookieConsentBanner />
         </HtmlDirWrapper>
         </ThemeProvider>
         </LanguageProvider>

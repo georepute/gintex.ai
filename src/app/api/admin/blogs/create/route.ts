@@ -1,15 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
-
-function slugify(text: string): string {
-  return text
-    .toLowerCase()
-    .replace(/[^a-z0-9\s-]/g, "")
-    .replace(/\s+/g, "-")
-    .replace(/-+/g, "-")
-    .trim()
-    .slice(0, 80);
-}
+import { slugify } from "@/lib/slug";
+import { allocateUniqueSeeds, coverUrl, injectImages } from "@/lib/images";
 
 export async function POST(request: NextRequest) {
   const supabase = await createClient();
@@ -28,7 +20,7 @@ export async function POST(request: NextRequest) {
   }
 
   // Ensure unique slug
-  let baseSlug = slugify(slug || title);
+  const baseSlug = slugify(slug || title);
   let finalSlug = baseSlug;
   let counter = 0;
   while (true) {
@@ -42,6 +34,9 @@ export async function POST(request: NextRequest) {
     finalSlug = `${baseSlug}-${counter}`;
   }
 
+  const tagArray = Array.isArray(tags) ? tags : [];
+
+  // Insert first so we have the real id to key globally-unique image seeds on.
   const { data, error } = await supabase
     .from("blogs")
     .insert({
@@ -51,7 +46,7 @@ export async function POST(request: NextRequest) {
       content: content?.trim() ?? null,
       seo_title: seo_title?.trim() ?? null,
       seo_description: seo_description?.trim() ?? null,
-      tags: Array.isArray(tags) ? tags : [],
+      tags: tagArray,
       reading_time: reading_time ?? null,
       language: language ?? "en",
       cover_image: cover_image?.trim() ?? null,
@@ -64,6 +59,25 @@ export async function POST(request: NextRequest) {
 
   if (error) {
     return NextResponse.json({ error: error.message }, { status: 500 });
+  }
+
+  // Assign globally-unique Picsum images keyed on the real blog id. Reserve a
+  // cover seed + 3 content seeds; respect a user-supplied custom cover.
+  try {
+    const seeds = await allocateUniqueSeeds(supabase, "blog", data.id, 4);
+    const [coverSeed, ...contentSeeds] = seeds;
+    const finalCover = cover_image?.trim() || coverUrl(coverSeed);
+    const finalContent = injectImages(data.content ?? "", contentSeeds, tagArray);
+
+    const { data: updated } = await supabase
+      .from("blogs")
+      .update({ cover_image: finalCover, content: finalContent })
+      .eq("id", data.id)
+      .select()
+      .single();
+    if (updated) return NextResponse.json(updated, { status: 201 });
+  } catch {
+    // Image assignment is best-effort; never block creation on it.
   }
 
   return NextResponse.json(data, { status: 201 });

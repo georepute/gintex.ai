@@ -297,6 +297,8 @@ export const t = {
       emailLabel: { en: "Email us",      he: "שלח אימייל" },
       phoneLabel: { en: "Phone",         he: "טלפון" },
       hqLabel:    { en: "Headquarters",  he: "מטה" },
+      emailCta:    { en: "Email us",        he: "שלח אימייל" },
+      whatsappCta: { en: "Chat on WhatsApp", he: "צ'אט בוואטסאפ" },
       socialLabel:{ en: "Digital presence", he: "נוכחות דיגיטלית" },
     },
     form: {
@@ -656,6 +658,9 @@ export const t = {
         he: "אנו מפרסמים מחקר על נראות AI, תפיסת מותג, מסגרות GEO ומודיעין שוק.",
       },
     },
+    reportsHeading: { en: "Intelligence Reports", he: "דוחות מודיעין" },
+    articlesHeading: { en: "Articles", he: "מאמרים" },
+    reportBadge: { en: "Report", he: "דוח" },
     minRead: { en: "min read", he: "דקות קריאה" },
   },
 
@@ -763,6 +768,8 @@ export const t = {
       about:       { en: "About Us",                 he: "אודותינו" },
       contact:     { en: "Contact",                  he: "צור קשר" },
       privacy:     { en: "Privacy Policy",           he: "מדיניות פרטיות" },
+      cookies:     { en: "Cookie Policy",            he: "מדיניות עוגיות" },
+      terms:       { en: "Terms of Use",             he: "תנאי שימוש" },
       report:      { en: "Intelligence Report",      he: "דוח מודיעין" },
     },
     emailPlaceholder: { en: "Enter email", he: "הכנס אימייל" },

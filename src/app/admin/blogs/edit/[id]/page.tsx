@@ -4,8 +4,9 @@ import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/client";
-import type { Blog, BlogStatus } from "@/types/blog";
+import type { Blog, BlogStatus, BlogRedirect } from "@/types/blog";
 import { RichTextEditor, isRtlLanguage } from "@/components/RichTextEditor";
+import { SlugField } from "@/components/admin/SlugField";
 
 export default function EditBlogPage() {
   const { id } = useParams<{ id: string }>();
@@ -25,6 +26,10 @@ export default function EditBlogPage() {
   const [tags, setTags] = useState("");
   const [coverImage, setCoverImage] = useState("");
   const [language, setLanguage] = useState("en");
+  const [slug, setSlug] = useState("");
+  const [originalSlug, setOriginalSlug] = useState("");
+  const [slugValid, setSlugValid] = useState(true);
+  const [redirects, setRedirects] = useState<BlogRedirect[]>([]);
 
   const showToast = (msg: string, ok = true) => {
     setToast({ msg, ok });
@@ -45,7 +50,18 @@ export default function EditBlogPage() {
       setTags((data.tags ?? []).join(", "));
       setCoverImage(data.cover_image ?? "");
       setLanguage(data.language ?? "en");
+      setSlug(data.slug ?? "");
+      setOriginalSlug(data.slug ?? "");
       setLoading(false);
+
+      // Load redirect history for this article.
+      try {
+        const res = await fetch(`/api/admin/blogs/${id}/redirects`);
+        if (res.ok) {
+          const json = await res.json();
+          setRedirects(json.redirects ?? []);
+        }
+      } catch { /* non-fatal */ }
     }
     load();
   }, [id]);
@@ -64,11 +80,24 @@ export default function EditBlogPage() {
         tags: tags.split(",").map(t => t.trim()).filter(Boolean),
         cover_image: coverImage.trim() || null,
         language,
+        slug: slug.trim(),
       }),
     });
     const data = await res.json();
     if (!res.ok) { showToast(data.error ?? "Save failed", false); }
-    else { showToast("Changes saved."); setBlog(data); }
+    else {
+      showToast("Changes saved.");
+      setBlog(data);
+      // If the slug changed on a published post, a redirect was created —
+      // refresh history and the original-slug baseline.
+      if (slug.trim() !== originalSlug) {
+        setOriginalSlug(slug.trim());
+        try {
+          const r = await fetch(`/api/admin/blogs/${id}/redirects`);
+          if (r.ok) setRedirects((await r.json()).redirects ?? []);
+        } catch { /* non-fatal */ }
+      }
+    }
     setSaving(false);
   }
 
@@ -215,6 +244,38 @@ export default function EditBlogPage() {
         </div>
 
         <div>
+          <SlugField
+            value={slug}
+            onChange={setSlug}
+            excludeId={id}
+            onValidityChange={setSlugValid}
+          />
+          {/* Notice: changing a published URL creates a 301 redirect */}
+          {blog.status === "published" && slug.trim() !== originalSlug && slug.trim() && (
+            <p className="mt-2 rounded-lg px-3 py-2 text-xs" style={{ background: "rgba(251,146,60,0.08)", color: "#fb923c", border: "1px solid rgba(251,146,60,0.2)" }}>
+              Changing this published URL will create a permanent (301) redirect from <strong>/blog/{originalSlug}</strong> so existing links and SEO are preserved.
+            </p>
+          )}
+          {/* Redirect history */}
+          {redirects.length > 0 && (
+            <div className="mt-3 rounded-lg p-3" style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.06)" }}>
+              <p className="text-[11px] font-semibold uppercase tracking-wide" style={{ color: "rgba(255,255,255,0.4)" }}>
+                Redirect History
+              </p>
+              <ul className="mt-2 space-y-1">
+                {redirects.map(r => (
+                  <li key={r.id} className="flex items-center gap-2 text-xs" style={{ color: "rgba(255,255,255,0.55)" }}>
+                    <span style={{ color: "rgba(255,255,255,0.35)" }}>/blog/{r.old_slug}</span>
+                    <span style={{ color: "#34d399" }}>→ /blog/{r.new_slug}</span>
+                    <span className="rounded px-1.5 py-0.5 text-[10px]" style={{ background: "rgba(56,189,248,0.1)", color: "#38bdf8" }}>{r.redirect_type}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+        </div>
+
+        <div>
           <label style={labelStyle}>Excerpt</label>
           <textarea value={excerpt} onChange={e => setExcerpt(e.target.value)} rows={3} style={{ ...inputStyle, resize: "vertical" }} />
         </div>
@@ -267,7 +328,7 @@ export default function EditBlogPage() {
         <div className="flex justify-end border-t pt-5" style={{ borderColor: "rgba(255,255,255,0.08)" }}>
           <button
             onClick={handleSave}
-            disabled={saving}
+            disabled={saving || !slugValid}
             className="rounded-lg px-5 py-2.5 text-sm font-semibold text-white transition-opacity disabled:opacity-50"
             style={{ background: "linear-gradient(135deg, #0ea5e9, #818cf8)" }}
           >

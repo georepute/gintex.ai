@@ -1,10 +1,8 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { useRef } from "react";
 import { motion, useScroll, useTransform, useSpring } from "framer-motion";
-import heroImage from "@/Gintex-images/Main img 1.png";
 import { useLang } from "@/components/LanguageContext";
 import { t, tx } from "@/lib/translations";
 
@@ -67,7 +65,7 @@ export function HeroSection() {
   return (
     <section
       ref={sectionRef}
-      className="relative overflow-hidden px-6 pb-16 pt-20 sm:px-10 sm:pt-24 lg:pb-24 lg:pt-28 xl:pt-32 transition-colors duration-300"
+      className="relative overflow-hidden px-6 pb-16 pt-20 sm:px-10 sm:pt-24 lg:px-16 lg:pb-24 lg:pt-28 xl:px-20 xl:pt-32 transition-colors duration-300"
       style={{ background: "var(--bg-page)" }}
     >
       {/* Ambient orbs */}
@@ -109,7 +107,7 @@ export function HeroSection() {
       />
 
       {/* Content grid */}
-      <div className="relative mx-auto grid max-w-6xl gap-12 lg:grid-cols-2 lg:items-center lg:gap-y-12 lg:gap-x-28 xl:gap-x-40">
+      <div className="relative mx-auto grid max-w-7xl gap-10 lg:grid-cols-[5fr_7fr] lg:items-center lg:gap-x-12 xl:gap-x-16">
 
         {/* Left: text */}
         <motion.div
@@ -258,37 +256,51 @@ export function HeroSection() {
             transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
           />
 
-          {/* Rotating gradient border */}
-          <motion.div
-            className="absolute -inset-[1.5px] rounded-2xl"
-            style={{
-              background:
-                "conic-gradient(from 0deg, transparent 0%, rgba(34,211,238,0.5) 20%, rgba(99,102,241,0.4) 50%, transparent 70%)",
-            }}
-            animate={{ rotate: 360 }}
-            transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
-          />
 
-          {/* Image card */}
-          <div className="relative aspect-[16/10] w-full overflow-hidden rounded-2xl border border-cyan-500/20 ring-1 ring-white/10 shadow-[0_0_80px_-12px_rgba(34,211,238,0.45),0_25px_50px_-12px_rgba(0,0,0,0.6)]">
-            <Image
-              src={heroImage}
-              alt="Futuristic analytics dashboard with neural network visualizations"
-              fill
-              className="object-cover"
-              priority
-              sizes="(max-width: 1024px) 100vw, 50vw"
-            />
-            <motion.div
-              className="pointer-events-none absolute inset-0"
-              style={{
-                background:
-                  "linear-gradient(115deg, transparent 30%, rgba(255,255,255,0.04) 50%, transparent 70%)",
-                backgroundSize: "200% 100%",
-              }}
-              animate={{ backgroundPosition: ["-100% 0", "200% 0"] }}
-              transition={{ duration: 3, repeat: Infinity, ease: "linear", repeatDelay: 3 }}
-            />
+          {/* Browser chrome mockup */}
+          <div className="relative w-full overflow-hidden rounded-2xl border border-cyan-500/20 ring-1 ring-white/10 shadow-[0_0_80px_-12px_rgba(34,211,238,0.45),0_32px_64px_-12px_rgba(0,0,0,0.5)]"
+            style={{ background: "rgba(15,23,42,0.95)" }}
+          >
+            {/* Title bar */}
+            <div className="flex items-center gap-2 px-4 py-3 border-b border-white/[0.07]"
+              style={{ background: "rgba(15,23,42,0.98)" }}
+            >
+              <span className="h-3 w-3 rounded-full bg-red-500/80" />
+              <span className="h-3 w-3 rounded-full bg-yellow-500/80" />
+              <span className="h-3 w-3 rounded-full bg-green-500/80" />
+              <div className="mx-auto flex items-center gap-2 rounded-md px-3 py-1 text-[11px] text-white/30"
+                style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.08)" }}
+              >
+                <span className="h-1.5 w-1.5 rounded-full bg-emerald-400/70" />
+                app.georepute.ai
+              </div>
+              <div className="w-14" />
+            </div>
+
+            {/* Video */}
+            <div className="relative w-full" style={{ aspectRatio: "16/10" }}>
+              <video
+                src="/screen-capture.webm"
+                autoPlay
+                loop
+                muted
+                playsInline
+                className="h-full w-full"
+                style={{ objectFit: "fill", background: "rgba(10,15,30,1)" }}
+              />
+              {/* Shimmer sweep */}
+              <motion.div
+                className="pointer-events-none absolute inset-0"
+                style={{
+                  background: "linear-gradient(115deg, transparent 30%, rgba(255,255,255,0.03) 50%, transparent 70%)",
+                  backgroundSize: "200% 100%",
+                }}
+                animate={{ backgroundPosition: ["-100% 0", "200% 0"] }}
+                transition={{ duration: 4, repeat: Infinity, ease: "linear", repeatDelay: 4 }}
+              />
+              {/* Bottom vignette */}
+              <div className="pointer-events-none absolute bottom-0 left-0 right-0 h-1/5 bg-gradient-to-t from-[rgba(10,15,30,0.6)] to-transparent" />
+            </div>
           </div>
 
           {/* Floating badge — top right */}

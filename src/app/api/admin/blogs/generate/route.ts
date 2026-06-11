@@ -3,16 +3,7 @@ import { createClient } from "@/lib/supabase/server";
 import OpenAI from "openai";
 import Anthropic from "@anthropic-ai/sdk";
 import type { BlogGenerationInput, BlogGenerationResult } from "@/types/blog";
-
-function slugify(text: string): string {
-  return text
-    .toLowerCase()
-    .replace(/[^a-z0-9\s-]/g, "")
-    .replace(/\s+/g, "-")
-    .replace(/-+/g, "-")
-    .trim()
-    .slice(0, 80);
-}
+import { slugify } from "@/lib/slug";
 
 function estimateReadingTime(text: string): number {
   const words = text.replace(/<[^>]+>/g, " ").split(/\s+/).filter(Boolean).length;
@@ -37,18 +28,18 @@ function ensureInsightCallout(content: string): string {
   return content.slice(0, lastH2) + fallback + content.slice(lastH2);
 }
 
-// Inject fallback internal links if fewer than 3 are present
+// Inject fallback internal + ecosystem links if fewer than 2 internal links present
 function ensureInternalLinks(content: string): string {
   const linkCount = (content.match(/href="\//g) || []).length;
-  if (linkCount >= 3) return content;
-  const linkBar = `<div style="background:rgba(99,102,241,0.05);border:1px solid rgba(99,102,241,0.15);border-radius:0.75rem;padding:1rem 1.5rem;margin:1.5rem 0;"><strong style="font-size:0.85rem;color:#6366f1;">Explore Further</strong><ul style="margin:0.5rem 0 0;padding-left:1.25rem;font-size:0.9rem;"><li><a href="/services" style="color:#0ea5e9;font-weight:600;">GeoRepute Intelligence Services</a> - AI visibility audits and market positioning</li><li><a href="/intelligence" style="color:#0ea5e9;font-weight:600;">Intelligence Reports</a> - Proprietary research and analytical frameworks</li><li><a href="/global-map" style="color:#0ea5e9;font-weight:600;">Global Intelligence Map</a> - Understand your market visibility structure</li><li><a href="/pdca" style="color:#0ea5e9;font-weight:600;">PDCA Optimization Framework</a> - Continuous intelligence and growth loop</li><li><a href="/contact" style="color:#0ea5e9;font-weight:600;">Book an Intelligence Audit</a> - Start with a free GeoRepute baseline</li></ul></div>`;
+  if (linkCount >= 2) return content;
+  const linkBar = `<div style="background:rgba(99,102,241,0.05);border:1px solid rgba(99,102,241,0.15);border-radius:0.75rem;padding:1rem 1.5rem;margin:1.5rem 0;"><strong style="font-size:0.85rem;color:#6366f1;">Explore Further</strong><ul style="margin:0.5rem 0 0;padding-left:1.25rem;font-size:0.9rem;"><li><a href="/services" style="color:#0ea5e9;font-weight:600;">GeoRepute Intelligence Services</a> - AI visibility audits and market positioning</li><li><a href="/intelligence" style="color:#0ea5e9;font-weight:600;">Intelligence Reports</a> - Proprietary research and analytical frameworks</li><li><a href="/global-map" style="color:#0ea5e9;font-weight:600;">Global Intelligence Map</a> - Understand your market visibility structure</li><li><a href="/pdca" style="color:#0ea5e9;font-weight:600;">PDCA Optimization Framework</a> - Continuous intelligence and growth loop</li><li><a href="/contact" style="color:#0ea5e9;font-weight:600;">Book an Intelligence Audit</a> - Start with a free GeoRepute baseline</li></ul><div style="margin-top:0.75rem;padding-top:0.75rem;border-top:1px solid rgba(99,102,241,0.15);"><strong style="font-size:0.8rem;color:#94a3b8;">Ecosystem</strong><ul style="margin:0.4rem 0 0;padding-left:1.25rem;font-size:0.9rem;"><li><a href="https://georepute.com" target="_blank" rel="noopener noreferrer" style="color:#6366f1;font-weight:600;">GeoRepute Intelligence Platform</a> - AI visibility scoring and brand monitoring</li><li><a href="https://copyup.io" target="_blank" rel="noopener noreferrer" style="color:#6366f1;font-weight:600;">CopyUp Content Distribution</a> - Authority content amplification</li><li><a href="https://onlineperception.ai" target="_blank" rel="noopener noreferrer" style="color:#6366f1;font-weight:600;">OnlinePerception AI Analysis</a> - Real-time brand perception intelligence</li></ul></div></div>`;
   return content + linkBar;
 }
 
-// Inject fallback sources block if missing
+// Inject fallback sources block if missing — uses data-citation triggers for smart popup
 function ensureSourcesBlock(content: string): string {
   if (content.includes("sources-block") || content.includes("Sources &amp;") || content.includes("Sources &")) return content;
-  const fallback = `<div class="sources-block" style="background:rgba(0,0,0,0.03);border-radius:0.75rem;padding:1.25rem 1.5rem;margin:2rem 0;font-size:0.85rem;"><strong>Sources &amp; References</strong><ol style="margin:0.5rem 0 0;padding-left:1.25rem;color:#64748b;"><li>Gintex GEON Index - AI Visibility Benchmark, Q3 2025</li><li>GeoRepute Visibility Audit (n=412 B2B brands), 2025</li><li>OnlinePerception AI Citation Tracker, 2025</li><li>Gintex AI Composition Audit, Q3 2025</li><li>Industry data cross-referenced with public LLM citation logs (2024-2025)</li></ol></div>`;
+  const fallback = `<div class="sources-block" style="background:rgba(0,0,0,0.03);border-radius:0.75rem;padding:1.25rem 1.5rem;margin:2rem 0;font-size:0.85rem;"><strong>Sources &amp; References</strong><ol style="margin:0.5rem 0 0;padding-left:1.25rem;color:#64748b;"><li>Gintex GEON Index - AI Visibility Benchmark, Q3 2025</li><li>GeoRepute Visibility Audit (n=412 B2B brands), 2025</li><li>OnlinePerception AI Citation Tracker, 2025</li><li><span data-citation="gartner" style="color:#0ea5e9;cursor:pointer;font-weight:600;text-decoration:underline;text-decoration-style:dotted;">Gartner</span> - AI and the Future of Brand Visibility (2025)</li><li><span data-citation="mckinsey" style="color:#0ea5e9;cursor:pointer;font-weight:600;text-decoration:underline;text-decoration-style:dotted;">McKinsey &amp; Company</span> - The State of AI in Marketing (2025)</li></ol></div>`;
   return content + fallback;
 }
 
@@ -116,46 +107,9 @@ function repairTruncatedJson(raw: string, topic: string): Record<string, unknown
   }
 }
 
-// Generate a stable numeric seed from a string
-function strToSeed(str: string): number {
-  let hash = 0;
-  for (let i = 0; i < str.length; i++) {
-    hash = (hash * 31 + str.charCodeAt(i)) & 0xffffffff;
-  }
-  return Math.abs(hash) % 1000;
-}
-
-// Inject 2-3 contextual Picsum images into blog HTML content
-function injectImages(content: string, slug: string, tags: string[]): string {
-  // Split on h2 tags to find natural break points
-  const parts = content.split(/(?=<h2)/i);
-  if (parts.length < 2) return content;
-
-  const seeds = [
-    strToSeed(slug),
-    strToSeed(slug + "-2"),
-    strToSeed(slug + "-3"),
-  ];
-
-  const imgTag = (seed: number, alt: string) =>
-    `<figure style="margin:2rem 0;"><img src="https://picsum.photos/seed/${seed}/1200/630" alt="${alt}" style="width:100%;border-radius:0.75rem;object-fit:cover;" loading="lazy" /><figcaption style="text-align:center;font-size:0.8rem;color:#94a3b8;margin-top:0.5rem;">${alt}</figcaption></figure>`;
-
-  const altTexts = [
-    tags[0] ?? "AI technology",
-    tags[1] ?? "digital intelligence",
-    tags[2] ?? "market insights",
-  ];
-
-  // Insert after 1st, 2nd, and (if enough parts) 3rd h2
-  const result = parts.map((part, i) => {
-    if (i === 1) return part + imgTag(seeds[0], altTexts[0]);
-    if (i === 2) return part + imgTag(seeds[1], altTexts[1]);
-    if (i === 3 && parts.length > 4) return part + imgTag(seeds[2], altTexts[2]);
-    return part;
-  });
-
-  return result.join("");
-}
+// Images (cover + in-content) are assigned in the create route, where the real
+// blog id exists, via src/lib/images.ts — this guarantees globally-unique Picsum
+// images (no two blogs/reports share one). Generation returns image-free content.
 
 const RTL_LANGUAGES = new Set(["he", "ar"]);
 
@@ -174,10 +128,10 @@ function sanitiseResult(parsed: Record<string, unknown>, topic: string, slug: st
   const withStats    = ensureStatBlock(cleanContent);
   const withInsight  = ensureInsightCallout(withStats);
   const withLinks    = ensureInternalLinks(withInsight);
-  const withSources  = ensureSourcesBlock(withLinks);
-  const enrichedContent = injectImages(withSources, slug, tags);
+  const enrichedContent = ensureSourcesBlock(withLinks);
 
-  // Wrap content in RTL dir if Hebrew/Arabic
+  // Wrap content in RTL dir if Hebrew/Arabic. In-content images are injected
+  // later (create route) with globally-unique seeds.
   const finalContent = RTL_LANGUAGES.has(language)
     ? `<div dir="rtl" style="text-align:right;">${enrichedContent}</div>`
     : enrichedContent;
@@ -246,7 +200,6 @@ Lead with Gintex / GeoRepute / OnlinePerception data. External sources support, 
 • Prefer specific proprietary-sounding framings: "Gintex GEON Index Q3 2025", "GeoRepute visibility benchmark across 412 B2B brands", "OnlinePerception AI citation tracker", "Gintex AI Composition Audit", "Average AI Citation Share (ACS)".
 • Where third-party data is essential, cite it precisely (organisation + year), but never use only third-party data. Every proprietary stat should appear at least 2x more often than third-party citations.
 • Frame stats as findings, not invented facts: "In Gintex's Q3 2025 visibility scan of [N] brands across [model], [X]% appeared in zero AI-generated answers." Numbers should be plausible and round-ish (not 73.4%).
-• Inline source markup: <em>(Gintex GEON Index, Q3 2025)</em> / <em>(GeoRepute benchmark, n=412)</em> / <em>(McKinsey, 2024)</em> — proprietary first.
 
 ━━━ RULE 3: RHYTHM & SHARPNESS ━━━
 Reader attention is the scarcest resource. Engineer rhythm.
@@ -271,8 +224,24 @@ Structure for both human readers AND AI extraction:
 • Use <strong> for entity names (Gintex AI, GeoRepute, OnlinePerception, GEON, ACS) and key proprietary terms.
 • Semantic flow: Hook claim > Why now > Proprietary data > Mechanism > Framework > Application > Action > FAQ > Conclusion.
 
-━━━ RULE 5: INTERNAL AUTHORITY LINKING ━━━
-Place 3-5 internal links naturally inside sentences (NEVER a separate link list):
+━━━ RULE 5: SOURCE CITATION MECHANICS ━━━
+PROPRIETARY sources (Gintex, GeoRepute, GEON, OnlinePerception) appear first and most often — use plain <em>(Gintex GEON Index, Q3 2025)</em> inline tags. They do not need data-citation popups.
+
+EXTERNAL supporting sources, when cited, use the smart-popup data-citation trigger instead of a plain href. Allowed external authorities only — never competitors:
+mckinsey, gartner, stanford, salesforce, hubspot, search engine journal, forrester, deloitte.
+
+External inline citation pattern:
+<em>(Source: <span data-citation="gartner" style="color:#0ea5e9;cursor:pointer;font-weight:600;text-decoration:underline;text-decoration-style:dotted;">Gartner</span>, 2025)</em>
+
+External reference list entry pattern (inside the Sources & References block at end of article):
+<li><span data-citation="mckinsey" style="color:#0ea5e9;cursor:pointer;font-weight:600;text-decoration:underline;text-decoration-style:dotted;">McKinsey & Company</span> - [Title of report] (Year)</li>
+
+Proprietary reference list entry pattern (no data-citation needed):
+<li>Gintex GEON Index - AI Visibility Benchmark, Q3 2025</li>
+
+━━━ RULE 6: INTERNAL & ECOSYSTEM LINKING ━━━
+INTERNAL links (our own pages — regular href, open same tab):
+Include 2-3 contextual internal links naturally inside sentences (NEVER a separate link dump):
 • <a href="/services" style="color:#0ea5e9;font-weight:600;">GeoRepute Intelligence Services</a>
 • <a href="/intelligence" style="color:#0ea5e9;font-weight:600;">Gintex Intelligence Reports</a>
 • <a href="/global-map" style="color:#0ea5e9;font-weight:600;">Global Visibility Map</a>
@@ -280,9 +249,17 @@ Place 3-5 internal links naturally inside sentences (NEVER a separate link list)
 • <a href="/about" style="color:#0ea5e9;font-weight:600;">About Gintex AI</a>
 • <a href="/contact" style="color:#0ea5e9;font-weight:600;">Book a GeoRepute Audit</a>
 
-━━━ RULE 6: SOURCES BLOCK ━━━
-End with a Sources & References block. Proprietary references first, external second.
-<div class="sources-block"><strong>Sources & References</strong><ol><li>Gintex GEON Index, Q3 2025</li><li>GeoRepute Visibility Benchmark (n=412 B2B brands)</li><li>OnlinePerception AI Citation Tracker</li><li>[External source if cited]</li></ol></div>
+ECOSYSTEM links (sister products — open in new tab with target="_blank"):
+Include 1-2 ecosystem links where contextually natural:
+• <a href="https://georepute.com" target="_blank" rel="noopener noreferrer" style="color:#6366f1;font-weight:600;">GeoRepute Intelligence Platform</a>
+• <a href="https://copyup.io" target="_blank" rel="noopener noreferrer" style="color:#6366f1;font-weight:600;">CopyUp Content Distribution</a>
+• <a href="https://onlineperception.ai" target="_blank" rel="noopener noreferrer" style="color:#6366f1;font-weight:600;">OnlinePerception AI Analysis</a>
+
+All links must appear naturally within sentences, not as a separate link dump.
+
+━━━ RULE 7: SOURCES BLOCK ━━━
+End with a Sources & References block. Proprietary references first, external (with data-citation spans) second.
+<div class="sources-block"><strong>Sources & References</strong><ol><li>Gintex GEON Index, Q3 2025</li><li>GeoRepute Visibility Benchmark (n=412 B2B brands)</li><li>OnlinePerception AI Citation Tracker</li><li><span data-citation="mckinsey" style="color:#0ea5e9;cursor:pointer;font-weight:600;text-decoration:underline;text-decoration-style:dotted;">McKinsey &amp; Company</span> - [external source if cited]</li></ol></div>
 
 ━━━ ARTICLE STRUCTURE (REQUIRED ORDER) ━━━
 1. Hook paragraph — category-defining statement, not a setup
@@ -352,9 +329,11 @@ MANDATORY CHECKLIST — every item must appear:
 [ ] Minimum 2 insight callout boxes spread through the article
 [ ] Mid-article Key Takeaways box AND end-of-article Key Takeaways box
 [ ] FAQ section with 3-5 Q&A pairs (answers 2-3 sentences max)
-[ ] 3-5 internal links woven naturally into sentences
+[ ] 2-3 internal links woven naturally into sentences (/services, /intelligence, /global-map, /pdca, /contact)
+[ ] 1-2 ecosystem links (georepute.com, copyup.io, onlineperception.ai) where contextually natural — open in new tab
 [ ] Proprietary data cited 2x more than third-party (Gintex / GeoRepute / GEON / OnlinePerception first; Gartner / McKinsey only if essential)
-[ ] Sources & References block with proprietary citations first
+[ ] EXTERNAL authority citations use <span data-citation="..."> spans (NOT plain href links). Allowed values: mckinsey, gartner, stanford, salesforce, hubspot, search engine journal, forrester, deloitte
+[ ] Sources & References block with proprietary citations first, then external (using data-citation spans)
 [ ] Zero banned phrases ("in today's", "leveraging", "unlock", "delve", "navigate", "game-changer", "revolutionize", "harness the power of", "in conclusion", "ever-changing landscape")
 [ ] Zero em-dashes or en-dashes
 
@@ -469,9 +448,8 @@ Return ONLY valid JSON as specified in the system prompt. No markdown fences. No
     }
   }
 
-  // Cover image: use Picsum with a stable seed based on slug (no upload needed — public CDN)
-  const coverSeed = strToSeed(result.slug);
-  const coverImageUrl = `https://picsum.photos/seed/${coverSeed}/1600/900`;
+  // Cover + in-content images are assigned on save (create route) using the real
+  // blog id so they are globally unique. Generation returns no cover.
 
   // Cost estimate
   const costUsd = tokensUsed * (modelUsed === "claude" ? 0.000003 : 0.000005);
@@ -482,5 +460,5 @@ Return ONLY valid JSON as specified in the system prompt. No markdown fences. No
     user_id: user.id,
   }).then(() => {}, () => {});
 
-  return NextResponse.json({ ...result, cover_image: coverImageUrl, _model: modelUsed });
+  return NextResponse.json({ ...result, cover_image: null, _model: modelUsed });
 }

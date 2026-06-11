@@ -17,6 +17,17 @@ export interface Blog {
   updated_at: string;
   reading_time: number | null;
   language: string;
+  slug_history?: string[] | null;
+  canonical_url?: string | null;
+}
+
+export interface BlogRedirect {
+  id: string;
+  blog_id: string | null;
+  old_slug: string;
+  new_slug: string;
+  redirect_type: number;
+  created_at: string;
 }
 
 export interface AdminProfile {

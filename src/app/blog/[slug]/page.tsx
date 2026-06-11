@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
-import { notFound } from "next/navigation";
+import { notFound, permanentRedirect } from "next/navigation";
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
 import type { Blog } from "@/types/blog";
-import { BlogShareBar } from "@/components/BlogShareBar";
+import BlogContent from "@/components/blog/BlogContent";
+import { AuthorCard } from "@/components/AuthorCard";
 
 export const revalidate = 60;
 
@@ -19,6 +20,18 @@ async function getBlog(slug: string): Promise<Blog | null> {
     .single();
   if (error || !data) return null;
   return data as Blog;
+}
+
+// Resolve an old/changed slug to the current one via the redirects table.
+// Returns the current slug, or null if this URL was never a redirect source.
+async function resolveRedirectTarget(slug: string): Promise<string | null> {
+  const supabase = await createClient();
+  const { data } = await supabase
+    .from("blog_redirects")
+    .select("new_slug")
+    .eq("old_slug", slug)
+    .maybeSingle();
+  return data?.new_slug ?? null;
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
@@ -58,9 +71,20 @@ function formatDate(iso: string | null, lang?: string): string {
 export default async function BlogDetailPage({ params }: Props) {
   const { slug } = await params;
   const blog = await getBlog(slug);
-  if (!blog) notFound();
 
-  const jsonLd = {
+  // On a miss, check whether this is an old slug with a redirect on record.
+  // permanentRedirect() serves a 308 (Permanent) response from a Server
+  // Component — the App Router equivalent of a 301; both preserve SEO rankings
+  // and indexed URLs. The redirect row records 301 as the semantic intent.
+  if (!blog) {
+    const target = await resolveRedirectTarget(slug);
+    if (target && target !== slug) permanentRedirect(`/blog/${target}`);
+    notFound();
+  }
+
+  const siteUrl = "https://gintex-ai.vercel.app";
+
+  const articleSchema = {
     "@context": "https://schema.org",
     "@type": "Article",
     headline: blog.title,
@@ -68,15 +92,74 @@ export default async function BlogDetailPage({ params }: Props) {
     image: blog.cover_image ?? undefined,
     datePublished: blog.published_at ?? undefined,
     dateModified: blog.updated_at,
-    author: { "@type": "Organization", name: "Gintex AI", url: "https://gintex-ai.vercel.app" },
+    author: {
+      "@type": "Person",
+      name: "Gintex AI Editorial Team",
+      url: `${siteUrl}/about`,
+      worksFor: { "@type": "Organization", name: "Gintex AI", url: siteUrl },
+    },
     publisher: {
       "@type": "Organization",
       name: "Gintex AI",
-      logo: { "@type": "ImageObject", url: "https://gintex-ai.vercel.app/logo.png" },
+      url: siteUrl,
+      logo: { "@type": "ImageObject", url: `${siteUrl}/logo.png` },
     },
-    url: `https://gintex-ai.vercel.app/blog/${blog.slug}`,
+    url: `${siteUrl}/blog/${blog.slug}`,
+    mainEntityOfPage: { "@type": "WebPage", "@id": `${siteUrl}/blog/${blog.slug}` },
     keywords: (blog.tags ?? []).join(", "),
+    articleSection: "AI Visibility Intelligence",
+    inLanguage: blog.language ?? "en",
+    isPartOf: { "@type": "Blog", name: "Gintex AI Intelligence", url: `${siteUrl}/intelligence` },
   };
+
+  const organizationSchema = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    name: "Gintex AI",
+    url: siteUrl,
+    logo: { "@type": "ImageObject", url: `${siteUrl}/logo.png` },
+    description: "AI visibility intelligence, brand perception analysis, and reputation management platform.",
+    sameAs: [siteUrl],
+    knowsAbout: [
+      "AI Visibility Intelligence",
+      "Brand Perception Analysis",
+      "GEO Optimization",
+      "Generative Engine Optimization",
+      "Reputation Management",
+      "AI Search Optimization",
+    ],
+  };
+
+  // Extract FAQ pairs from content for FAQ schema
+  const faqSchema = (() => {
+    const content = blog.content ?? "";
+    const faqSection = content.match(/<h[23][^>]*>(?:Frequently Asked Questions|FAQ)[^<]*<\/h[23]>([\s\S]*?)(?=<h2|$)/i);
+    if (!faqSection) return null;
+    const pairs: { question: string; answer: string }[] = [];
+    const qRegex = /<(?:h3|strong|dt)[^>]*>(.*?)<\/(?:h3|strong|dt)>/gi;
+    const aRegex = /<p[^>]*>(.*?)<\/p>/gi;
+    const sectionHtml = faqSection[1];
+    let qMatch;
+    while ((qMatch = qRegex.exec(sectionHtml)) !== null) {
+      const q = qMatch[1].replace(/<[^>]+>/g, "").trim();
+      aRegex.lastIndex = qMatch.index;
+      const aMatch = aRegex.exec(sectionHtml);
+      const a = aMatch ? aMatch[1].replace(/<[^>]+>/g, "").trim() : "";
+      if (q && a) pairs.push({ question: q, answer: a });
+    }
+    if (pairs.length === 0) return null;
+    return {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      mainEntity: pairs.map(({ question, answer }) => ({
+        "@type": "Question",
+        name: question,
+        acceptedAnswer: { "@type": "Answer", text: answer },
+      })),
+    };
+  })();
+
+  const jsonLd = articleSchema;
 
   const isRtl = RTL_LANGS.has(blog.language ?? "en");
   const dir = isRtl ? "rtl" : "ltr";
@@ -85,6 +168,10 @@ export default async function BlogDetailPage({ params }: Props) {
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }} />
+      {faqSchema && (
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
+      )}
 
       <main className="flex flex-1 flex-col" style={{ background: "var(--bg-page)", color: "var(--text-primary)" }}>
         {/* Hero */}
@@ -158,18 +245,16 @@ export default async function BlogDetailPage({ params }: Props) {
 
         {/* Article content */}
         <article className="px-6 pb-20 pt-10 sm:px-10" dir={dir}>
-          <div className="mx-auto max-w-3xl">
-            <div
-              className={`blog-content${isRtl ? " blog-content-rtl" : ""}`}
-              dangerouslySetInnerHTML={{ __html: blog.content ?? "" }}
-            />
-            <BlogShareBar
-              url={`https://gintex-ai.vercel.app/blog/${blog.slug}`}
-              title={blog.title}
-              rtl={isRtl}
-            />
-          </div>
+          <BlogContent
+            html={blog.content ?? ""}
+            isRtl={isRtl}
+            shareUrl={`${siteUrl}/blog/${blog.slug}`}
+            shareTitle={blog.title}
+          />
         </article>
+
+        {/* About the Author */}
+        <AuthorCard />
 
         {/* Footer CTA */}
         <div
