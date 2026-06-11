@@ -3,16 +3,7 @@ import { createClient } from "@/lib/supabase/server";
 import OpenAI from "openai";
 import Anthropic from "@anthropic-ai/sdk";
 import type { BlogGenerationInput, BlogGenerationResult } from "@/types/blog";
-
-function slugify(text: string): string {
-  return text
-    .toLowerCase()
-    .replace(/[^a-z0-9\s-]/g, "")
-    .replace(/\s+/g, "-")
-    .replace(/-+/g, "-")
-    .trim()
-    .slice(0, 80);
-}
+import { slugify } from "@/lib/slug";
 
 function estimateReadingTime(text: string): number {
   const words = text.replace(/<[^>]+>/g, " ").split(/\s+/).filter(Boolean).length;
@@ -116,46 +107,9 @@ function repairTruncatedJson(raw: string, topic: string): Record<string, unknown
   }
 }
 
-// Generate a stable numeric seed from a string
-function strToSeed(str: string): number {
-  let hash = 0;
-  for (let i = 0; i < str.length; i++) {
-    hash = (hash * 31 + str.charCodeAt(i)) & 0xffffffff;
-  }
-  return Math.abs(hash) % 1000;
-}
-
-// Inject 2-3 contextual Picsum images into blog HTML content
-function injectImages(content: string, slug: string, tags: string[]): string {
-  // Split on h2 tags to find natural break points
-  const parts = content.split(/(?=<h2)/i);
-  if (parts.length < 2) return content;
-
-  const seeds = [
-    strToSeed(slug),
-    strToSeed(slug + "-2"),
-    strToSeed(slug + "-3"),
-  ];
-
-  const imgTag = (seed: number, alt: string) =>
-    `<figure style="margin:2rem 0;"><img src="https://picsum.photos/seed/${seed}/1200/630" alt="${alt}" style="width:100%;border-radius:0.75rem;object-fit:cover;" loading="lazy" /><figcaption style="text-align:center;font-size:0.8rem;color:#94a3b8;margin-top:0.5rem;">${alt}</figcaption></figure>`;
-
-  const altTexts = [
-    tags[0] ?? "AI technology",
-    tags[1] ?? "digital intelligence",
-    tags[2] ?? "market insights",
-  ];
-
-  // Insert after 1st, 2nd, and (if enough parts) 3rd h2
-  const result = parts.map((part, i) => {
-    if (i === 1) return part + imgTag(seeds[0], altTexts[0]);
-    if (i === 2) return part + imgTag(seeds[1], altTexts[1]);
-    if (i === 3 && parts.length > 4) return part + imgTag(seeds[2], altTexts[2]);
-    return part;
-  });
-
-  return result.join("");
-}
+// Images (cover + in-content) are assigned in the create route, where the real
+// blog id exists, via src/lib/images.ts — this guarantees globally-unique Picsum
+// images (no two blogs/reports share one). Generation returns image-free content.
 
 const RTL_LANGUAGES = new Set(["he", "ar"]);
 
@@ -174,10 +128,10 @@ function sanitiseResult(parsed: Record<string, unknown>, topic: string, slug: st
   const withStats    = ensureStatBlock(cleanContent);
   const withInsight  = ensureInsightCallout(withStats);
   const withLinks    = ensureInternalLinks(withInsight);
-  const withSources  = ensureSourcesBlock(withLinks);
-  const enrichedContent = injectImages(withSources, slug, tags);
+  const enrichedContent = ensureSourcesBlock(withLinks);
 
-  // Wrap content in RTL dir if Hebrew/Arabic
+  // Wrap content in RTL dir if Hebrew/Arabic. In-content images are injected
+  // later (create route) with globally-unique seeds.
   const finalContent = RTL_LANGUAGES.has(language)
     ? `<div dir="rtl" style="text-align:right;">${enrichedContent}</div>`
     : enrichedContent;
@@ -494,9 +448,8 @@ Return ONLY valid JSON as specified in the system prompt. No markdown fences. No
     }
   }
 
-  // Cover image: use Picsum with a stable seed based on slug (no upload needed — public CDN)
-  const coverSeed = strToSeed(result.slug);
-  const coverImageUrl = `https://picsum.photos/seed/${coverSeed}/1600/900`;
+  // Cover + in-content images are assigned on save (create route) using the real
+  // blog id so they are globally unique. Generation returns no cover.
 
   // Cost estimate
   const costUsd = tokensUsed * (modelUsed === "claude" ? 0.000003 : 0.000005);
@@ -507,5 +460,5 @@ Return ONLY valid JSON as specified in the system prompt. No markdown fences. No
     user_id: user.id,
   }).then(() => {}, () => {});
 
-  return NextResponse.json({ ...result, cover_image: coverImageUrl, _model: modelUsed });
+  return NextResponse.json({ ...result, cover_image: null, _model: modelUsed });
 }
